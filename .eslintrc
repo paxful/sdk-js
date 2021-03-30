@@ -1,0 +1,20 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "no-loops",
+    "radar"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:radar/recommended"
+  ],
+  "rules": {
+    "no-console": "error",
+    "no-loops/no-loops": "error",
+    "object-curly-spacing": ["error", "always"]
+  }
+}

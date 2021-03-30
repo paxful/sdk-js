@@ -1,0 +1,47 @@
+---
+stages:
+  - lint
+  - test
+  - doc
+  - page
+
+.base:
+  image: node:14-alpine
+  interruptible: true
+  tags:
+    - kubernetes
+  cache:
+    key: paxful-sdk-ts
+    policy: pull
+    paths:
+      - node_modules
+
+Lint:
+  extends: .base
+  cache:
+    policy: pull-push
+  stage: lint
+  before_script:
+    - npm ci
+  script:
+    - npm run lint
+
+Test:
+  extends: .base
+  stage: test
+  before_script:
+    - npm ci
+  script:
+    - npm test
+  artifacts:
+    reports:
+      junit: junit.xml
+
+pages:
+  extends: .base
+  stage: doc
+  script:
+    - npm run doc
+  artifacts:
+    paths:
+      - public

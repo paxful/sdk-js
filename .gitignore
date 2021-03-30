@@ -1,0 +1,6 @@
+junit.xml
+build
+node_modules
+public
+.idea
+dist
