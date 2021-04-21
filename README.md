@@ -11,7 +11,7 @@ language that is **transpiled to Javascript**.
 ## Use
 To use authorization flow use:
  ```typescript
- import usePaxful from "paxful-sdk";
+ import usePaxful from "@paxful/sdk-js";
 
  const paxfulApi = usePaxful({
      clientId: "YOUR CLIENT ID HERE",
@@ -23,7 +23,7 @@ To use authorization flow use:
 
  To use client credentials flow use:
  ```typescript
- import usePaxful from "paxful-sdk";
+ import usePaxful from "@paxful/sdk-js";
 
  const paxfulApi = usePaxful({
      clientId: "YOUR CLIENT ID HERE",
