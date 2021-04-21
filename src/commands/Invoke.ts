@@ -11,7 +11,8 @@ const createRequest = (url: string, credentials: Credentials): Request => {
     }, {
         method: "POST",
         headers: {
-            "Accepts": "application/json",
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
             "Authorization": `Bearer ${credentials.accessToken}`
         }
     });
