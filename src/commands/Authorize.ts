@@ -27,8 +27,8 @@ export default function authorize(response: Http2ServerResponse, config: ApiConf
     if (!config.redirectUri) {
         throw new Error("Redirect uri is needed for authorization flow.");
     }
-    response.statusCode = 301;
-    response.writeHead(301, {
+    response.statusCode = 302;
+    response.writeHead(302, {
         Location: createOAuthAuthorizeUrl(
             config.clientId,
             config.redirectUri,

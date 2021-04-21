@@ -8,11 +8,36 @@ with Paxful more easily.
 It can be used with Javascript and Typescript projects or any other
 language that is **transpiled to Javascript**.
 
-## Pre-requisites
+## Use
+To use authorization flow use:
+ ```typescript
+ import usePaxful from "paxful-sdk";
+
+ const paxfulApi = usePaxful({
+     clientId: "YOUR CLIENT ID HERE",
+     clientSecret: "YOUR CLIENT SECRET HERE",
+     redirectUri: "YOUR REDIRECT URI HERE",
+ //  scope: ["profile", "email"] // Optional variable for passing requested scopes.
+ });
+ ```
+
+ To use client credentials flow use:
+ ```typescript
+ import usePaxful from "paxful-sdk";
+
+ const paxfulApi = usePaxful({
+     clientId: "YOUR CLIENT ID HERE",
+     clientSecret: "YOUR CLIENT SECRET HERE",
+ //  scope: ["profile", "email"] // Optional variable for passing requested scopes.
+ });
+ ```
+
+## Build
+### Pre-requisites
 
 * Node JS (preferable installed by NVM) v12+
 
-## Tests
+### Tests
 
 To run the tests execute the following command:
 ```shell
@@ -30,7 +55,7 @@ need to follow this steps:
 Keep in mind that every new feature, bugfix or hotfix needs to
 follow this rule.
 
-## Documentation
+### Documentation
 
 To generate the documentation, execute the following command:
 ```shell
