@@ -53,7 +53,7 @@ describe("With the Paxful API SDK", function () {
 
         paxfulApi.login(response);
 
-        expect(response._getStatusCode()).toBe(301);
+        expect(response._getStatusCode()).toBe(302);
         expect(response.getHeaders().location).toMatch(/\/oauth2\/authorize/);
         expect(response.getHeaders().location).toMatch(/response_type=code/);
         expect(response.getHeaders().location).toMatch(/scope=profile\+email/);
