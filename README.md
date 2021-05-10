@@ -13,6 +13,14 @@ It can be used with Javascript and Typescript projects or any other language tha
 * Fluent API (coming soon)
 * `Client Credentials` and `Authorization Code Grant` flows support (read below)
 
+## Installation
+
+To install SDK to your NPM project you need to run the following command:
+
+ ```bash
+ npm i @paxful/sdk-js
+ ```
+
 ## Getting started
 
 The very first thing you need to do is to create an application and get your `Client ID` (`App ID` on developers portal) 
