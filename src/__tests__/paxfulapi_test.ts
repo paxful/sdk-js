@@ -41,6 +41,15 @@ describe("With the Paxful API SDK", function () {
         });
     });
 
+    it('SDK points to Paxful production by default', function () {
+        process.env.PAXFUL_OAUTH_HOST = "";
+        const paxfulApi = usePaxful(credentials);
+        const response = httpMocks.createResponse();
+
+        paxfulApi.login(response);
+        expect(response.getHeaders().location).toMatch(/https:\/\/accounts.paxful.com/);
+    });
+
     it('I can configure to connect to Paxful', function () {
         const paxfulApi = usePaxful(credentials);
         expect(paxfulApi).toBeDefined();
@@ -145,6 +154,7 @@ describe("With the Paxful API SDK", function () {
     });
 
     it('I can get my trades', async function () {
+        process.env.PAXFUL_DATA_HOST = "";
         const credentialStorage = mock<CredentialStorage>();
         credentialStorage.getCredentials.mockReturnValueOnce({
             ...expectedTokenAnswer,
@@ -154,7 +164,7 @@ describe("With the Paxful API SDK", function () {
         const expectedTrades = [];
 
         (fetch as unknown as FetchMockSandbox).once({
-            url: /data\/trades/,
+            url: /https:\/\/paxful.com\/data\/trades/,
             method: "POST"
         }, {
             status: 200,
