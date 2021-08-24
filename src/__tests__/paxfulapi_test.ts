@@ -263,17 +263,6 @@ describe("With the Paxful API SDK", function () {
 
         const expectedTrades = [];
 
-        (fetch as unknown as FetchMockSandbox).once({
-            url: /https:\/\/api\.paxful\.com\/paxful\/v1\/offer\/create/,
-            method: "POST"
-        }, {
-            status: 200,
-            body: JSON.stringify(expectedTrades)
-        }, {
-            sendAsJson: false
-        });
-
-        const paxfulApi = usePaxful(credentials, credentialStorage);
         const newOffer = {
             margin: 10,
             currency: 'BTC',
@@ -285,6 +274,23 @@ describe("With the Paxful API SDK", function () {
             payment_window: 30,
             offer_type_field: 'sell'
         };
+
+        (fetch as unknown as FetchMockSandbox).once({
+            url: /https:\/\/api\.paxful\.com\/paxful\/v1\/offer\/create/,
+            method: "POST",
+            matcher: (_, opts) => {
+                return opts.body.then(body => {
+                    return body === 'currency=BTC&margin=10&offer_terms=Offer terms&offer_type_field=sell&payment_method=gcc&payment_window=30&range_max=1&range_min=1&trade_details=Trade details';
+                })
+            }
+        }, {
+            status: 200,
+            body: JSON.stringify(expectedTrades)
+        }, {
+            sendAsJson: false
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
 
         const trades = await paxfulApi.invoke('/paxful/v1/offer/create', newOffer);
 
