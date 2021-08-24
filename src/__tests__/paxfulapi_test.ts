@@ -41,6 +41,15 @@ describe("With the Paxful API SDK", function () {
         });
     });
 
+    it('SDK points to Paxful production by default when using an empty string', function () {
+        process.env.PAXFUL_OAUTH_HOST = "";
+        const paxfulApi = usePaxful(credentials);
+        const response = httpMocks.createResponse();
+
+        paxfulApi.login(response);
+        expect(response.getHeaders().location).toMatch(/https:\/\/accounts.paxful.com/);
+    });
+
     it('I can configure to connect to Paxful', function () {
         const paxfulApi = usePaxful(credentials);
         expect(paxfulApi).toBeDefined();
@@ -144,6 +153,33 @@ describe("With the Paxful API SDK", function () {
         expect(profile).toMatchObject(userProfile);
     });
 
+    it('I can get my trades if data host is empty', async function () {
+        process.env.PAXFUL_DATA_HOST = "";
+        const credentialStorage = mock<CredentialStorage>();
+        credentialStorage.getCredentials.mockReturnValueOnce({
+            ...expectedTokenAnswer,
+            expiresAt: new Date()
+        });
+
+        const expectedTrades = [];
+
+        (fetch as unknown as FetchMockSandbox).once({
+            url: /https:\/\/paxful.com\/data\/trades/,
+            method: "POST"
+        }, {
+            status: 200,
+            body: JSON.stringify(expectedTrades)
+        }, {
+            sendAsJson: false
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
+
+        const trades = await paxfulApi.invoke('/data/trades');
+
+        expect(trades).toMatchObject(expectedTrades);
+    });
+
     it('I can get my trades', async function () {
         const credentialStorage = mock<CredentialStorage>();
         credentialStorage.getCredentials.mockReturnValueOnce({
@@ -154,7 +190,7 @@ describe("With the Paxful API SDK", function () {
         const expectedTrades = [];
 
         (fetch as unknown as FetchMockSandbox).once({
-            url: /data\/trades/,
+            url: /https:\/\/paxful.com\/data\/trades/,
             method: "POST"
         }, {
             status: 200,
