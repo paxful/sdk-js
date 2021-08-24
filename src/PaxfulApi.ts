@@ -51,22 +51,25 @@ export class PaxfulApi {
      * Get current logged user profile.
      */
     public async getProfile(): Promise<Profile> {
-        if(!this.credentialStorage) throw Error("No token service defined.");
+        if(!this.credentialStorage) throw Error("No credentials storage defined.");
         return await getProfile(this.credentialStorage, this.apiConfiguration);
     }
 
     /**
-     * Get a scoped information from user
+     * Invokes an API operation on behalf of currently authenticated user.
+     *
+     * @param url - Url that should be called at api.paxful.com
+     * @param payload - (Optional) Payload of the request
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public invoke(url: string): Promise<any> {
-        if(!this.credentialStorage) throw Error("No token service defined.");
-        return invoke(url, this.credentialStorage, this.apiConfiguration);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+    public invoke(url: string, payload?: Record<string, unknown> | []): Promise<any> {
+        if (!this.credentialStorage) throw Error("No credentials storage defined.");
+        return invoke(url, this.credentialStorage, this.apiConfiguration, payload);
     }
 
     private validateAndSetDefaultParameters(configuration: ApiConfiguration) {
         const defaultOAuthHost = "https://accounts.paxful.com";
-        const defaultDataHost = "https://paxful.com";
+        const defaultDataHost = "https://api.paxful.com";
         if (!configuration.scope || configuration.scope.length === 0) {
             this.apiConfiguration.scope = ["profile", "email"];
         }

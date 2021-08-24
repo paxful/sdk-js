@@ -164,7 +164,7 @@ describe("With the Paxful API SDK", function () {
         const expectedTrades = [];
 
         (fetch as unknown as FetchMockSandbox).once({
-            url: /https:\/\/paxful.com\/data\/trades/,
+            url: /https:\/\/api\.paxful\.com\/paxful\/v1\/trade\/get/,
             method: "POST"
         }, {
             status: 200,
@@ -175,7 +175,7 @@ describe("With the Paxful API SDK", function () {
 
         const paxfulApi = usePaxful(credentials, credentialStorage);
 
-        const trades = await paxfulApi.invoke('/data/trades');
+        const trades = await paxfulApi.invoke('/paxful/v1/trade/get');
 
         expect(trades).toMatchObject(expectedTrades);
     });
@@ -190,7 +190,7 @@ describe("With the Paxful API SDK", function () {
         const expectedTrades = [];
 
         (fetch as unknown as FetchMockSandbox).once({
-            url: /https:\/\/paxful.com\/data\/trades/,
+            url: /https:\/\/api\.paxful\.com\/paxful\/v1\/trade\/get/,
             method: "POST"
         }, {
             status: 200,
@@ -201,7 +201,7 @@ describe("With the Paxful API SDK", function () {
 
         const paxfulApi = usePaxful(credentials, credentialStorage);
 
-        const trades = await paxfulApi.invoke('/data/trades');
+        const trades = await paxfulApi.invoke('/paxful/v1/trade/get');
 
         expect(trades).toMatchObject(expectedTrades);
     });
@@ -252,5 +252,42 @@ describe("With the Paxful API SDK", function () {
         const profile = await paxfulApi.getProfile();
 
         expect(profile).toMatchObject(userProfile);
+    });
+
+    it('I can create an offer', async function () {
+        const credentialStorage = mock<CredentialStorage>();
+        credentialStorage.getCredentials.mockReturnValueOnce({
+            ...expectedTokenAnswer,
+            expiresAt: new Date()
+        });
+
+        const expectedTrades = [];
+
+        (fetch as unknown as FetchMockSandbox).once({
+            url: /https:\/\/api\.paxful\.com\/paxful\/v1\/offer\/create/,
+            method: "POST"
+        }, {
+            status: 200,
+            body: JSON.stringify(expectedTrades)
+        }, {
+            sendAsJson: false
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
+        const newOffer = {
+            margin: 10,
+            currency: 'BTC',
+            range_max: 1,
+            range_min: 1,
+            offer_terms: 'Offer terms',
+            trade_details: 'Trade details',
+            payment_method: 'gcc',
+            payment_window: 30,
+            offer_type_field: 'sell'
+        };
+
+        const trades = await paxfulApi.invoke('/paxful/v1/offer/create', newOffer);
+
+        expect(trades).toMatchObject(expectedTrades);
     });
 });
