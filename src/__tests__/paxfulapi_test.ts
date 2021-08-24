@@ -20,40 +20,6 @@ const expectedTokenAnswer = {
     refreshToken: UUID(),
 }
 
-function assertCorrectWebsiteIsReachable() {
-    const paxfulApi = usePaxful(credentials);
-    const response = httpMocks.createResponse();
-
-    paxfulApi.login(response);
-    expect(response.getHeaders().location).toMatch(/https:\/\/accounts.paxful.com/);
-}
-
-async function assertTradePointsToRightEndpoint() {
-    const credentialStorage = mock<CredentialStorage>();
-    credentialStorage.getCredentials.mockReturnValueOnce({
-        ...expectedTokenAnswer,
-        expiresAt: new Date()
-    });
-
-    const expectedTrades = [];
-
-    (fetch as unknown as FetchMockSandbox).once({
-        url: /https:\/\/paxful.com\/data\/trades/,
-        method: "POST"
-    }, {
-        status: 200,
-        body: JSON.stringify(expectedTrades)
-    }, {
-        sendAsJson: false
-    });
-
-    const paxfulApi = usePaxful(credentials, credentialStorage);
-
-    const trades = await paxfulApi.invoke('/data/trades');
-
-    expect(trades).toMatchObject(expectedTrades);
-}
-
 describe("With the Paxful API SDK", function () {
 
     beforeEach(() => {
@@ -77,12 +43,11 @@ describe("With the Paxful API SDK", function () {
 
     it('SDK points to Paxful production by default when using an empty string', function () {
         process.env.PAXFUL_OAUTH_HOST = "";
-        assertCorrectWebsiteIsReachable();
-    });
+        const paxfulApi = usePaxful(credentials);
+        const response = httpMocks.createResponse();
 
-    it('SDK points to Paxful production by default when using undefined', function () {
-        process.env.PAXFUL_OAUTH_HOST = undefined;
-        assertCorrectWebsiteIsReachable();
+        paxfulApi.login(response);
+        expect(response.getHeaders().location).toMatch(/https:\/\/accounts.paxful.com/);
     });
 
     it('I can configure to connect to Paxful', function () {
@@ -190,12 +155,55 @@ describe("With the Paxful API SDK", function () {
 
     it('I can get my trades if data host is empty', async function () {
         process.env.PAXFUL_DATA_HOST = "";
-        await assertTradePointsToRightEndpoint();
+        const credentialStorage = mock<CredentialStorage>();
+        credentialStorage.getCredentials.mockReturnValueOnce({
+            ...expectedTokenAnswer,
+            expiresAt: new Date()
+        });
+
+        const expectedTrades = [];
+
+        (fetch as unknown as FetchMockSandbox).once({
+            url: /https:\/\/paxful.com\/data\/trades/,
+            method: "POST"
+        }, {
+            status: 200,
+            body: JSON.stringify(expectedTrades)
+        }, {
+            sendAsJson: false
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
+
+        const trades = await paxfulApi.invoke('/data/trades');
+
+        expect(trades).toMatchObject(expectedTrades);
     });
 
-    it('I can get my trades if data host is undefined', async function () {
-        process.env.PAXFUL_DATA_HOST = undefined;
-        await assertTradePointsToRightEndpoint();
+    it('I can get my trades', async function () {
+        const credentialStorage = mock<CredentialStorage>();
+        credentialStorage.getCredentials.mockReturnValueOnce({
+            ...expectedTokenAnswer,
+            expiresAt: new Date()
+        });
+
+        const expectedTrades = [];
+
+        (fetch as unknown as FetchMockSandbox).once({
+            url: /https:\/\/paxful.com\/data\/trades/,
+            method: "POST"
+        }, {
+            status: 200,
+            body: JSON.stringify(expectedTrades)
+        }, {
+            sendAsJson: false
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
+
+        const trades = await paxfulApi.invoke('/data/trades');
+
+        expect(trades).toMatchObject(expectedTrades);
     });
 
     it('I dont need to worry about refreshing my credentials', async function () {

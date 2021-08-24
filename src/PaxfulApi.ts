@@ -65,14 +65,20 @@ export class PaxfulApi {
     }
 
     private validateAndSetDefaultParameters(configuration: ApiConfiguration) {
+        const defaultOAuthHost = "https://accounts.paxful.com";
+        const defaultDataHost = "https://paxful.com";
         if (!configuration.scope || configuration.scope.length === 0) {
             this.apiConfiguration.scope = ["profile", "email"];
         }
-        if (process.env.PAXFUL_OAUTH_HOST === "" || !process.env.PAXFUL_OAUTH_HOST) {
-            process.env.PAXFUL_OAUTH_HOST = "https://accounts.paxful.com";
+        if (process.env.PAXFUL_OAUTH_HOST === "") {
+            process.env.PAXFUL_OAUTH_HOST = defaultOAuthHost;
+        } else {
+            process.env.PAXFUL_OAUTH_HOST = process.env.PAXFUL_OAUTH_HOST ?? defaultOAuthHost;
         }
         if (process.env.PAXFUL_DATA_HOST === "" || !process.env.PAXFUL_DATA_HOST) {
-            process.env.PAXFUL_DATA_HOST = "https://paxful.com";
+            process.env.PAXFUL_DATA_HOST = defaultDataHost;
+        } else {
+            process.env.PAXFUL_DATA_HOST = process.env.PAXFUL_DATA_HOST ?? defaultDataHost;
         }
     }
 
