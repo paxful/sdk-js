@@ -4,8 +4,11 @@ import validateAndRefresh from "./RefreshIfNeeded";
 
 import { Credentials, CredentialStorage } from "../oauth";
 import { ApiConfiguration } from "../ApiConfiguration";
+import queryString from 'query-string';
+import { flatten } from 'q-flat';
 
-const createRequest = (url: string, credentials: Credentials): Request => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+const createRequest = (url: string, credentials: Credentials, payload?: Record<string, unknown> | []): Request => {
     return new Request({
         href: `${process.env.PAXFUL_DATA_HOST}${url}`
     }, {
@@ -14,7 +17,8 @@ const createRequest = (url: string, credentials: Credentials): Request => {
             "Accept": "application/json",
             "Content-Type": "application/x-www-form-urlencoded",
             "Authorization": `Bearer ${credentials.accessToken}`
-        }
+        },
+        body: queryString.stringify(flatten(payload), { encode:false })
     });
 }
 
@@ -22,12 +26,15 @@ const createRequest = (url: string, credentials: Credentials): Request => {
  * Retrieves personal access token and refresh token.
  *
  * @param url
+ * @param payload
  * @param credentialStorage
  * @param config
  */
-export default function invoke(url: string, credentialStorage: CredentialStorage, config: ApiConfiguration): Promise<any> {
-    const request = createRequest(url, credentialStorage.getCredentials());
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+export default function invoke(url: string, credentialStorage: CredentialStorage, config: ApiConfiguration, payload?: Record<string, unknown> | []): Promise<any> {
+    const request = createRequest(url, credentialStorage.getCredentials(), payload);
     return fetch(request)
         .then(response => validateAndRefresh(request, response, credentialStorage, config))
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .then(response => response.json() as Promise<any>);
 }
