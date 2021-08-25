@@ -272,7 +272,12 @@ describe("With the Paxful API SDK", function () {
             trade_details: 'Trade details',
             payment_method: 'gcc',
             payment_window: 30,
-            offer_type_field: 'sell'
+            offer_type_field: 'sell',
+            nested: {
+                key1: '1',
+                key2: '2',
+                key3: [0, 1]
+            }
         };
 
         (fetch as unknown as FetchMockSandbox).once({
@@ -280,7 +285,7 @@ describe("With the Paxful API SDK", function () {
             method: "POST",
             matcher: (_, opts) => {
                 return opts.body.then(body => {
-                    return body === 'currency=BTC&margin=10&offer_terms=Offer terms&offer_type_field=sell&payment_method=gcc&payment_window=30&range_max=1&range_min=1&trade_details=Trade details';
+                    return body === 'currency=BTC&margin=10&offer_terms=Offer terms&offer_type_field=sell&payment_method=gcc&payment_window=30&range_max=1&range_min=1&trade_details=Trade details&nested[key1]=1&nested[key2]=2&nested[key3][0]=0&nested[key3][1]=1';
                 })
             }
         }, {
