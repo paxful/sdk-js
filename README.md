@@ -106,6 +106,22 @@ const paxfulApi = usePaxful({
 }, redisCredentialsStorage);
 ```
 
+#### Proxy
+
+By default we don't use any proxy configuration but if you need to use a proxy server you can do it by using like this:
+
+```typescript
+import ProxyAgent from "simple-proxy-agent";
+
+const paxfulApi = usePaxful({
+    clientId: "YOUR CLIENT ID HERE",
+    clientSecret: "YOUR CLIENT SECRET HERE",
+    redirectUri: "YOUR REDIRECT URI HERE",
+    //  scope: ["profile", "email"] // Optional variable for passing requested scopes.
+    proxyAgent: new ProxyAgent("YOUR PROXY URL HERE")
+});
+```
+
 ## Contributing
 ### Pre-requisites
 

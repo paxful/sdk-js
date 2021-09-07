@@ -1,7 +1,8 @@
 import httpMocks from "node-mocks-http";
 import { v4 as UUID } from "uuid";
 import fetch from "node-fetch";
-import { mock } from 'jest-mock-extended';
+import { mock } from "jest-mock-extended";
+import ProxyAgent from "simple-proxy-agent";
 
 import usePaxful from "../";
 import { CredentialStorage } from "../oauth";
@@ -18,6 +19,30 @@ const ttl = 3600;
 const expectedTokenAnswer = {
     accessToken: UUID(),
     refreshToken: UUID(),
+}
+
+const proxyAgent = new ProxyAgent("http://proxy_url:proxy_port");
+
+const picture = "https://paxful.com/2/images/avatar.png";
+const userProfile = {
+    sub: UUID(),
+    nickname: UUID(),
+    given_name: UUID(),
+    family_name: UUID(),
+    locale: "en",
+    picture,
+    email: `${UUID()}@paxful.test.com`,
+    email_verified: true
+};
+
+const credentialStorage = mock<CredentialStorage>();
+const paxfulTradeUrl = '/paxful/v1/trade/get';
+
+function mockCredentialsStorageReturnValue() {
+    credentialStorage.getCredentials.mockReturnValueOnce({
+        ...expectedTokenAnswer,
+        expiresAt: new Date()
+    });
 }
 
 describe("With the Paxful API SDK", function () {
@@ -92,13 +117,20 @@ describe("With the Paxful API SDK", function () {
         expect(response).toMatchObject(expectedTokenAnswer);
     });
 
+    it('I can get a impersonated access token and refresh token using a proxy', async function () {
+        const paxfulApi = usePaxful({ ...credentials, proxyAgent });
+
+        const response = await paxfulApi.impersonatedCredentials(UUID());
+
+        expect(response).toMatchObject(expectedTokenAnswer);
+    });
+
     it('I can save my impersonated tokens', async function () {
-        const tokenStorage = mock<CredentialStorage>();
-        const paxfulApi = usePaxful(credentials, tokenStorage);
+        const paxfulApi = usePaxful(credentials, credentialStorage);
 
         await paxfulApi.impersonatedCredentials(UUID());
 
-        expect(tokenStorage.saveCredentials).toBeCalled()
+        expect(credentialStorage.saveCredentials).toBeCalled()
     });
 
     it('I can get my own access token and refresh token', async function () {
@@ -109,8 +141,15 @@ describe("With the Paxful API SDK", function () {
         expect(response).toMatchObject(expectedTokenAnswer);
     });
 
+    it('I can get my own access token and refresh token using a proxy', async function () {
+        const paxfulApi = usePaxful({ ...credentials, proxyAgent });
+
+        const response = await paxfulApi.myCredentials();
+
+        expect(response).toMatchObject(expectedTokenAnswer);
+    });
+
     it('I can save my own tokens', async function () {
-        const credentialStorage = mock<CredentialStorage>();
         const paxfulApi = usePaxful(credentials, credentialStorage);
 
         await paxfulApi.myCredentials();
@@ -119,13 +158,36 @@ describe("With the Paxful API SDK", function () {
     });
 
     it('I can get my profile', async function () {
+        (fetch as unknown as FetchMockSandbox).once({
+            url: /oauth2\/userinfo/,
+            method: "GET"
+        }, {
+            status: 200,
+            body: JSON.stringify(userProfile)
+        }, {
+            sendAsJson: false
+        });
+
+        credentialStorage.getCredentials.mockReturnValueOnce({
+            ...expectedTokenAnswer,
+            expiresAt: new Date()
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
+
+        const profile = await paxfulApi.getProfile();
+
+        expect(profile).toMatchObject(userProfile);
+    });
+
+    it('I can get my profile using a proxy', async function () {
         const userProfile = {
             sub: UUID(),
             nickname: UUID(),
             given_name: UUID(),
             family_name: UUID(),
             locale: "en",
-            picture: "https://paxful.com/2/images/avatar.png",
+            picture,
             email: `${UUID()}@paxful.test.com`,
             email_verified: true
         };
@@ -140,13 +202,12 @@ describe("With the Paxful API SDK", function () {
             sendAsJson: false
         });
 
-        const credentialStorage = mock<CredentialStorage>();
         credentialStorage.getCredentials.mockReturnValueOnce({
             ...expectedTokenAnswer,
             expiresAt: new Date()
         });
 
-        const paxfulApi = usePaxful(credentials, credentialStorage);
+        const paxfulApi = usePaxful({ ...credentials, proxyAgent }, credentialStorage);
 
         const profile = await paxfulApi.getProfile();
 
@@ -155,11 +216,8 @@ describe("With the Paxful API SDK", function () {
 
     it('I can get my trades if data host is empty', async function () {
         process.env.PAXFUL_DATA_HOST = "";
-        const credentialStorage = mock<CredentialStorage>();
-        credentialStorage.getCredentials.mockReturnValueOnce({
-            ...expectedTokenAnswer,
-            expiresAt: new Date()
-        });
+
+        mockCredentialsStorageReturnValue();
 
         const expectedTrades = [];
 
@@ -175,13 +233,12 @@ describe("With the Paxful API SDK", function () {
 
         const paxfulApi = usePaxful(credentials, credentialStorage);
 
-        const trades = await paxfulApi.invoke('/paxful/v1/trade/get');
+        const trades = await paxfulApi.invoke(paxfulTradeUrl);
 
         expect(trades).toMatchObject(expectedTrades);
     });
 
     it('I can get my trades', async function () {
-        const credentialStorage = mock<CredentialStorage>();
         credentialStorage.getCredentials.mockReturnValueOnce({
             ...expectedTokenAnswer,
             expiresAt: new Date()
@@ -201,23 +258,37 @@ describe("With the Paxful API SDK", function () {
 
         const paxfulApi = usePaxful(credentials, credentialStorage);
 
-        const trades = await paxfulApi.invoke('/paxful/v1/trade/get');
+        const trades = await paxfulApi.invoke(paxfulTradeUrl);
+
+        expect(trades).toMatchObject(expectedTrades);
+    });
+
+    it('I can get my trades using a proxy', async function () {
+        credentialStorage.getCredentials.mockReturnValueOnce({
+            ...expectedTokenAnswer,
+            expiresAt: new Date()
+        });
+
+        const expectedTrades = [];
+
+        (fetch as unknown as FetchMockSandbox).once({
+            url: /https:\/\/api\.paxful\.com\/paxful\/v1\/trade\/get/,
+            method: "POST"
+        }, {
+            status: 200,
+            body: JSON.stringify(expectedTrades)
+        }, {
+            sendAsJson: false
+        });
+
+        const paxfulApi = usePaxful({ ...credentials, proxyAgent }, credentialStorage);
+
+        const trades = await paxfulApi.invoke(paxfulTradeUrl);
 
         expect(trades).toMatchObject(expectedTrades);
     });
 
     it('I dont need to worry about refreshing my credentials', async function () {
-        const userProfile = {
-            sub: UUID(),
-            nickname: UUID(),
-            given_name: UUID(),
-            family_name: UUID(),
-            locale: "en",
-            picture: "https://paxful.com/2/images/avatar.png",
-            email: `${UUID()}@paxful.test.com`,
-            email_verified: true
-        };
-
         (fetch as unknown as FetchMockSandbox).once({
             name: 'invalid_access_token',
             url: /oauth2\/userinfo/,
@@ -241,7 +312,6 @@ describe("With the Paxful API SDK", function () {
             sendAsJson: false
         });
 
-        const credentialStorage = mock<CredentialStorage>();
         credentialStorage.getCredentials.mockReturnValue({
             ...expectedTokenAnswer,
             expiresAt: new Date()
@@ -255,7 +325,6 @@ describe("With the Paxful API SDK", function () {
     });
 
     it('I can create an offer', async function () {
-        const credentialStorage = mock<CredentialStorage>();
         credentialStorage.getCredentials.mockReturnValueOnce({
             ...expectedTokenAnswer,
             expiresAt: new Date()
