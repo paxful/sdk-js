@@ -1,7 +1,10 @@
 name: Paxful Javascript SDK
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
+    tags:
+      - "v*"
   pull_request:
     branches: [ master ]
 jobs:
@@ -21,7 +24,7 @@ jobs:
       - run: echo "🎉 Tests completed."
   deploy:
     name: Publish
-    if: ${{ github.ref == 'refs/heads/master' }}
+    if: ${{ startsWith(github.ref, 'refs/tags/') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -32,6 +35,8 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: npm run build --if-present
-      - run: npm publish
+      - run: |
+          npm version $(echo -n $GITHUB_REF | grep -o '\d\.\d\.\d$') --no-git-tag-version
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
