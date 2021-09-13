@@ -18,6 +18,7 @@ const createOAuthRequestTokenUrl = (config: ApiConfiguration): Request => {
             "Content-Type": "application/x-www-form-urlencoded",
             "Accepts": "application/json"
         },
+        agent: config.proxyAgent,
         body: form
     });
 }

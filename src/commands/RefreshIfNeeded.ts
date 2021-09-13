@@ -20,6 +20,7 @@ const refreshAccessToken = async (credentials: Credentials, config: ApiConfigura
                 "Content-Type": "application/x-www-form-urlencoded",
                 "Accepts": "application/json"
             },
+            agent: config.proxyAgent,
             body: form
         })
     ).then(response => response.json() as Promise<AccountServiceTokenResponse>)

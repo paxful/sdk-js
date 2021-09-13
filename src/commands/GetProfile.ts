@@ -5,7 +5,7 @@ import validateAndRefresh from "./RefreshIfNeeded";
 import { Profile, Credentials, CredentialStorage } from "../oauth";
 import { ApiConfiguration } from "../ApiConfiguration";
 
-const createRequest = (credentials: Credentials): Request => {
+const createRequest = (credentials: Credentials, config: ApiConfiguration): Request => {
     return new Request({
         href: `${process.env.PAXFUL_OAUTH_HOST}/oauth2/userinfo`
     }, {
@@ -13,7 +13,8 @@ const createRequest = (credentials: Credentials): Request => {
         headers: {
             "Accepts": "application/json",
             "Authorization": `Bearer ${credentials.accessToken}`
-        }
+        },
+        agent: config.proxyAgent
     });
 }
 
@@ -26,7 +27,7 @@ const createRequest = (credentials: Credentials): Request => {
 export default function retrieveProfile(credentialStorage: CredentialStorage, config: ApiConfiguration): Promise<Profile> {
     const token = credentialStorage.getCredentials();
     if(!token) throw Error("Token not provided, please review if token was generated!");
-    const request = createRequest(token);
+    const request = createRequest(token, config);
     return fetch(request)
         .then(response => validateAndRefresh(request, response, credentialStorage, config))
         .then(response => response.json() as Promise<Profile>);
