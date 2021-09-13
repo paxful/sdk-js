@@ -35,8 +35,12 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: npm run build --if-present
-      - run: |
-          npm version $(echo -n $GITHUB_REF | grep -o '\d\.\d\.\d$') --no-git-tag-version
-          npm publish
+      - name: Set output
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/v}
+      - run: npm version $RELEASE_VERSION --no-git-tag-version
+        env:
+          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+      - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
