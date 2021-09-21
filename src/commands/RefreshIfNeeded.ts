@@ -34,16 +34,15 @@ const refreshAccessToken = async (credentials: Credentials, config: ApiConfigura
 }
 
 const createRequest = async (request: Request, config: ApiConfiguration, credentialStorage?: CredentialStorage): Promise<Request> => {
+    let credentials: Credentials;
     if(credentialStorage){
-        let credentials = credentialStorage.getCredentials()
+        credentials = credentialStorage.getCredentials()
         credentials = await refreshAccessToken(credentials, config);
         credentialStorage.saveCredentials(credentials);
-
-        request.headers["Authorization"] = `Bearer ${credentials.accessToken}`;
     } else {
-        const credentials = await retrieveImpersonatedCredentials(config);
-        request.headers["Authorization"] = `Bearer ${credentials.accessToken}`;
+        credentials = await retrieveImpersonatedCredentials(config);
     }
+    request.headers["Authorization"] = `Bearer ${credentials.accessToken}`;
 
     return Promise.resolve(request);
 }
