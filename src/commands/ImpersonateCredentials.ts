@@ -4,11 +4,15 @@ import { URLSearchParams } from "url";
 import { AccountServiceTokenResponse, Credentials } from "../oauth";
 import { ApiConfiguration } from "../ApiConfiguration";
 
-const createOAuthRequestTokenUrl = (code: string, config: ApiConfiguration): Request => {
+const createOAuthRequestTokenUrl = (config: ApiConfiguration, code?: string): Request => {
     const form = new URLSearchParams();
-    form.append("grant_type", "authorization_code");
-    form.append("code", code);
-    form.append("redirect_uri", config.redirectUri || "");
+    if(code) {
+        form.append("grant_type", "authorization_code");
+        form.append("code", code);
+        form.append("redirect_uri", config.redirectUri || "");
+    } else {
+        form.append("grant_type", "client_credentials");
+    }
     form.append("client_id", config.clientId);
     form.append("client_secret", config.clientSecret);
 
@@ -31,12 +35,14 @@ const createOAuthRequestTokenUrl = (code: string, config: ApiConfiguration): Req
  * @param code
  * @param config
  */
-export default function retrieveImpersonatedCredentials(code: string, config: ApiConfiguration): Promise<Credentials> {
-    return fetch(createOAuthRequestTokenUrl(code, config))
+export default function retrieveImpersonatedCredentials(config: ApiConfiguration, code?: string): Promise<Credentials> {
+    return fetch(createOAuthRequestTokenUrl(config, code))
         .then(response => response.json() as Promise<AccountServiceTokenResponse>)
-        .then((tokenResponse: AccountServiceTokenResponse) => ({
-            accessToken: tokenResponse.access_token,
-            refreshToken: tokenResponse.refresh_token,
-            expiresAt: new Date(Date.now() + (tokenResponse.expires_in * 1000))
-        }));
+        .then((tokenResponse: AccountServiceTokenResponse) => {
+            return ({
+                accessToken: tokenResponse.access_token,
+                refreshToken: tokenResponse.refresh_token,
+                expiresAt: new Date(Date.now() + (tokenResponse.expires_in * 1000))
+            });
+        });
 }

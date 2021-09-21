@@ -34,7 +34,7 @@ export class PaxfulApi {
      */
     public async impersonatedCredentials(code: string): Promise<Credentials> {
         return this.saveToken(
-            retrieveImpersonatedCredentials(code, this.apiConfiguration)
+            retrieveImpersonatedCredentials(this.apiConfiguration, code)
         );
     }
 
@@ -63,8 +63,7 @@ export class PaxfulApi {
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
     public invoke(url: string, payload?: Record<string, unknown> | []): Promise<any> {
-        if (!this.credentialStorage) throw Error("No credentials storage defined.");
-        return invoke(url, this.credentialStorage, this.apiConfiguration, payload);
+        return invoke(url, this.apiConfiguration, this.credentialStorage, payload);
     }
 
     private validateAndSetDefaultParameters(configuration: ApiConfiguration) {
