@@ -29,6 +29,6 @@ export default function retrieveProfile(credentialStorage: CredentialStorage, co
     if(!token) throw Error("Token not provided, please review if token was generated!");
     const request = createRequest(token, config);
     return fetch(request)
-        .then(response => validateAndRefresh(request, response, credentialStorage, config))
+        .then(response => validateAndRefresh(request, response, config, credentialStorage))
         .then(response => response.json() as Promise<Profile>);
 }

@@ -21,6 +21,7 @@ const expectedTokenAnswer = {
     refreshToken: UUID(),
 }
 
+// noinspection HttpUrlsUsage
 const proxyAgent = new ProxyAgent("http://proxy_url:proxy_port");
 
 const picture = "https://paxful.com/2/images/avatar.png";
@@ -62,7 +63,7 @@ describe("With the Paxful API SDK", function () {
                 expires_in: ttl
             })
         }, {
-            sendAsJson: false
+            sendAsJson: false,
         });
     });
 
@@ -349,6 +350,7 @@ describe("With the Paxful API SDK", function () {
             }
         };
 
+        // noinspection JSUnusedGlobalSymbols
         (fetch as unknown as FetchMockSandbox).once({
             url: /https:\/\/api\.paxful\.com\/paxful\/v1\/offer\/create/,
             method: "POST",
@@ -369,5 +371,18 @@ describe("With the Paxful API SDK", function () {
         const trades = await paxfulApi.invoke('/paxful/v1/offer/create', newOffer);
 
         expect(trades).toMatchObject(expectedTrades);
+    });
+
+    it('I can see my offers in client grant flow', async function (){
+        (fetch as unknown as FetchMockSandbox).reset();
+        const credentials = {
+            clientId: process.env.PAXFUL_CLIENT_ID || "",
+            clientSecret: process.env.PAXFUL_CLIENT_SECRET || "",
+        };
+        const paxfulApi = usePaxful(credentials);
+        const offers = await paxfulApi.invoke('/paxful/v1/offer/all', {
+            offer_type: "buy"
+        });
+        expect(offers.data.offers.length).toBeGreaterThan(0);
     });
 });

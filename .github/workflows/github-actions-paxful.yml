@@ -21,6 +21,9 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
       - run: npm test
+        env:
+          PAXFUL_CLIENT_ID: ${{ secrets.PAXFUL_CLIENT_ID }}
+          PAXFUL_CLIENT_SECRET: ${{ secrets.PAXFUL_CLIENT_SECRET }}
       - run: echo "🎉 Tests completed."
   deploy:
     name: Publish

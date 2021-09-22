@@ -1,6 +1,8 @@
 import fetch, { Request, Response } from "node-fetch";
 import { URLSearchParams } from "url";
 
+import retrieveImpersonatedCredentials from "./ImpersonateCredentials";
+
 import { AccountServiceTokenResponse, Credentials, CredentialStorage } from "../oauth";
 import { ApiConfiguration } from "../ApiConfiguration";
 
@@ -31,21 +33,25 @@ const refreshAccessToken = async (credentials: Credentials, config: ApiConfigura
         }));
 }
 
-const createRequest = async (request: Request, credentialStorage: CredentialStorage, config: ApiConfiguration): Promise<Request> => {
-    let credentials = credentialStorage.getCredentials()
-    credentials = await refreshAccessToken(credentials, config);
-    credentialStorage.saveCredentials(credentials);
-
-    request.headers["Authorization"] = credentials.accessToken;
+const createRequest = async (request: Request, config: ApiConfiguration, credentialStorage?: CredentialStorage): Promise<Request> => {
+    let credentials: Credentials;
+    if(credentialStorage){
+        credentials = credentialStorage.getCredentials()
+        credentials = await refreshAccessToken(credentials, config);
+        credentialStorage.saveCredentials(credentials);
+    } else {
+        credentials = await retrieveImpersonatedCredentials(config);
+    }
+    request.headers["Authorization"] = `Bearer ${credentials.accessToken}`;
 
     return Promise.resolve(request);
 }
 
-const validateIfTokenIsExpired = async (request: Request, response: Response, credentialStorage: CredentialStorage, config: ApiConfiguration): Promise<Response> => {
-    if (response.status === 401) return await fetch(await createRequest(request, credentialStorage, config));
+const validateIfTokenIsExpired = async (request: Request, response: Response, config: ApiConfiguration, credentialStorage?: CredentialStorage): Promise<Response> => {
+    if (response.status === 401) return await fetch(await createRequest(request, config, credentialStorage));
     return Promise.resolve(response);
 }
 
-export default function validateAndRefresh(request: Request, response: Response, credentialStorage: CredentialStorage, config: ApiConfiguration): Promise<Response> {
-    return validateIfTokenIsExpired(request, response, credentialStorage, config);
+export default function validateAndRefresh(request: Request, response: Response, config: ApiConfiguration, credentialStorage?: CredentialStorage): Promise<Response> {
+    return validateIfTokenIsExpired(request, response, config, credentialStorage);
 }
