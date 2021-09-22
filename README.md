@@ -25,7 +25,8 @@ To install SDK to your NPM project you need to run the following command:
 
 The very first thing you need to do is to create an application and get your `Client ID` (`App ID` on developers portal) 
 and `Secret`. You can do that by creating an application [here](https://developers.paxful.com/apps/new/). Once
-you have created an application, do not forget to add at least one product to it, you can do that under `Products`.
+you have created an application, do not forget to add at least one product to it, you can do that under `Products`. If you
+would like to follow along with this guide, then once you have created an application go ahead and add `Paxful API
 
 ## Supported flows
 
@@ -45,14 +46,13 @@ import usePaxful from "@paxful/sdk-js";
 
 const paxfulApi = usePaxful({
     clientId: "YOUR CLIENT ID HERE",
-    clientSecret: "YOUR CLIENT SECRET HERE",
-    //  scope: ["profile", "email"] // Optional variable for passing requested scopes.
+    clientSecret: "YOUR CLIENT SECRET HERE"
 });
 ```
 
 After you have instantiated an instance you can use its `invoke` method:
 ```typescript
-const myOffers = paxfulApi.invoke('offer/all');
+const myOffers = await paxful.invoke("/paxful/v1/offer/all", { type: 'sell' });
 ```
 
 ### Authorization Code Grant flow
@@ -81,7 +81,7 @@ Login method would do all the necessary OAuth2 machinery for you in order to rec
 operation method has been invoked, you can start using `invoke` method to access endpoints on behalf of a user
 in the same way as in `Client Credentials` flow:
 ```
-const myOffers = paxfulApi.invoke('offer/all');
+const myOffers = await paxful.invoke("/paxful/v1/offer/all", { type: 'sell' });
 ```
 
 #### Persistence
