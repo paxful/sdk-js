@@ -52,7 +52,7 @@ const paxfulApi = usePaxful({
 
 After you have instantiated an instance you can use its `invoke` method:
 ```typescript
-const myOffers = await paxful.invoke("/paxful/v1/offer/all", { type: 'sell' });
+const myOffers = await paxfulApi.invoke("/paxful/v1/offer/all", { type: 'sell' });
 ```
 
 ### Authorization Code Grant flow
@@ -68,7 +68,9 @@ const paxfulApi = usePaxful({
     redirectUri: "YOUR REDIRECT URI HERE",
     //  scope: ["profile", "email"] // Optional variable for passing requested scopes.
 });
- ```
+```
+(a list of all available scopes for Paxful API can be found [here](https://developers.paxful.com/paxful-products/paxful/documentation/))
+ 
 The SDK is framework agnostic and only relies on a generic `Http2ServerResponse` for working with the web layer. The
 controller endpoint that you would specify for `redirectUri` could look akin to the following:
 
@@ -80,8 +82,8 @@ function callback(response) {
 Login method would do all the necessary OAuth2 machinery for you in order to receive an access token. Once the `login`
 operation method has been invoked, you can start using `invoke` method to access endpoints on behalf of a user
 in the same way as in `Client Credentials` flow:
-```
-const myOffers = await paxful.invoke("/paxful/v1/offer/all", { type: 'sell' });
+```typescript
+const myOffers = await paxfulApi.invoke("/paxful/v1/offer/all", { type: 'sell' });
 ```
 
 #### Persistence
