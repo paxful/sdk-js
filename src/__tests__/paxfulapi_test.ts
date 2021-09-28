@@ -38,6 +38,7 @@ const userProfile = {
 
 const credentialStorage = mock<CredentialStorage>();
 const paxfulTradeUrl = '/paxful/v1/trade/get';
+const paxfulTradeChatImageUrl = '/paxful/v1/trade-chat/image';
 
 function mockCredentialsStorageReturnValue() {
     credentialStorage.getCredentials.mockReturnValueOnce({
@@ -262,6 +263,31 @@ describe("With the Paxful API SDK", function () {
         const trades = await paxfulApi.invoke(paxfulTradeUrl);
 
         expect(trades).toMatchObject(expectedTrades);
+    });
+
+    it('I can get my trade chat images', async function () {
+        credentialStorage.getCredentials.mockReturnValueOnce({
+            ...expectedTokenAnswer,
+            expiresAt: new Date()
+        });
+
+        const expectedImage = new ArrayBuffer(10);
+
+        (fetch as unknown as FetchMockSandbox).once({
+            url: /https:\/\/api\.paxful\.com\/paxful\/v1\/trade-chat\/image/,
+            method: "POST"
+        }, {
+            status: 200,
+            body: expectedImage
+        }, {
+            sendAsJson: false
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
+
+        const image = await paxfulApi.invoke(paxfulTradeChatImageUrl);
+
+        expect(image).toMatchObject(expectedImage);
     });
 
     it('I can get my trades using a proxy', async function () {
