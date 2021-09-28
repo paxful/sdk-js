@@ -1,4 +1,4 @@
-import fetch, { BodyInit, Request } from "node-fetch";
+import fetch, { BodyInit, Request, Response } from "node-fetch";
 import { ReadStream } from "fs";
 import queryString from 'query-string';
 import { flatten } from 'q-flat';
@@ -35,6 +35,24 @@ const createRequest = (url: string, config: ApiConfiguration, credentials: Crede
     });
 }
 
+const convertResponse = (response: Response) => {
+    const contentType = response.headers.get("Content-Type");
+    if (contentType) {
+        if( contentType.startsWith("text/") ) {
+            return response.text()
+        } else if (contentType.indexOf("json") > 0) {
+            return response.json()
+        }
+    }
+    return response.blob()
+        .catch(() => (
+            response.arrayBuffer()
+                .catch(() => (
+                    response.buffer()
+                ))
+        ))
+}
+
 /**
  * Retrieves personal access token and refresh token.
  *
@@ -50,5 +68,5 @@ export default async function invoke(url: string, config: ApiConfiguration, cred
     return fetch(request)
         .then(response => validateAndRefresh(request, response, config, credentialStorage))
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .then(response => response.json() as Promise<any>);
+        .then(convertResponse);
 }

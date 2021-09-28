@@ -38,6 +38,10 @@ const userProfile = {
     email_verified: true
 };
 
+const headers = {
+    "Content-Type": "application/json; charset=UTF-8"
+};
+
 const credentialStorage = mock<CredentialStorage>();
 const paxfulTradeUrl = '/paxful/v1/trade/get';
 const paxfulTradeChatImageDownloadUrl = '/paxful/v1/trade-chat/image';
@@ -73,7 +77,8 @@ async function upload_trade_chat_attachment(image: ReadStream | Buffer) {
         }
     }, {
         status: 200,
-        body: JSON.stringify(expectedAnswer)
+        body: JSON.stringify(expectedAnswer),
+        headers
     }, {
         sendAsJson: false
     });
@@ -99,7 +104,8 @@ describe("With the Paxful API SDK", function () {
                 access_token: expectedTokenAnswer.accessToken,
                 refresh_token: expectedTokenAnswer.refreshToken,
                 expires_in: ttl
-            })
+            }),
+            headers
         }, {
             sendAsJson: false,
         });
@@ -265,7 +271,8 @@ describe("With the Paxful API SDK", function () {
             method: "POST"
         }, {
             status: 200,
-            body: JSON.stringify(expectedTrades)
+            body: JSON.stringify(expectedTrades),
+            headers
         }, {
             sendAsJson: false
         });
@@ -290,7 +297,8 @@ describe("With the Paxful API SDK", function () {
             method: "POST"
         }, {
             status: 200,
-            body: JSON.stringify(expectedTrades)
+            body: JSON.stringify(expectedTrades),
+            headers
         }, {
             sendAsJson: false
         });
@@ -315,7 +323,10 @@ describe("With the Paxful API SDK", function () {
             method: "POST"
         }, {
             status: 200,
-            body: expectedImage
+            body: expectedImage,
+            headers: {
+                "Content-Type": "image/png; charset=UTF-8"
+            }
         }, {
             sendAsJson: false
         });
@@ -351,7 +362,8 @@ describe("With the Paxful API SDK", function () {
             method: "POST"
         }, {
             status: 200,
-            body: JSON.stringify(expectedTrades)
+            body: JSON.stringify(expectedTrades),
+            headers
         }, {
             sendAsJson: false
         });
@@ -435,7 +447,8 @@ describe("With the Paxful API SDK", function () {
             }
         }, {
             status: 200,
-            body: JSON.stringify(expectedTrades)
+            body: JSON.stringify(expectedTrades),
+            headers
         }, {
             sendAsJson: false
         });
