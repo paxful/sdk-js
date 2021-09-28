@@ -1,7 +1,8 @@
 import fetch, { BodyInit, Request, Response } from "node-fetch";
 import { ReadStream } from "fs";
-import queryString from 'query-string';
-import { flatten } from 'q-flat';
+import queryString from "query-string";
+import { flatten } from "q-flat";
+import FormData from "form-data";
 
 import validateAndRefresh from "./RefreshIfNeeded";
 import retrieveImpersonatedCredentials from "./ImpersonateCredentials";
@@ -19,9 +20,13 @@ const createRequest = (url: string, config: ApiConfiguration, credentials: Crede
         "Authorization": `Bearer ${credentials.accessToken}`
     };
     let body: BodyInit | undefined;
-    if (payload && (payload instanceof ReadStream || payload instanceof Buffer)) {
+    if (url.endsWith('/trade-chat/image/upload') && payload) {
         headers["Content-Type"] = "multipart/form-data";
-        body = payload;
+        const form: FormData = new FormData();
+        Object.keys(payload).forEach((key) => {
+            form.append(key, payload[key]);
+        })
+        body = form;
     } else {
         body = queryString.stringify(flatten(payload), { encode:false });
     }

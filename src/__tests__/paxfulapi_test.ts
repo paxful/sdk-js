@@ -54,7 +54,7 @@ function mockCredentialsStorageReturnValue() {
     });
 }
 
-async function upload_trade_chat_attachment(image: ReadStream | Buffer) {
+async function upload_trade_chat_attachment(file: ReadStream | Buffer) {
     credentialStorage.getCredentials.mockReturnValueOnce({
         ...expectedTokenAnswer,
         expiresAt: new Date()
@@ -84,7 +84,10 @@ async function upload_trade_chat_attachment(image: ReadStream | Buffer) {
     });
 
     const paxfulApi = usePaxful(credentials, credentialStorage);
-    const answer = await paxfulApi.invoke(paxfulTradeChatImageUploadUrl, image);
+    const answer = await paxfulApi.invoke(paxfulTradeChatImageUploadUrl, {
+        trade_hash: "random_hash",
+        file
+    });
 
     expect(answer).toMatchObject(expectedAnswer);
 }
