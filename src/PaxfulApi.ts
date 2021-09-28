@@ -1,4 +1,5 @@
 import { Http2ServerResponse } from "http2";
+import { ReadStream } from "fs";
 
 import { Profile, Credentials, CredentialStorage } from "./oauth";
 import { ApiConfiguration } from "./ApiConfiguration";
@@ -62,7 +63,7 @@ export class PaxfulApi {
      * @param payload - (Optional) Payload of the request
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-    public invoke(url: string, payload?: Record<string, unknown> | []): Promise<any> {
+    public invoke(url: string, payload?: Record<string, unknown> | [] | ReadStream | Buffer): Promise<any> {
         return invoke(url, this.apiConfiguration, this.credentialStorage, payload);
     }
 

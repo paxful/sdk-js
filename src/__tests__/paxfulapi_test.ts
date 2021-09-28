@@ -3,6 +3,8 @@ import { v4 as UUID } from "uuid";
 import fetch from "node-fetch";
 import { mock } from "jest-mock-extended";
 import ProxyAgent from "simple-proxy-agent";
+import { createReadStream, readFileSync, ReadStream } from "fs";
+import { resolve } from "path";
 
 import usePaxful from "../";
 import { CredentialStorage } from "../oauth";
@@ -38,13 +40,48 @@ const userProfile = {
 
 const credentialStorage = mock<CredentialStorage>();
 const paxfulTradeUrl = '/paxful/v1/trade/get';
-const paxfulTradeChatImageUrl = '/paxful/v1/trade-chat/image';
+const paxfulTradeChatImageDownloadUrl = '/paxful/v1/trade-chat/image';
+const paxfulTradeChatImageUploadUrl = '/paxful/v1/trade-chat/image/upload';
 
 function mockCredentialsStorageReturnValue() {
     credentialStorage.getCredentials.mockReturnValueOnce({
         ...expectedTokenAnswer,
         expiresAt: new Date()
     });
+}
+
+async function upload_trade_chat_attachment(image: ReadStream | Buffer) {
+    credentialStorage.getCredentials.mockReturnValueOnce({
+        ...expectedTokenAnswer,
+        expiresAt: new Date()
+    });
+
+    const expectedAnswer = {
+        _data: {
+            id: "<id_here>",
+            success: true
+        },
+        status: "success",
+        timestamp: 1455032576
+    };
+
+    (fetch as unknown as FetchMockSandbox).once({
+        url: /https:\/\/api\.paxful\.com\/paxful\/v1\/trade-chat\/image\/upload/,
+        method: "POST",
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+    }, {
+        status: 200,
+        body: JSON.stringify(expectedAnswer)
+    }, {
+        sendAsJson: false
+    });
+
+    const paxfulApi = usePaxful(credentials, credentialStorage);
+    const answer = await paxfulApi.invoke(paxfulTradeChatImageUploadUrl, image);
+
+    expect(answer).toMatchObject(expectedAnswer);
 }
 
 describe("With the Paxful API SDK", function () {
@@ -285,9 +322,20 @@ describe("With the Paxful API SDK", function () {
 
         const paxfulApi = usePaxful(credentials, credentialStorage);
 
-        const image = await paxfulApi.invoke(paxfulTradeChatImageUrl);
+        const image = await paxfulApi.invoke(paxfulTradeChatImageDownloadUrl);
 
         expect(image).toMatchObject(expectedImage);
+    });
+
+    it('I can upload my trade chat images as a ReadStream', async function () {
+        const image = createReadStream(resolve(__dirname, 'paxful.png'));
+
+        await upload_trade_chat_attachment(image);
+    });
+
+    it('I can upload my trade chat files as a Buffer content', async function () {
+        const file = readFileSync(resolve(__dirname, 'paxful.txt'));
+        await upload_trade_chat_attachment(file);
     });
 
     it('I can get my trades using a proxy', async function () {
