@@ -2,8 +2,14 @@ import { Http2ServerResponse } from "http2";
 
 import { Profile, Credentials, CredentialStorage } from "./oauth";
 import { ApiConfiguration } from "./ApiConfiguration";
-import { authorize, retrieveImpersonatedCredentials, retrievePersonalCredentials, getProfile, invoke } from "./commands";
-import { InvokeBody } from "./commands/Invoke";
+import {
+    authorize,
+    retrieveImpersonatedCredentials,
+    retrievePersonalCredentials,
+    getProfile,
+    invoke,
+    InvokeBody
+} from "./commands";
 
 /**
  * Interface responsable for exposing Paxful API integration.
