@@ -9,8 +9,10 @@ import retrieveImpersonatedCredentials from "./ImpersonateCredentials";
 import { Credentials, CredentialStorage } from "../oauth";
 import { ApiConfiguration } from "../ApiConfiguration";
 
+export type InvokeBody = Record<string, unknown> | [] | ReadStream | Buffer;
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-const createRequest = (url: string, config: ApiConfiguration, credentials: Credentials, payload?: Record<string, unknown> | [] | ReadStream | Buffer): Request => {
+const createRequest = (url: string, config: ApiConfiguration, credentials: Credentials, payload?: InvokeBody): Request => {
     const headers = {
         "Accept": "application/json",
         "Content-Type": "application/x-www-form-urlencoded",
@@ -42,7 +44,7 @@ const createRequest = (url: string, config: ApiConfiguration, credentials: Crede
  * @param config
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-export default async function invoke(url: string, config: ApiConfiguration, credentialStorage?: CredentialStorage, payload?: Record<string, unknown> | [] | ReadStream | Buffer): Promise<any> {
+export default async function invoke(url: string, config: ApiConfiguration, credentialStorage?: CredentialStorage, payload?: InvokeBody): Promise<any> {
     const credentials = credentialStorage?.getCredentials() || await retrieveImpersonatedCredentials(config);
     const request = createRequest(url, config, credentials, payload);
     return fetch(request)
