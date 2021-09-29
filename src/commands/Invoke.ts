@@ -21,7 +21,6 @@ const createRequest = (url: string, config: ApiConfiguration, credentials: Crede
     };
     let body: BodyInit | undefined;
     if (url.endsWith('/trade-chat/image/upload') && payload) {
-        headers["Content-Type"] = "multipart/form-data";
         const form: FormData = new FormData();
         Object.keys(payload).forEach((key) => {
             form.append(key, payload[key]);
