@@ -2,7 +2,14 @@ import { Http2ServerResponse } from "http2";
 
 import { Profile, Credentials, CredentialStorage } from "./oauth";
 import { ApiConfiguration } from "./ApiConfiguration";
-import { authorize, retrieveImpersonatedCredentials, retrievePersonalCredentials, getProfile, invoke } from "./commands";
+import {
+    authorize,
+    retrieveImpersonatedCredentials,
+    retrievePersonalCredentials,
+    getProfile,
+    invoke,
+    InvokeBody
+} from "./commands";
 
 /**
  * Interface responsable for exposing Paxful API integration.
@@ -62,7 +69,7 @@ export class PaxfulApi {
      * @param payload - (Optional) Payload of the request
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-    public invoke(url: string, payload?: Record<string, unknown> | []): Promise<any> {
+    public invoke(url: string, payload?: InvokeBody): Promise<any> {
         return invoke(url, this.apiConfiguration, this.credentialStorage, payload);
     }
 
