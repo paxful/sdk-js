@@ -16,7 +16,6 @@ export type InvokeBody = Record<string, unknown> | [] | ReadStream | Buffer;
 const createRequest = (url: string, config: ApiConfiguration, credentials: Credentials, payload?: InvokeBody): Request => {
     const headers = {
         "Accept": "application/json",
-        "Content-Type": "application/x-www-form-urlencoded",
         "Authorization": `Bearer ${credentials.accessToken}`
     };
     let body: BodyInit | undefined;
@@ -27,6 +26,7 @@ const createRequest = (url: string, config: ApiConfiguration, credentials: Crede
         })
         body = form;
     } else {
+        headers["Content-Type"] = "application/x-www-form-urlencoded";
         body = queryString.stringify(flatten(payload), { encode:false });
     }
     return new Request({
