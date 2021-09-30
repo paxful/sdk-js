@@ -2,8 +2,8 @@ import { Http2ServerResponse } from "http2";
 
 import { Profile, Credentials, CredentialStorage } from "./oauth";
 import { ApiConfiguration } from "./ApiConfiguration";
-import { authorize, retrieveImpersonatedCredentials, retrievePersonalCredentials, getProfile, invoke } from "./commands";
-import { RequestBuilder } from "./commands/Invoke";
+import { authorize, retrieveImpersonatedCredentials, retrievePersonalCredentials, getProfile, executeRequestAuthorized } from "./commands";
+import { AnyJson, InvokeBody, RequestBuilder, RequestResponse } from "./commands/Invoke";
 
 /**
  * Interface responsable for exposing Paxful API integration.
@@ -62,8 +62,8 @@ export class PaxfulApi {
      * @param url - Url that should be called at api.paxful.com
      * @param payload - (Optional) Payload of the request
      */
-    public invoke(url: string, payload?: Record<string, unknown> | []): Promise<any> {
-        return invoke((
+    public invoke(url: string, payload?: InvokeBody): RequestResponse {
+        return executeRequestAuthorized((
             new RequestBuilder(`${process.env.PAXFUL_DATA_HOST}${url}`)
                 .acceptJson()
                 .withMethod("POST")
@@ -79,8 +79,8 @@ export class PaxfulApi {
      * @param payload - (Optional) Payload of the request
      * @param method - (Optional) Method to use. Default: POST
      */
-    public upload(url: string, payload: Record<string, unknown> | [], method="POST"): Promise<any> {
-        return invoke((
+    public upload(url: string, payload: InvokeBody, method="POST"): RequestResponse {
+        return executeRequestAuthorized((
             new RequestBuilder(`${process.env.PAXFUL_DATA_HOST}${url}`)
                 .acceptJson()
                 .withMethod(method)
@@ -95,8 +95,8 @@ export class PaxfulApi {
      * @param url - Url that should be called at api.paxful.com
      * @param method - (Optional) Method to use. Default: POST
      */
-    public download(url: string, method="GET"): Promise<any> {
-        return invoke((
+    public download(url: string, method="GET"): RequestResponse {
+        return executeRequestAuthorized((
             new RequestBuilder(`${process.env.PAXFUL_DATA_HOST}${url}`)
                 .acceptBinary()
                 .withMethod(method)
@@ -109,8 +109,8 @@ export class PaxfulApi {
      *
      * @param url - Url that should be called at api.paxful.com
      */
-    public get(url: string): Promise<any> {
-        return invoke((
+    public get(url: string): RequestResponse {
+        return executeRequestAuthorized((
             new RequestBuilder(`${process.env.PAXFUL_DATA_HOST}${url}`)
                 .acceptJson()
                 .withMethod("GET")
@@ -124,7 +124,7 @@ export class PaxfulApi {
      * @param url - Url that should be called at api.paxful.com
      * @param json - (Optional) any json data
      */
-    public post(url: string, json?: Record<string, any>): Promise<any> {
+    public post(url: string, json?: AnyJson): RequestResponse {
         return this.invokeJsonMethod(url,"POST", json)
     }
 
@@ -135,7 +135,7 @@ export class PaxfulApi {
      * @param url - Url that should be called at api.paxful.com
      * @param json - (Optional) any json data
      */
-    public delete(url: string, json?: Record<string, any>): Promise<any> {
+    public delete(url: string, json?: AnyJson): RequestResponse {
         return this.invokeJsonMethod(url,"DELETE", json)
     }
 
@@ -146,7 +146,7 @@ export class PaxfulApi {
      * @param url - Url that should be called at api.paxful.com
      * @param json - (Optional) any json data
      */
-    public put(url: string, json?: Record<string, any>): Promise<any> {
+    public put(url: string, json?: AnyJson): RequestResponse {
         return this.invokeJsonMethod(url,"PUT", json)
     }
 
@@ -157,12 +157,12 @@ export class PaxfulApi {
      * @param url - Url that should be called at api.paxful.com
      * @param json - (Optional) any json data
      */
-    public patch(url: string, json?: Record<string, any>): Promise<any> {
+    public patch(url: string, json?: AnyJson): RequestResponse {
         return this.invokeJsonMethod(url,"PATCH", json)
     }
 
-    protected invokeJsonMethod(url: string, method: string, json?: Record<string, any>): Promise<any> {
-        return invoke((
+    protected invokeJsonMethod(url: string, method: string, json?: AnyJson): RequestResponse {
+        return executeRequestAuthorized((
             new RequestBuilder(`${process.env.PAXFUL_DATA_HOST}${url}`)
                 .acceptJson()
                 .withMethod(method)

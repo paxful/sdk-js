@@ -465,6 +465,6 @@ describe("With the Paxful API SDK", function () {
         const offers = await paxfulApi.invoke('/paxful/v1/offer/all', {
             offer_type: "buy"
         });
-        expect(offers.data.offers.length).toBeGreaterThan(0);
+        expect(offers?.data?.offers.length).toBeGreaterThan(0);
     });
 });

@@ -9,7 +9,16 @@ import queryString from 'query-string';
 import { flatten } from 'q-flat';
 import FormData from "form-data";
 
-export type ResponseParser = (Response) => Promise<any>
+export type AnyJson =  boolean | number | string | null | JsonArray | JsonMap;
+export interface JsonMap {  [key: string]: AnyJson; }
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface JsonArray extends Array<AnyJson> {}
+
+export type InvokeBody = Record<string, unknown> | [];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type RequestResponse = Promise<any>;
+export type ResponseParser = (Response) => RequestResponse
+
 
 export class RequestBuilder {
     private url: string
@@ -50,7 +59,7 @@ export class RequestBuilder {
         return this
     }
 
-    public withJsonData(data?: Record<string, unknown>): RequestBuilder {
+    public withJsonData(data?: AnyJson): RequestBuilder {
         this.withHeader("Content-Type", "application/json")
         this.init.body = JSON.stringify(data || {})
         return this
@@ -91,13 +100,15 @@ export class RequestBuilder {
 }
 
 /**
+ * Executes request with the user credentials applied.
  * Retrieves personal access token and refresh token.
  *
  * @param requestBuilder
  * @param credentialStorage
  * @param config
  */
-export default async function invoke(requestBuilder: RequestBuilder, config: ApiConfiguration, credentialStorage?: CredentialStorage): Promise<any> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default async function executeRequestAuthorized(requestBuilder: RequestBuilder, config: ApiConfiguration, credentialStorage?: CredentialStorage): Promise<any> {
     const credentials = credentialStorage?.getCredentials() || await retrieveImpersonatedCredentials(config);
 
     const [request, transformResponse] = requestBuilder

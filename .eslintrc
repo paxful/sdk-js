@@ -15,7 +15,6 @@
   "rules": {
     "no-console": "error",
     "no-loops/no-loops": "error",
-    "object-curly-spacing": ["error", "always"],
-    "@typescript-eslint/no-explicit-any": "off"
+    "object-curly-spacing": ["error", "always"]
   }
 }
