@@ -54,7 +54,7 @@ function mockCredentialsStorageReturnValue() {
     });
 }
 
-async function upload_trade_chat_attachment(file: ReadStream | Buffer) {
+async function uploadTradeChatAttachment(file: ReadStream | Buffer) {
     credentialStorage.getCredentials.mockReturnValueOnce({
         ...expectedTokenAnswer,
         expiresAt: new Date()
@@ -81,7 +81,7 @@ async function upload_trade_chat_attachment(file: ReadStream | Buffer) {
     });
 
     const paxfulApi = usePaxful(credentials, credentialStorage);
-    const answer = await paxfulApi.invoke(paxfulTradeChatImageUploadUrl, {
+    const answer = await paxfulApi.upload(paxfulTradeChatImageUploadUrl, {
         trade_hash: "random_hash",
         file
     });
@@ -104,8 +104,7 @@ describe("With the Paxful API SDK", function () {
                 access_token: expectedTokenAnswer.accessToken,
                 refresh_token: expectedTokenAnswer.refreshToken,
                 expires_in: ttl
-            }),
-            headers
+            })
         }, {
             sendAsJson: false,
         });
@@ -271,8 +270,7 @@ describe("With the Paxful API SDK", function () {
             method: "POST"
         }, {
             status: 200,
-            body: JSON.stringify(expectedTrades),
-            headers
+            body: JSON.stringify(expectedTrades)
         }, {
             sendAsJson: false
         });
@@ -297,15 +295,14 @@ describe("With the Paxful API SDK", function () {
             method: "POST"
         }, {
             status: 200,
-            body: JSON.stringify(expectedTrades),
-            headers
+            body: JSON.stringify(expectedTrades)
         }, {
             sendAsJson: false
         });
 
         const paxfulApi = usePaxful(credentials, credentialStorage);
 
-        const trades = await paxfulApi.invoke(paxfulTradeUrl);
+        const trades = await paxfulApi.post(paxfulTradeUrl);
 
         expect(trades).toMatchObject(expectedTrades);
     });
@@ -333,7 +330,7 @@ describe("With the Paxful API SDK", function () {
 
         const paxfulApi = usePaxful(credentials, credentialStorage);
 
-        const image = await paxfulApi.invoke(paxfulTradeChatImageDownloadUrl);
+        const image = await paxfulApi.download(paxfulTradeChatImageDownloadUrl);
 
         expect(image).toMatchObject(expectedImage);
     });
@@ -341,12 +338,12 @@ describe("With the Paxful API SDK", function () {
     it('I can upload my trade chat images as a ReadStream', async function () {
         const image = createReadStream(resolve(__dirname, 'paxful.png'));
 
-        await upload_trade_chat_attachment(image);
+        await uploadTradeChatAttachment(image);
     });
 
     it('I can upload my trade chat files as a Buffer content', async function () {
         const file = readFileSync(resolve(__dirname, 'paxful.txt'));
-        await upload_trade_chat_attachment(file);
+        await uploadTradeChatAttachment(file);
     });
 
     it('I can get my trades using a proxy', async function () {
@@ -362,15 +359,14 @@ describe("With the Paxful API SDK", function () {
             method: "POST"
         }, {
             status: 200,
-            body: JSON.stringify(expectedTrades),
-            headers
+            body: JSON.stringify(expectedTrades)
         }, {
             sendAsJson: false
         });
 
         const paxfulApi = usePaxful({ ...credentials, proxyAgent }, credentialStorage);
 
-        const trades = await paxfulApi.invoke(paxfulTradeUrl);
+        const trades = await paxfulApi.post(paxfulTradeUrl);
 
         expect(trades).toMatchObject(expectedTrades);
     });
@@ -447,8 +443,7 @@ describe("With the Paxful API SDK", function () {
             }
         }, {
             status: 200,
-            body: JSON.stringify(expectedTrades),
-            headers
+            body: JSON.stringify(expectedTrades)
         }, {
             sendAsJson: false
         });
