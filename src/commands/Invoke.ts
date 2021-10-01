@@ -8,6 +8,7 @@ import { ApiConfiguration } from "../ApiConfiguration";
 import queryString from 'query-string';
 import { flatten } from 'q-flat';
 import FormData from "form-data";
+import { ReadStream } from "fs";
 
 export type AnyJson =  boolean | number | string | null | JsonArray | JsonMap;
 export interface JsonMap {  [key: string]: AnyJson; }
@@ -19,6 +20,18 @@ export type InvokeBody = Record<string, unknown> | [];
 export type RequestResponse = Promise<any>;
 export type ResponseParser = (Response) => RequestResponse
 
+const CONTENT_TYPE_HEADER = "Content-Type";
+
+export function containsBinary(payload: InvokeBody) : boolean {
+    let isBinary = false;
+    Object.values(payload).map(value => {
+        if (isBinary) return;
+        if (value instanceof Buffer || value instanceof ReadStream) {
+            isBinary = true;
+        }
+    });
+    return isBinary
+}
 
 export class RequestBuilder {
     private url: string
@@ -45,12 +58,18 @@ export class RequestBuilder {
     }
 
     public withFormData(payload?: Record<string, unknown> | []): RequestBuilder {
-        this.withHeader("Content-Type", "application/x-www-form-urlencoded")
+        this.withHeader(CONTENT_TYPE_HEADER, "application/x-www-form-urlencoded")
         this.init.body = queryString.stringify(flatten(payload), { encode: false })
         return this
     }
 
+    public withUrlParams(payload?: Record<string, unknown> | []): RequestBuilder {
+        this.url += "?" + queryString.stringify(flatten(payload), { encode: false })
+        return this
+    }
+
     public withMultipartFormData(payload: Record<string, unknown> | []): RequestBuilder {
+        this.withHeader(CONTENT_TYPE_HEADER, "multipart/form-data")
         const form: FormData = new FormData();
         Object.keys(payload).forEach((key) => {
             form.append(key, payload[key]);
@@ -60,7 +79,7 @@ export class RequestBuilder {
     }
 
     public withJsonData(data?: AnyJson): RequestBuilder {
-        this.withHeader("Content-Type", "application/json")
+        this.withHeader(CONTENT_TYPE_HEADER, "application/json")
         this.init.body = JSON.stringify(data || {})
         return this
     }

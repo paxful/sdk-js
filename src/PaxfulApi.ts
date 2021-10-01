@@ -3,7 +3,7 @@ import { Http2ServerResponse } from "http2";
 import { Profile, Credentials, CredentialStorage } from "./oauth";
 import { ApiConfiguration } from "./ApiConfiguration";
 import { authorize, retrieveImpersonatedCredentials, retrievePersonalCredentials, getProfile, executeRequestAuthorized } from "./commands";
-import { AnyJson, InvokeBody, RequestBuilder, RequestResponse } from "./commands/Invoke";
+import { AnyJson, containsBinary, InvokeBody, RequestBuilder, RequestResponse } from "./commands/Invoke";
 
 /**
  * Interface responsable for exposing Paxful API integration.
@@ -63,12 +63,15 @@ export class PaxfulApi {
      * @param payload - (Optional) Payload of the request
      */
     public invoke(url: string, payload?: InvokeBody): RequestResponse {
-        return executeRequestAuthorized((
-            new RequestBuilder(`${process.env.PAXFUL_DATA_HOST}${url}`)
-                .acceptJson()
-                .withMethod("POST")
-                .withFormData(payload)
-        ), this.apiConfiguration, this.credentialStorage);
+        if (payload && containsBinary(payload)) {
+            return this.upload(url, payload)
+        }
+
+        const requestBuilder = new RequestBuilder(`${process.env.PAXFUL_DATA_HOST}${url}`)
+            .acceptJson()
+            .withMethod("POST")
+            .withFormData(payload);
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
     }
 
     /**
@@ -108,12 +111,14 @@ export class PaxfulApi {
      * Will parse response as json.
      *
      * @param url - Url that should be called at api.paxful.com
+     * @param params - (Optional) url parameters to send
      */
-    public get(url: string): RequestResponse {
+    public get(url: string, params: InvokeBody = {}): RequestResponse {
         return executeRequestAuthorized((
             new RequestBuilder(`${process.env.PAXFUL_DATA_HOST}${url}`)
                 .acceptJson()
                 .withMethod("GET")
+                .withUrlParams(params)
         ), this.apiConfiguration, this.credentialStorage);
     }
 
