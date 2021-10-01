@@ -2,14 +2,8 @@ import { Http2ServerResponse } from "http2";
 
 import { Profile, Credentials, CredentialStorage } from "./oauth";
 import { ApiConfiguration } from "./ApiConfiguration";
-import {
-    authorize,
-    retrieveImpersonatedCredentials,
-    retrievePersonalCredentials,
-    getProfile,
-    invoke,
-    InvokeBody
-} from "./commands";
+import { authorize, retrieveImpersonatedCredentials, retrievePersonalCredentials, getProfile, executeRequestAuthorized } from "./commands";
+import { AnyJson, containsBinary, InvokeBody, RequestBuilder, AnyPromise } from "./commands/Invoke";
 
 /**
  * Interface responsable for exposing Paxful API integration.
@@ -68,9 +62,129 @@ export class PaxfulApi {
      * @param url - Url that should be called at api.paxful.com
      * @param payload - (Optional) Payload of the request
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-    public invoke(url: string, payload?: InvokeBody): Promise<any> {
-        return invoke(url, this.apiConfiguration, this.credentialStorage, payload);
+    public invoke(url: string, payload?: InvokeBody): AnyPromise {
+        if (payload && containsBinary(payload)) {
+            return this.upload(url, payload)
+        }
+
+        const requestBuilder = new RequestBuilder(`${process.env.PAXFUL_DATA_HOST}${url}`)
+            .acceptJson()
+            .withMethod("POST");
+
+        // API expects form data almost always
+        requestBuilder.withHeader("Content-Type", "application/x-www-form-urlencoded")
+
+        if (payload) {
+            requestBuilder.withFormData(payload)
+        }
+
+        // TODO: can be removed when DP-734 is delivered
+        if (url.endsWith('currency/btc')) {
+            requestBuilder.withMethod("GET");
+        }
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Uploads files on behalf of currently authenticated user,
+     * assumes that payload contains multipart form data.
+     *
+     * @param url - Url that should be called at api.paxful.com
+     * @param payload - (Optional) Payload of the request
+     * @param method - (Optional) Method to use. Default: POST
+     */
+    public upload(url: string, payload: InvokeBody, method="POST"): AnyPromise {
+        return executeRequestAuthorized((
+            new RequestBuilder(`${process.env.PAXFUL_DATA_HOST}${url}`)
+                .acceptJson()
+                .withMethod(method)
+                .withMultipartFormData(payload)
+        ), this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Downloads file on behalf of currently authenticated user,
+     * assumes that response will be binary file.
+     *
+     * @param url - Url that should be called at api.paxful.com
+     * @param method - (Optional) Method to use. Default: POST
+     */
+    public download(url: string, method="GET"): AnyPromise {
+        return executeRequestAuthorized((
+            new RequestBuilder(`${process.env.PAXFUL_DATA_HOST}${url}`)
+                .acceptBinary()
+                .withMethod(method)
+        ), this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Invokes a GET API operation on behalf of currently authenticated user.
+     * Will parse response as json.
+     *
+     * @param url - Url that should be called at api.paxful.com
+     * @param params - (Optional) url parameters to send
+     */
+    public get(url: string, params: InvokeBody = {}): AnyPromise {
+        return executeRequestAuthorized((
+            new RequestBuilder(`${process.env.PAXFUL_DATA_HOST}${url}`)
+                .acceptJson()
+                .withMethod("GET")
+                .withUrlParams(params)
+        ), this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Invokes a POST API operation on behalf of currently authenticated user.
+     * Will parse response as json.
+     *
+     * @param url - Url that should be called at api.paxful.com
+     * @param json - (Optional) any json data
+     */
+    public post(url: string, json?: AnyJson): AnyPromise {
+        return this.invokeJsonMethod(url,"POST", json)
+    }
+
+    /**
+     * Invokes a DELETE API operation on behalf of currently authenticated user.
+     * Will parse response as json.
+     *
+     * @param url - Url that should be called at api.paxful.com
+     * @param json - (Optional) any json data
+     */
+    public delete(url: string, json?: AnyJson): AnyPromise {
+        return this.invokeJsonMethod(url,"DELETE", json)
+    }
+
+    /**
+     * Invokes a PUT API operation on behalf of currently authenticated user.
+     * Will parse response as json.
+     *
+     * @param url - Url that should be called at api.paxful.com
+     * @param json - (Optional) any json data
+     */
+    public put(url: string, json?: AnyJson): AnyPromise {
+        return this.invokeJsonMethod(url,"PUT", json)
+    }
+
+    /**
+     * Invokes a PATCH API operation on behalf of currently authenticated user.
+     * Will parse response as json.
+     *
+     * @param url - Url that should be called at api.paxful.com
+     * @param json - (Optional) any json data
+     */
+    public patch(url: string, json?: AnyJson): AnyPromise {
+        return this.invokeJsonMethod(url,"PATCH", json)
+    }
+
+    protected invokeJsonMethod(url: string, method: string, json?: AnyJson): AnyPromise {
+        return executeRequestAuthorized((
+            new RequestBuilder(`${process.env.PAXFUL_DATA_HOST}${url}`)
+                .acceptJson()
+                .withMethod(method)
+                .withJsonData(json)
+        ), this.apiConfiguration, this.credentialStorage);
     }
 
     private validateAndSetDefaultParameters(configuration: ApiConfiguration) {

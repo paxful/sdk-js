@@ -11,6 +11,8 @@ import { CredentialStorage } from "../oauth";
 import { PaxfulApi } from "../PaxfulApi";
 import { FetchMockSandbox } from "fetch-mock";
 
+import FormData from "form-data";
+
 const credentials = {
     clientId: UUID(),
     clientSecret: UUID(),
@@ -54,7 +56,7 @@ function mockCredentialsStorageReturnValue() {
     });
 }
 
-async function upload_trade_chat_attachment(file: ReadStream | Buffer) {
+async function uploadTradeChatAttachment(file: ReadStream | Buffer) {
     credentialStorage.getCredentials.mockReturnValueOnce({
         ...expectedTokenAnswer,
         expiresAt: new Date()
@@ -69,9 +71,12 @@ async function upload_trade_chat_attachment(file: ReadStream | Buffer) {
         timestamp: 1455032576
     };
 
+    const expectedFormData = new FormData()
+    expectedFormData.append('file', file);
+
     (fetch as unknown as FetchMockSandbox).once({
         url: /https:\/\/api\.paxful\.com\/paxful\/v1\/trade-chat\/image\/upload/,
-        method: "POST",
+        method: "POST"
     }, {
         status: 200,
         body: JSON.stringify(expectedAnswer),
@@ -104,8 +109,7 @@ describe("With the Paxful API SDK", function () {
                 access_token: expectedTokenAnswer.accessToken,
                 refresh_token: expectedTokenAnswer.refreshToken,
                 expires_in: ttl
-            }),
-            headers
+            })
         }, {
             sendAsJson: false,
         });
@@ -271,8 +275,7 @@ describe("With the Paxful API SDK", function () {
             method: "POST"
         }, {
             status: 200,
-            body: JSON.stringify(expectedTrades),
-            headers
+            body: JSON.stringify(expectedTrades)
         }, {
             sendAsJson: false
         });
@@ -297,15 +300,14 @@ describe("With the Paxful API SDK", function () {
             method: "POST"
         }, {
             status: 200,
-            body: JSON.stringify(expectedTrades),
-            headers
+            body: JSON.stringify(expectedTrades)
         }, {
             sendAsJson: false
         });
 
         const paxfulApi = usePaxful(credentials, credentialStorage);
 
-        const trades = await paxfulApi.invoke(paxfulTradeUrl);
+        const trades = await paxfulApi.post(paxfulTradeUrl);
 
         expect(trades).toMatchObject(expectedTrades);
     });
@@ -333,7 +335,7 @@ describe("With the Paxful API SDK", function () {
 
         const paxfulApi = usePaxful(credentials, credentialStorage);
 
-        const image = await paxfulApi.invoke(paxfulTradeChatImageDownloadUrl);
+        const image = await paxfulApi.download(paxfulTradeChatImageDownloadUrl);
 
         expect(image).toMatchObject(expectedImage);
     });
@@ -341,12 +343,12 @@ describe("With the Paxful API SDK", function () {
     it('I can upload my trade chat images as a ReadStream', async function () {
         const image = createReadStream(resolve(__dirname, 'paxful.png'));
 
-        await upload_trade_chat_attachment(image);
+        await uploadTradeChatAttachment(image);
     });
 
     it('I can upload my trade chat files as a Buffer content', async function () {
         const file = readFileSync(resolve(__dirname, 'paxful.txt'));
-        await upload_trade_chat_attachment(file);
+        await uploadTradeChatAttachment(file);
     });
 
     it('I can get my trades using a proxy', async function () {
@@ -362,15 +364,14 @@ describe("With the Paxful API SDK", function () {
             method: "POST"
         }, {
             status: 200,
-            body: JSON.stringify(expectedTrades),
-            headers
+            body: JSON.stringify(expectedTrades)
         }, {
             sendAsJson: false
         });
 
         const paxfulApi = usePaxful({ ...credentials, proxyAgent }, credentialStorage);
 
-        const trades = await paxfulApi.invoke(paxfulTradeUrl);
+        const trades = await paxfulApi.post(paxfulTradeUrl);
 
         expect(trades).toMatchObject(expectedTrades);
     });
@@ -447,8 +448,7 @@ describe("With the Paxful API SDK", function () {
             }
         }, {
             status: 200,
-            body: JSON.stringify(expectedTrades),
-            headers
+            body: JSON.stringify(expectedTrades)
         }, {
             sendAsJson: false
         });
@@ -470,6 +470,159 @@ describe("With the Paxful API SDK", function () {
         const offers = await paxfulApi.invoke('/paxful/v1/offer/all', {
             offer_type: "buy"
         });
-        expect(offers.data.offers.length).toBeGreaterThan(0);
+
+        expect(offers?.data?.offers.length).toBeGreaterThan(0);
+    });
+
+    it('I can call make get() request', async function () {
+        (fetch as unknown as FetchMockSandbox).once({
+            url: /https:\/\/api\.paxful\.com\/webhook\/v1\/info/,
+            method: "GET"
+        }, {
+            status: 200,
+            body: JSON.stringify({ some: "info" })
+        });
+
+        credentialStorage.getCredentials.mockReturnValue({
+            ...expectedTokenAnswer,
+            expiresAt: new Date()
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
+
+        const response = await paxfulApi.get("/webhook/v1/info");
+
+        expect(response).toMatchObject({ some: "info" });
+    });
+
+    it('I can call make get() request with params', async function () {
+        (fetch as unknown as FetchMockSandbox).once({
+            url: /https:\/\/api\.paxful\.com\/webhook\/v1\/info/,
+            query: { some: "things" },
+            method: "GET"
+        }, {
+            status: 200,
+            body: JSON.stringify({ some: "info" })
+        });
+
+        credentialStorage.getCredentials.mockReturnValue({
+            ...expectedTokenAnswer,
+            expiresAt: new Date()
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
+
+        const response = await paxfulApi.get("/webhook/v1/info", { some: "things" });
+
+        expect(response).toMatchObject({ some: "info" });
+    });
+
+    it('I can call make post() request', async function () {
+        (fetch as unknown as FetchMockSandbox).once({
+            url: /https:\/\/api\.paxful\.com\/webhook\/v1\/some-post1/,
+            method: "POST",
+            body: { foo: "bar" }
+        }, {
+            status: 200,
+            body: JSON.stringify({ some: "info" })
+        });
+
+        credentialStorage.getCredentials.mockReturnValue({
+            ...expectedTokenAnswer,
+            expiresAt: new Date()
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
+
+        const response = await paxfulApi.post("/webhook/v1/some-post1", { foo: "bar" });
+
+        expect(response).toMatchObject({ some: "info" });
+    });
+
+    it('I can call make delete() request', async function () {
+        (fetch as unknown as FetchMockSandbox).once({
+            url: /https:\/\/api\.paxful\.com\/webhook\/v1\/some-post2/,
+            method: "DELETE",
+            body: { foo: "bar" }
+        }, {
+            status: 200,
+            body: JSON.stringify({ some: "info" })
+        });
+
+        credentialStorage.getCredentials.mockReturnValue({
+            ...expectedTokenAnswer,
+            expiresAt: new Date()
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
+
+        const response = await paxfulApi.delete("/webhook/v1/some-post2", { foo: "bar" });
+
+        expect(response).toMatchObject({ some: "info" });
+    });
+
+    it('I can call make patch() request', async function () {
+        (fetch as unknown as FetchMockSandbox).once({
+            url: /https:\/\/api\.paxful\.com\/webhook\/v1\/some-post3/,
+            method: "PATCH",
+            body: { foo: "bar" }
+        }, {
+            status: 200,
+            body: JSON.stringify({ some: "info" })
+        });
+
+        credentialStorage.getCredentials.mockReturnValue({
+            ...expectedTokenAnswer,
+            expiresAt: new Date()
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
+
+        const response = await paxfulApi.patch("/webhook/v1/some-post3", { foo: "bar" });
+
+        expect(response).toMatchObject({ some: "info" });
+    });
+
+    it('I can call make put() request', async function () {
+        (fetch as unknown as FetchMockSandbox).once({
+            url: /https:\/\/api\.paxful\.com\/webhook\/v1\/some-post4/,
+            method: "PUT",
+            body: { foo: "bar" }
+        }, {
+            status: 200,
+            body: JSON.stringify({ some: "info" })
+        });
+
+        credentialStorage.getCredentials.mockReturnValue({
+            ...expectedTokenAnswer,
+            expiresAt: new Date()
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
+
+        const response = await paxfulApi.put("/webhook/v1/some-post4", { foo: "bar" });
+
+        expect(response).toMatchObject({ some: "info" });
+    });
+
+    it('I can invoke currency/btc and it will use GET instead of post', async function () {
+        (fetch as unknown as FetchMockSandbox).once({
+            url: /https:\/\/api\.paxful\.com\/webhook\/v1\/currency\/btc/,
+            method: "GET"
+        }, {
+            status: 200,
+            body: JSON.stringify({ some: "info" })
+        });
+
+        credentialStorage.getCredentials.mockReturnValue({
+            ...expectedTokenAnswer,
+            expiresAt: new Date()
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
+
+        const response = await paxfulApi.invoke("/webhook/v1/currency/btc");
+
+        expect(response).toMatchObject({ some: "info" });
     });
 });
