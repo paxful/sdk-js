@@ -71,6 +71,9 @@ export class PaxfulApi {
             .acceptJson()
             .withMethod("POST");
 
+        // API expects form data almost always
+        requestBuilder.withHeader("Content-Type", "application/x-www-form-urlencoded")
+
         if (payload) {
             requestBuilder.withFormData(payload)
         }
