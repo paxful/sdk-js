@@ -75,6 +75,7 @@ export class PaxfulApi {
             requestBuilder.withFormData(payload)
         }
 
+        // TODO: can be removed when DP-734 is delivered
         if (url.endsWith('currency/btc')) {
             requestBuilder.withMethod("GET");
         }
