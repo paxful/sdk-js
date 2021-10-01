@@ -69,8 +69,16 @@ export class PaxfulApi {
 
         const requestBuilder = new RequestBuilder(`${process.env.PAXFUL_DATA_HOST}${url}`)
             .acceptJson()
-            .withMethod("POST")
-            .withFormData(payload);
+            .withMethod("POST");
+
+        if (payload) {
+            requestBuilder.withFormData(payload)
+        }
+
+        if (url.endsWith('currency/btc')) {
+            requestBuilder.withMethod("GET");
+        }
+
         return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
     }
 

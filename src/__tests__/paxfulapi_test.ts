@@ -605,4 +605,25 @@ describe("With the Paxful API SDK", function () {
 
         expect(response).toMatchObject({ some: "info" });
     });
+
+    it('I can invoke currency/btc and it will use GET instead of post', async function () {
+        (fetch as unknown as FetchMockSandbox).once({
+            url: /https:\/\/api\.paxful\.com\/webhook\/v1\/currency\/btc/,
+            method: "GET"
+        }, {
+            status: 200,
+            body: JSON.stringify({ some: "info" })
+        });
+
+        credentialStorage.getCredentials.mockReturnValue({
+            ...expectedTokenAnswer,
+            expiresAt: new Date()
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
+
+        const response = await paxfulApi.invoke("/webhook/v1/currency/btc");
+
+        expect(response).toMatchObject({ some: "info" });
+    });
 });
