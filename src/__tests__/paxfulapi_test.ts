@@ -76,8 +76,7 @@ async function uploadTradeChatAttachment(file: ReadStream | Buffer) {
 
     (fetch as unknown as FetchMockSandbox).once({
         url: /https:\/\/api\.paxful\.com\/paxful\/v1\/trade-chat\/image\/upload/,
-        method: "POST",
-        headers: { "Content-Type": "multipart/form-data" }
+        method: "POST"
     }, {
         status: 200,
         body: JSON.stringify(expectedAnswer),

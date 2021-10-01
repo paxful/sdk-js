@@ -70,7 +70,6 @@ export class RequestBuilder {
     }
 
     public withMultipartFormData(payload: InvokeBody): RequestBuilder {
-        this.withHeader(CONTENT_TYPE_HEADER, "multipart/form-data")
         const form: FormData = new FormData();
         Object.keys(payload).forEach((key) => {
             form.append(key, payload[key]);
