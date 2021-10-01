@@ -16,9 +16,10 @@ export interface JsonMap {  [key: string]: AnyJson; }
 export interface JsonArray extends Array<AnyJson> {}
 
 export type InvokeBody = Record<string, unknown> | [];
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type RequestResponse = Promise<any>;
-export type ResponseParser = (Response) => RequestResponse
+export type AnyPromise = Promise<any>
+export type ResponseParser = (Response) => AnyPromise
 
 const CONTENT_TYPE_HEADER = "Content-Type";
 
@@ -57,18 +58,18 @@ export class RequestBuilder {
         return this
     }
 
-    public withFormData(payload?: Record<string, unknown> | []): RequestBuilder {
+    public withFormData(payload?: InvokeBody): RequestBuilder {
         this.withHeader(CONTENT_TYPE_HEADER, "application/x-www-form-urlencoded")
         this.init.body = queryString.stringify(flatten(payload), { encode: false })
         return this
     }
 
-    public withUrlParams(payload?: Record<string, unknown> | []): RequestBuilder {
+    public withUrlParams(payload?: InvokeBody): RequestBuilder {
         this.url += "?" + queryString.stringify(flatten(payload), { encode: false })
         return this
     }
 
-    public withMultipartFormData(payload: Record<string, unknown> | []): RequestBuilder {
+    public withMultipartFormData(payload: InvokeBody): RequestBuilder {
         this.withHeader(CONTENT_TYPE_HEADER, "multipart/form-data")
         const form: FormData = new FormData();
         Object.keys(payload).forEach((key) => {
