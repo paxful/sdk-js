@@ -68,7 +68,6 @@ export class PaxfulApi {
         }
 
         const requestBuilder = new RequestBuilder(`${process.env.PAXFUL_DATA_HOST}${url}`)
-            .acceptJson()
             .withMethod("POST");
 
         // API expects form data almost always
@@ -81,6 +80,13 @@ export class PaxfulApi {
         // TODO: can be removed when DP-734 is delivered
         if (url.endsWith('currency/btc')) {
             requestBuilder.withMethod("GET");
+        }
+
+        // TODO: can be removed when DP-734 is delivered
+        if (url.endsWith('trade-chat/image')) {
+            requestBuilder.acceptBinary();
+        } else {
+            requestBuilder.acceptJson();
         }
 
         return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
@@ -108,14 +114,19 @@ export class PaxfulApi {
      * assumes that response will be binary file.
      *
      * @param url - Url that should be called at api.paxful.com
-     * @param method - (Optional) Method to use. Default: POST
+     * @param payload - (Optional) arguments. Passed as url params in case of GET, or as FormData in case of other methods.
+     * @param method - (Optional) Method to use. Default: GET
      */
-    public download(url: string, method="GET"): AnyPromise {
-        return executeRequestAuthorized((
-            new RequestBuilder(`${process.env.PAXFUL_DATA_HOST}${url}`)
-                .acceptBinary()
-                .withMethod(method)
-        ), this.apiConfiguration, this.credentialStorage);
+    public download(url: string, payload: InvokeBody = {}, method="GET"): AnyPromise {
+        const requestBuilder = new RequestBuilder(`${process.env.PAXFUL_DATA_HOST}${url}`)
+            .acceptBinary()
+            .withMethod(method);
+        if (method === "GET") {
+            requestBuilder.withUrlParams(payload);
+        } else {
+            requestBuilder.withFormData(payload);
+        }
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
     }
 
     /**
