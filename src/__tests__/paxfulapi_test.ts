@@ -335,8 +335,7 @@ describe("With the Paxful API SDK", function () {
 
         const paxfulApi = usePaxful(credentials, credentialStorage);
 
-        const image = await paxfulApi.download(paxfulTradeChatImageDownloadUrl);
-
+        const image = await paxfulApi.invoke(paxfulTradeChatImageDownloadUrl, { image_hash: "zzz" });
         expect(image).toMatchObject(expectedImage);
     });
 
