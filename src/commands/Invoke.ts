@@ -90,23 +90,33 @@ export class RequestBuilder {
     }
 
     public acceptJson(): RequestBuilder {
-        this.responseParser = async response => await response.json()
-        this.withHeader("Accept", `application/json`)
+        this.withHeader("Accept", "application/json");
+        this.responseParser = async response => {
+            const content = await response.text();
+            try {
+                return JSON.parse(content);
+            } catch (e) {
+                throw Error("Can not parse json response: " + content)
+            }
+        }
         return this
     }
 
     public acceptText(): RequestBuilder {
-        this.responseParser = async response => await response.text()
+        this.responseParser = response => response.text()
         return this
     }
 
     public acceptBinary(): RequestBuilder {
-        this.responseParser = async response => {
-            return response.blob()
+        this.responseParser = response => {
+            return response.buffer()
                 .catch(() => (
                     response.arrayBuffer()
                         .catch(() => (
-                            response.buffer()
+                            response.blob()
+                                .catch(() => {
+                                    response.text()
+                                })
                         ))
                 ))
         }
@@ -127,8 +137,13 @@ export class RequestBuilder {
  * @param config
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default async function executeRequestAuthorized(requestBuilder: RequestBuilder, config: ApiConfiguration, credentialStorage?: CredentialStorage): Promise<any> {
-    const credentials = credentialStorage?.getCredentials() || await retrieveImpersonatedCredentials(config);
+export default async function executeRequestAuthorized(requestBuilder: RequestBuilder, config: ApiConfiguration, credentialStorage: CredentialStorage): Promise<any> {
+    let credentials = credentialStorage.getCredentials();
+
+    if (!credentials) {
+         credentials = await retrieveImpersonatedCredentials(config);
+         credentialStorage.saveCredentials(credentials);
+    }
 
     const [request, transformResponse] = requestBuilder
         .withConfig(config)

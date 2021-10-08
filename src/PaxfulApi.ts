@@ -4,6 +4,7 @@ import { Profile, Credentials, CredentialStorage } from "./oauth";
 import { ApiConfiguration } from "./ApiConfiguration";
 import { authorize, retrieveImpersonatedCredentials, retrievePersonalCredentials, getProfile, executeRequestAuthorized } from "./commands";
 import { AnyJson, containsBinary, InvokeBody, RequestBuilder, AnyPromise } from "./commands/Invoke";
+import { InMemoryCredentialStorage } from "./oauth/CredentialStorage";
 
 /**
  * Interface responsable for exposing Paxful API integration.
@@ -12,11 +13,11 @@ import { AnyJson, containsBinary, InvokeBody, RequestBuilder, AnyPromise } from 
 export class PaxfulApi {
 
     private readonly apiConfiguration: ApiConfiguration
-    private readonly credentialStorage?: CredentialStorage
+    private readonly credentialStorage: CredentialStorage
 
     constructor(configuration: ApiConfiguration, credentialStorage?: CredentialStorage) {
         this.apiConfiguration = configuration;
-        this.credentialStorage = credentialStorage;
+        this.credentialStorage = credentialStorage || new InMemoryCredentialStorage();
         this.validateAndSetDefaultParameters(configuration);
     }
 
@@ -52,7 +53,6 @@ export class PaxfulApi {
      * Get current logged user profile.
      */
     public async getProfile(): Promise<Profile> {
-        if(!this.credentialStorage) throw Error("No credentials storage defined.");
         return await getProfile(this.credentialStorage, this.apiConfiguration);
     }
 
@@ -217,9 +217,7 @@ export class PaxfulApi {
     }
 
     private async saveToken(credentialsPromise: Promise<Credentials>): Promise<Credentials> {
-        if(this.credentialStorage) {
-            this.credentialStorage.saveCredentials(await credentialsPromise);
-        }
+        this.credentialStorage.saveCredentials(await credentialsPromise);
         return credentialsPromise;
     }
 }

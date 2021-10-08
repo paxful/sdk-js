@@ -33,25 +33,24 @@ const refreshAccessToken = async (credentials: Credentials, config: ApiConfigura
         }));
 }
 
-const createRequest = async (request: Request, config: ApiConfiguration, credentialStorage?: CredentialStorage): Promise<Request> => {
-    let credentials: Credentials;
-    if(credentialStorage){
-        credentials = credentialStorage.getCredentials()
-        credentials = await refreshAccessToken(credentials, config);
-        credentialStorage.saveCredentials(credentials);
-    } else {
-        credentials = await retrieveImpersonatedCredentials(config);
+const createRequest = async (request: Request, config: ApiConfiguration, credentialStorage: CredentialStorage): Promise<Request> => {
+    let credentials: Credentials|undefined;
+    credentials = credentialStorage.getCredentials()
+    if (!credentials) {
+        throw Error("Misconfiguration: no credentials provided")
     }
+    credentials = await refreshAccessToken(credentials, config);
+    credentialStorage.saveCredentials(credentials);
     request.headers["Authorization"] = `Bearer ${credentials.accessToken}`;
 
     return Promise.resolve(request);
 }
 
-const validateIfTokenIsExpired = async (request: Request, response: Response, config: ApiConfiguration, credentialStorage?: CredentialStorage): Promise<Response> => {
+const validateIfTokenIsExpired = async (request: Request, response: Response, config: ApiConfiguration, credentialStorage: CredentialStorage): Promise<Response> => {
     if (response.status === 401) return await fetch(await createRequest(request, config, credentialStorage));
     return Promise.resolve(response);
 }
 
-export default function validateAndRefresh(request: Request, response: Response, config: ApiConfiguration, credentialStorage?: CredentialStorage): Promise<Response> {
+export default function validateAndRefresh(request: Request, response: Response, config: ApiConfiguration, credentialStorage: CredentialStorage): Promise<Response> {
     return validateIfTokenIsExpired(request, response, config, credentialStorage);
 }

@@ -99,7 +99,7 @@ describe("With the Request Builder", function () {
 
         const response = new Response(Buffer.from(exampleJson));
         const actual = await transform(response);
-        expect(actual.constructor.name).toEqual("Blob")
+        expect(actual.constructor.name).toEqual("Buffer")
     });
 
     it.each`
