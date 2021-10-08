@@ -11,7 +11,7 @@ export class InMemoryCredentialStorage implements CredentialStorage {
 
     constructor() {
         // eslint-disable-next-line no-console
-        console.warn("WARNING: Please don't use InMemoryCredentialStorage in production. ")
+        console.warn("Warning: at the moment PaxfulApi is using an InMemoryCredentialsStorage, meaning if you restart your application then access token you have received will be lost and SDK will need to fetch a new one. As a result your requests will have additional latency added to them. For production use please create and use a proper implementation that would store the access token in a persistence storage (i.e. database). For more details please see /README.md file.")
     }
 
     getCredentials(): Credentials | undefined {

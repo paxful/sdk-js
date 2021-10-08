@@ -13,7 +13,7 @@ import { InMemoryCredentialStorage } from "./oauth/CredentialStorage";
 export class PaxfulApi {
 
     private readonly apiConfiguration: ApiConfiguration
-    private readonly credentialStorage?: CredentialStorage
+    private readonly credentialStorage: CredentialStorage
 
     constructor(configuration: ApiConfiguration, credentialStorage?: CredentialStorage) {
         this.apiConfiguration = configuration;
@@ -53,7 +53,6 @@ export class PaxfulApi {
      * Get current logged user profile.
      */
     public async getProfile(): Promise<Profile> {
-        if(!this.credentialStorage) throw Error("No credentials storage defined.");
         return await getProfile(this.credentialStorage, this.apiConfiguration);
     }
 
@@ -218,9 +217,7 @@ export class PaxfulApi {
     }
 
     private async saveToken(credentialsPromise: Promise<Credentials>): Promise<Credentials> {
-        if(this.credentialStorage) {
-            this.credentialStorage.saveCredentials(await credentialsPromise);
-        }
+        this.credentialStorage.saveCredentials(await credentialsPromise);
         return credentialsPromise;
     }
 }

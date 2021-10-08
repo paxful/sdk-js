@@ -137,12 +137,12 @@ export class RequestBuilder {
  * @param config
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default async function executeRequestAuthorized(requestBuilder: RequestBuilder, config: ApiConfiguration, credentialStorage?: CredentialStorage): Promise<any> {
-    let credentials = credentialStorage?.getCredentials();
+export default async function executeRequestAuthorized(requestBuilder: RequestBuilder, config: ApiConfiguration, credentialStorage: CredentialStorage): Promise<any> {
+    let credentials = credentialStorage.getCredentials();
 
     if (!credentials) {
          credentials = await retrieveImpersonatedCredentials(config);
-         credentialStorage?.saveCredentials(credentials);
+         credentialStorage.saveCredentials(credentials);
     }
 
     const [request, transformResponse] = requestBuilder
