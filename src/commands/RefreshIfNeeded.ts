@@ -34,9 +34,12 @@ const refreshAccessToken = async (credentials: Credentials, config: ApiConfigura
 }
 
 const createRequest = async (request: Request, config: ApiConfiguration, credentialStorage?: CredentialStorage): Promise<Request> => {
-    let credentials: Credentials;
+    let credentials: Credentials|undefined;
     if(credentialStorage){
         credentials = credentialStorage.getCredentials()
+        if (!credentials) {
+            throw Error("Misconfiguration: no credentials provided")
+        }
         credentials = await refreshAccessToken(credentials, config);
         credentialStorage.saveCredentials(credentials);
     } else {

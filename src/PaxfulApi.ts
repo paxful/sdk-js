@@ -4,6 +4,7 @@ import { Profile, Credentials, CredentialStorage } from "./oauth";
 import { ApiConfiguration } from "./ApiConfiguration";
 import { authorize, retrieveImpersonatedCredentials, retrievePersonalCredentials, getProfile, executeRequestAuthorized } from "./commands";
 import { AnyJson, containsBinary, InvokeBody, RequestBuilder, AnyPromise } from "./commands/Invoke";
+import { InMemoryCredentialStorage } from "./oauth/CredentialStorage";
 
 /**
  * Interface responsable for exposing Paxful API integration.
@@ -16,7 +17,7 @@ export class PaxfulApi {
 
     constructor(configuration: ApiConfiguration, credentialStorage?: CredentialStorage) {
         this.apiConfiguration = configuration;
-        this.credentialStorage = credentialStorage;
+        this.credentialStorage = credentialStorage || new InMemoryCredentialStorage();
         this.validateAndSetDefaultParameters(configuration);
     }
 
