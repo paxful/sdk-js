@@ -12,6 +12,7 @@ import { PaxfulApi } from "../PaxfulApi";
 import { FetchMockSandbox } from "fetch-mock";
 
 import FormData from "form-data";
+import { InMemoryCredentialStorage } from "../oauth/CredentialStorage";
 
 const credentials = {
     clientId: UUID(),
@@ -623,5 +624,11 @@ describe("With the Paxful API SDK", function () {
         const response = await paxfulApi.invoke("/webhook/v1/currency/btc");
 
         expect(response).toMatchObject({ some: "info" });
+    });
+
+    it('Default Credentials Store is InMemoryStore()', async function () {
+        const paxfulApi = usePaxful({ ...credentials, proxyAgent });
+
+        expect(paxfulApi['credentialStorage']).toBeInstanceOf(InMemoryCredentialStorage);
     });
 });

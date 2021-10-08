@@ -1,4 +1,4 @@
-import {Credentials} from "./Credentials";
+import { Credentials } from "./Credentials";
 
 export declare interface CredentialStorage {
     getCredentials(): Credentials | undefined;
