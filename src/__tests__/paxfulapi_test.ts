@@ -288,6 +288,25 @@ describe("With the Paxful API SDK", function () {
         expect(trades).toMatchObject(expectedTrades);
     });
 
+    it('I can see an error if response is not a valid json', async function () {
+        process.env.PAXFUL_DATA_HOST = "";
+
+        mockCredentialsStorageReturnValue();
+
+        (fetch as unknown as FetchMockSandbox).once({
+            url: /https:\/\/api\.paxful\.com\/paxful\/v1\/trade\/get/,
+            method: "POST"
+        }, {
+            status: 200,
+            body: "Some lalala"
+        }, {
+            sendAsJson: false
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
+        expect(paxfulApi.invoke(paxfulTradeUrl)).rejects.toThrow(Error);
+    });
+
     it('I can get my trades', async function () {
         credentialStorage.getCredentials.mockReturnValueOnce({
             ...expectedTokenAnswer,

@@ -9,6 +9,11 @@ export declare interface CredentialStorage {
 export class InMemoryCredentialStorage implements CredentialStorage {
     private credentials?: Credentials;
 
+    constructor() {
+        // eslint-disable-next-line no-console
+        console.warn("WARNING: Please don't use InMemoryCredentialStorage in production. ")
+    }
+
     getCredentials(): Credentials | undefined {
         return this.credentials;
     }
@@ -16,5 +21,4 @@ export class InMemoryCredentialStorage implements CredentialStorage {
     saveCredentials(credentials: Credentials): Credentials {
         return this.credentials = credentials;
     }
-
 }

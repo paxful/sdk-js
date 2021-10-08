@@ -90,23 +90,33 @@ export class RequestBuilder {
     }
 
     public acceptJson(): RequestBuilder {
-        this.responseParser = async response => await response.json()
-        this.withHeader("Accept", `application/json`)
+        this.withHeader("Accept", "application/json");
+        this.responseParser = async response => {
+            const content = await response.text();
+            try {
+                return JSON.parse(content);
+            } catch (e) {
+                throw Error("Can not parse json response: " + content)
+            }
+        }
         return this
     }
 
     public acceptText(): RequestBuilder {
-        this.responseParser = async response => await response.text()
+        this.responseParser = response => response.text()
         return this
     }
 
     public acceptBinary(): RequestBuilder {
-        this.responseParser = async response => {
-            return response.blob()
+        this.responseParser = response => {
+            return response.buffer()
                 .catch(() => (
                     response.arrayBuffer()
                         .catch(() => (
-                            response.buffer()
+                            response.blob()
+                                .catch(() => {
+                                    response.text()
+                                })
                         ))
                 ))
         }
