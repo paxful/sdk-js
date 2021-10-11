@@ -38,11 +38,11 @@
     "ts-jest": "^26.5.4",
     "ts-node": "^9.1.1",
     "typedoc": "^0.20.34",
+    "fetch-mock-jest": "^1.5.1",
     "typescript": "^4.2.3"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
-    "fetch-mock-jest": "^1.5.1",
     "form-data": "^4.0.0",
     "node-fetch": "^2.6.1",
     "q-flat": "^1.0.7",
