@@ -26,15 +26,6 @@ const credentialStorage = mock<CredentialStorage>();
 describe("With the Paxful API SDK", function () {
     beforeEach(() => fetchMock.reset());
 
-    // it('I can get a impersonated access token and refresh token', async function () {
-    //     const paxfulApi = usePaxful(credentials);
-    //
-    //     const response = await paxfulApi.impersonatedCredentials(UUID());
-    //
-    //     expect(response).toMatchObject(expectedTokenAnswer);
-    // });
-
-
     it("Client credentials reset flow", async () => {
         fetchMock.once({
             url: /oauth2\/userinfo/,
