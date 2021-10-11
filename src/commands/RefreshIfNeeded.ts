@@ -33,21 +33,28 @@ const refreshAccessToken = async (credentials: Credentials, config: ApiConfigura
         }));
 }
 
-const createRequest = async (request: Request, config: ApiConfiguration, credentialStorage: CredentialStorage): Promise<Request> => {
+const createRefreshRequest = async (request: Request, config: ApiConfiguration, credentialStorage: CredentialStorage): Promise<Request> => {
     let credentials: Credentials|undefined;
     credentials = credentialStorage.getCredentials()
     if (!credentials) {
         throw Error("Misconfiguration: no credentials provided")
     }
-    credentials = await refreshAccessToken(credentials, config);
+
+    if (credentials.refreshToken) {
+        credentials = await refreshAccessToken(credentials, config);
+    } else {
+        credentials = await retrieveImpersonatedCredentials(config);
+    }
+
     credentialStorage.saveCredentials(credentials);
+
     request.headers["Authorization"] = `Bearer ${credentials.accessToken}`;
 
     return Promise.resolve(request);
 }
 
 const validateIfTokenIsExpired = async (request: Request, response: Response, config: ApiConfiguration, credentialStorage: CredentialStorage): Promise<Response> => {
-    if (response.status === 401) return await fetch(await createRequest(request, config, credentialStorage));
+    if (response.status === 401) return await fetch(await createRefreshRequest(request, config, credentialStorage));
     return Promise.resolve(response);
 }
 
