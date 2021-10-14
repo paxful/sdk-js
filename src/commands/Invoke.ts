@@ -36,11 +36,14 @@ export function containsBinary(payload: InvokeBody) : boolean {
 
 export class RequestBuilder {
     private url: string
-    private init: RequestInit = {};
+    private readonly init: RequestInit = {};
     private responseParser: ResponseParser = async (response: Response) => response
 
-    constructor(url: string) {
+    constructor(url: string, initialConfig?: RequestInit) {
         this.url = url;
+        if (initialConfig) {
+            this.init = initialConfig;
+        }
     }
 
     public withMethod(method: string): RequestBuilder {

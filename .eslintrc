@@ -13,6 +13,7 @@
     "plugin:radar/recommended"
   ],
   "rules": {
+    "@typescript-eslint/no-namespace": "off",
     "no-console": "error",
     "no-loops/no-loops": "error",
     "object-curly-spacing": ["error", "always"]
