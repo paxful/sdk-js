@@ -5651,6 +5651,21 @@ export const CurrencyApiFetchParamCreator = {
     },
 };
 
+export type CurrencyApiCryptoListParams = {
+}
+
+export type CurrencyApiCurrencyBtcParams = {
+    response?: string;
+}
+
+export type CurrencyApiCurrencyListParams = {
+    locale?: string;
+}
+
+export type CurrencyApiCurrencyRatesParams = {
+}
+
+
 /**
  * CurrencyApi
  * @export
@@ -5661,11 +5676,12 @@ export class CurrencyApi extends BaseAPI {
     /**
      * Fetch allowed cryptocurrency list. Authentication is optional.
      * @summary crypto/list
+     * @param { CurrencyApiCryptoListParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CurrencyApi
      */
-    public cryptoList(options?: any): Promise<InlineResponse2008> {
+    public cryptoList(params: CurrencyApiCryptoListParams, options?: any): Promise<InlineResponse2008> {
         const localVarFetchArgs = CurrencyApiFetchParamCreator.cryptoList(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -5676,13 +5692,13 @@ export class CurrencyApi extends BaseAPI {
     /**
      * Return bitcoin price in US Dollars. The given price is used as indicative price of bitcoin on      the marketplace. Bitcoin price is being updated every 3 minutes. Authentication is optional.
      * @summary currency/btc
-     * @param {string} [response] 
+     * @param { CurrencyApiCurrencyBtcParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CurrencyApi
      */
-    public currencyBtc(response?: string, options?: any): Promise<CurrencyBtcResponse> {
-        const localVarFetchArgs = CurrencyApiFetchParamCreator.currencyBtc(response, options);
+    public currencyBtc(params: CurrencyApiCurrencyBtcParams, options?: any): Promise<CurrencyBtcResponse> {
+        const localVarFetchArgs = CurrencyApiFetchParamCreator.currencyBtc(params.response, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -5692,13 +5708,13 @@ export class CurrencyApi extends BaseAPI {
     /**
      * Fetch all marketplace supported fiat currencies and their corresponding rates in crypto and USD.      Authentication is optional.
      * @summary currency/list
-     * @param {string} [locale] 
+     * @param { CurrencyApiCurrencyListParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CurrencyApi
      */
-    public currencyList(locale?: string, options?: any): Promise<InlineResponse20013> {
-        const localVarFetchArgs = CurrencyApiFetchParamCreator.currencyList(locale, options);
+    public currencyList(params: CurrencyApiCurrencyListParams, options?: any): Promise<InlineResponse20013> {
+        const localVarFetchArgs = CurrencyApiFetchParamCreator.currencyList(params.locale, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -5708,11 +5724,12 @@ export class CurrencyApi extends BaseAPI {
     /**
      * Fetch all marketplace supported fiat currencies and their rates in USD and BTC.      Authentication is optional. Deprecated, use currency/list instead.
      * @summary currency/rates
+     * @param { CurrencyApiCurrencyRatesParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CurrencyApi
      */
-    public currencyRates(options?: any): Promise<CurrencyRatesResponse> {
+    public currencyRates(params: CurrencyApiCurrencyRatesParams, options?: any): Promise<CurrencyRatesResponse> {
         const localVarFetchArgs = CurrencyApiFetchParamCreator.currencyRates(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -5882,6 +5899,26 @@ export const FeedbackApiFetchParamCreator = {
     },
 };
 
+export type FeedbackApiFeedbackGiveParams = {
+    rating: number;
+    message: string;
+    tradeHash: string;
+}
+
+export type FeedbackApiFeedbackListParams = {
+    page?: number;
+    role?: string;
+    rating?: number;
+    username?: string;
+    offerHash?: string;
+}
+
+export type FeedbackApiFeedbackReplyParams = {
+    message: string;
+    tradeHash: string;
+}
+
+
 /**
  * FeedbackApi
  * @export
@@ -5892,15 +5929,13 @@ export class FeedbackApi extends BaseAPI {
     /**
      * Give a feedback for a trade.             NB! Message should be encoded as required per RFC 3986 (i.e. spaces should look like %20).
      * @summary feedback/give
-     * @param {number} rating 
-     * @param {string} message 
-     * @param {string} tradeHash 
+     * @param { FeedbackApiFeedbackGiveParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FeedbackApi
      */
-    public feedbackGive(rating: number, message: string, tradeHash: string, options?: any): Promise<SuccessTrueResponse> {
-        const localVarFetchArgs = FeedbackApiFetchParamCreator.feedbackGive(rating, message, tradeHash, options);
+    public feedbackGive(params: FeedbackApiFeedbackGiveParams, options?: any): Promise<SuccessTrueResponse> {
+        const localVarFetchArgs = FeedbackApiFetchParamCreator.feedbackGive(params.rating, params.message, params.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -5910,17 +5945,13 @@ export class FeedbackApi extends BaseAPI {
     /**
      * Fetch all feedback either for a user or an offer. Latest feedback is returned first.
      * @summary feedback/list
-     * @param {number} [page] 
-     * @param {string} [role] 
-     * @param {number} [rating] 
-     * @param {string} [username] 
-     * @param {string} [offerHash] 
+     * @param { FeedbackApiFeedbackListParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FeedbackApi
      */
-    public feedbackList(page?: number, role?: string, rating?: number, username?: string, offerHash?: string, options?: any): Promise<InlineResponse20014> {
-        const localVarFetchArgs = FeedbackApiFetchParamCreator.feedbackList(page, role, rating, username, offerHash, options);
+    public feedbackList(params: FeedbackApiFeedbackListParams, options?: any): Promise<InlineResponse20014> {
+        const localVarFetchArgs = FeedbackApiFetchParamCreator.feedbackList(params.page, params.role, params.rating, params.username, params.offerHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -5930,14 +5961,13 @@ export class FeedbackApi extends BaseAPI {
     /**
      * Reply to feedback.
      * @summary feedback/reply
-     * @param {string} message 
-     * @param {string} tradeHash 
+     * @param { FeedbackApiFeedbackReplyParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FeedbackApi
      */
-    public feedbackReply(message: string, tradeHash: string, options?: any): Promise<SuccessResponse> {
-        const localVarFetchArgs = FeedbackApiFetchParamCreator.feedbackReply(message, tradeHash, options);
+    public feedbackReply(params: FeedbackApiFeedbackReplyParams, options?: any): Promise<SuccessResponse> {
+        const localVarFetchArgs = FeedbackApiFetchParamCreator.feedbackReply(params.message, params.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -5985,6 +6015,11 @@ export const KioskApiFetchParamCreator = {
     },
 };
 
+export type KioskApiKioskTransactionsParams = {
+    page?: number;
+}
+
+
 /**
  * KioskApi
  * @export
@@ -5995,13 +6030,13 @@ export class KioskApi extends BaseAPI {
     /**
      * Fetch a list of your Kiosk affiliate transactions. Two types of transactions returned:     commissions you have earned when people trade through your Kiosk,     transfers between affiliate wallet and main wallet.
      * @summary kiosk/transactions
-     * @param {number} [page] 
+     * @param { KioskApiKioskTransactionsParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KioskApi
      */
-    public kioskTransactions(page?: number, options?: any): Promise<InlineResponse20027> {
-        const localVarFetchArgs = KioskApiFetchParamCreator.kioskTransactions(page, options);
+    public kioskTransactions(params: KioskApiKioskTransactionsParams, options?: any): Promise<InlineResponse20027> {
+        const localVarFetchArgs = KioskApiFetchParamCreator.kioskTransactions(params.page, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -6102,6 +6137,18 @@ export const NotificationsApiFetchParamCreator = {
     },
 };
 
+export type NotificationsApiNotificationsListParams = {
+    page?: number;
+    isRead?: boolean;
+}
+
+export type NotificationsApiNotificationsMarkReadParams = {
+}
+
+export type NotificationsApiNotificationsUnreadCountParams = {
+}
+
+
 /**
  * NotificationsApi
  * @export
@@ -6112,14 +6159,13 @@ export class NotificationsApi extends BaseAPI {
     /**
      * Fetch user's notifications, ordered by creation date (latest at the top).
      * @summary notifications/list
-     * @param {number} [page] 
-     * @param {boolean} [isRead] 
+     * @param { NotificationsApiNotificationsListParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof NotificationsApi
      */
-    public notificationsList(page?: number, isRead?: boolean, options?: any): Promise<InlineResponse20028> {
-        const localVarFetchArgs = NotificationsApiFetchParamCreator.notificationsList(page, isRead, options);
+    public notificationsList(params: NotificationsApiNotificationsListParams, options?: any): Promise<InlineResponse20028> {
+        const localVarFetchArgs = NotificationsApiFetchParamCreator.notificationsList(params.page, params.isRead, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -6129,11 +6175,12 @@ export class NotificationsApi extends BaseAPI {
     /**
      * Mark all unread notifications as read.
      * @summary notifications/mark-read
+     * @param { NotificationsApiNotificationsMarkReadParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof NotificationsApi
      */
-    public notificationsMarkRead(options?: any): Promise<SuccessResponse> {
+    public notificationsMarkRead(params: NotificationsApiNotificationsMarkReadParams, options?: any): Promise<SuccessResponse> {
         const localVarFetchArgs = NotificationsApiFetchParamCreator.notificationsMarkRead(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -6144,11 +6191,12 @@ export class NotificationsApi extends BaseAPI {
     /**
      * Fetch the number of unread notifications.
      * @summary notifications/unread-count
+     * @param { NotificationsApiNotificationsUnreadCountParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof NotificationsApi
      */
-    public notificationsUnreadCount(options?: any): Promise<InlineResponse20034> {
+    public notificationsUnreadCount(params: NotificationsApiNotificationsUnreadCountParams, options?: any): Promise<InlineResponse20034> {
         const localVarFetchArgs = NotificationsApiFetchParamCreator.notificationsUnreadCount(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -7188,6 +7236,120 @@ export const OfferApiFetchParamCreator = {
     },
 };
 
+export type OfferApiOfferActivateParams = {
+    offerHash: string;
+}
+
+export type OfferApiOfferAllParams = {
+    type: string;
+    group: string;
+    limit: number;
+    offset: number;
+    fiatMin: number;
+    geonameId: number;
+    marginMax: number;
+    marginMin: number;
+    offerType: string;
+    userTypes: string;
+    locationId: number;
+    userCountry: string;
+    currencyCode: string;
+    paymentMethod: string;
+    fiatAmountMax: number;
+    fiatAmountMin: number;
+    cryptoCurrencyCode: string;
+    fiatFixedPriceMax: number;
+    fiatFixedPriceMin: number;
+}
+
+export type OfferApiOfferCreateParams = {
+    tags: string;
+    margin: number;
+    currency: string;
+    rangeMax: number;
+    rangeMin: number;
+    fixedPrice: number;
+    locationId: number;
+    offerTerms: string;
+    tradeDetails: string;
+    isFixedPrice: boolean;
+    paymentMethod: string;
+    paymentWindow: number;
+    cryptoCurrency: string;
+    paymentCountry: string;
+    offerTypeField: string;
+    predefinedAmount: string;
+    paymentMethodGroup: string;
+    paymentMethodLabel: string;
+    showOnlyTrustedUser: boolean;
+    countryLimitationList: string;
+    countryLimitationType: string;
+    requireMinPastTrades: number;
+}
+
+export type OfferApiOfferDeactivateParams = {
+    offerHash: string;
+}
+
+export type OfferApiOfferDeleteParams = {
+    offerHash: string;
+}
+
+export type OfferApiOfferGetParams = {
+    offerHash: string;
+}
+
+export type OfferApiOfferListParams = {
+    active: boolean;
+    offerType: string;
+}
+
+export type OfferApiOfferPriceParams = {
+    offerHash: string;
+}
+
+export type OfferApiOfferPricesParams = {
+    paymentMethod: string;
+}
+
+export type OfferApiOfferTurnOffParams = {
+}
+
+export type OfferApiOfferTurnOnParams = {
+}
+
+export type OfferApiOfferUpdateParams = {
+    tags: string;
+    margin: number;
+    currency: string;
+    offerCap: OfferUpdateRequestBodyOfferCap;
+    rangeMax: number;
+    rangeMin: number;
+    dutyHours: Array<OfferDutyHours>;
+    offerHash: string;
+    fixedPrice: number;
+    locationId: number;
+    offerTerms: string;
+    tradeDetails: string;
+    paymentMethod: string;
+    paymentWindow: number;
+    paymentCountry: string;
+    predefinedAmount: string;
+    paymentMethodGroup: string;
+    paymentMethodLabel: string;
+    showOnlyTrustedUser: boolean;
+    countryLimitationList: string;
+    countryLimitationType: string;
+    requireMinPastTrades: boolean;
+}
+
+export type OfferApiOfferUpdatePriceParams = {
+    margin: number;
+    offerHash: string;
+    fixedPrice: number;
+}
+
+
 /**
  * OfferApi
  * @export
@@ -7198,13 +7360,13 @@ export class OfferApi extends BaseAPI {
     /**
      * Activate an offer.
      * @summary offer/activate
-     * @param {string} offerHash 
+     * @param { OfferApiOfferActivateParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OfferApi
      */
-    public offerActivate(offerHash: string, options?: any): Promise<SuccessTrueResponse> {
-        const localVarFetchArgs = OfferApiFetchParamCreator.offerActivate(offerHash, options);
+    public offerActivate(params: OfferApiOfferActivateParams, options?: any): Promise<SuccessTrueResponse> {
+        const localVarFetchArgs = OfferApiFetchParamCreator.offerActivate(params.offerHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -7214,31 +7376,13 @@ export class OfferApi extends BaseAPI {
     /**
      * Fetch offers. Authentication is optional         (replaces deprecated method of /buy-bitcoin?format=json, results are cached for 1 minute).
      * @summary offer/all
-     * @param {string} type 
-     * @param {string} group 
-     * @param {number} limit 
-     * @param {number} offset 
-     * @param {number} fiatMin 
-     * @param {number} geonameId 
-     * @param {number} marginMax 
-     * @param {number} marginMin 
-     * @param {string} offerType 
-     * @param {string} userTypes 
-     * @param {number} locationId 
-     * @param {string} userCountry 
-     * @param {string} currencyCode 
-     * @param {string} paymentMethod 
-     * @param {number} fiatAmountMax 
-     * @param {number} fiatAmountMin 
-     * @param {string} cryptoCurrencyCode 
-     * @param {number} fiatFixedPriceMax 
-     * @param {number} fiatFixedPriceMin 
+     * @param { OfferApiOfferAllParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OfferApi
      */
-    public offerAll(type: string, group: string, limit: number, offset: number, fiatMin: number, geonameId: number, marginMax: number, marginMin: number, offerType: string, userTypes: string, locationId: number, userCountry: string, currencyCode: string, paymentMethod: string, fiatAmountMax: number, fiatAmountMin: number, cryptoCurrencyCode: string, fiatFixedPriceMax: number, fiatFixedPriceMin: number, options?: any): Promise<InlineResponse2001> {
-        const localVarFetchArgs = OfferApiFetchParamCreator.offerAll(type, group, limit, offset, fiatMin, geonameId, marginMax, marginMin, offerType, userTypes, locationId, userCountry, currencyCode, paymentMethod, fiatAmountMax, fiatAmountMin, cryptoCurrencyCode, fiatFixedPriceMax, fiatFixedPriceMin, options);
+    public offerAll(params: OfferApiOfferAllParams, options?: any): Promise<InlineResponse2001> {
+        const localVarFetchArgs = OfferApiFetchParamCreator.offerAll(params.type, params.group, params.limit, params.offset, params.fiatMin, params.geonameId, params.marginMax, params.marginMin, params.offerType, params.userTypes, params.locationId, params.userCountry, params.currencyCode, params.paymentMethod, params.fiatAmountMax, params.fiatAmountMin, params.cryptoCurrencyCode, params.fiatFixedPriceMax, params.fiatFixedPriceMin, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -7248,34 +7392,13 @@ export class OfferApi extends BaseAPI {
     /**
      * Create an offer.
      * @summary offer/create
-     * @param {string} tags 
-     * @param {number} margin 
-     * @param {string} currency 
-     * @param {number} rangeMax 
-     * @param {number} rangeMin 
-     * @param {number} fixedPrice 
-     * @param {number} locationId 
-     * @param {string} offerTerms 
-     * @param {string} tradeDetails 
-     * @param {boolean} isFixedPrice 
-     * @param {string} paymentMethod 
-     * @param {number} paymentWindow 
-     * @param {string} cryptoCurrency 
-     * @param {string} paymentCountry 
-     * @param {string} offerTypeField 
-     * @param {string} predefinedAmount 
-     * @param {string} paymentMethodGroup 
-     * @param {string} paymentMethodLabel 
-     * @param {boolean} showOnlyTrustedUser 
-     * @param {string} countryLimitationList 
-     * @param {string} countryLimitationType 
-     * @param {number} requireMinPastTrades 
+     * @param { OfferApiOfferCreateParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OfferApi
      */
-    public offerCreate(tags: string, margin: number, currency: string, rangeMax: number, rangeMin: number, fixedPrice: number, locationId: number, offerTerms: string, tradeDetails: string, isFixedPrice: boolean, paymentMethod: string, paymentWindow: number, cryptoCurrency: string, paymentCountry: string, offerTypeField: string, predefinedAmount: string, paymentMethodGroup: string, paymentMethodLabel: string, showOnlyTrustedUser: boolean, countryLimitationList: string, countryLimitationType: string, requireMinPastTrades: number, options?: any): Promise<InlineResponse20011> {
-        const localVarFetchArgs = OfferApiFetchParamCreator.offerCreate(tags, margin, currency, rangeMax, rangeMin, fixedPrice, locationId, offerTerms, tradeDetails, isFixedPrice, paymentMethod, paymentWindow, cryptoCurrency, paymentCountry, offerTypeField, predefinedAmount, paymentMethodGroup, paymentMethodLabel, showOnlyTrustedUser, countryLimitationList, countryLimitationType, requireMinPastTrades, options);
+    public offerCreate(params: OfferApiOfferCreateParams, options?: any): Promise<InlineResponse20011> {
+        const localVarFetchArgs = OfferApiFetchParamCreator.offerCreate(params.tags, params.margin, params.currency, params.rangeMax, params.rangeMin, params.fixedPrice, params.locationId, params.offerTerms, params.tradeDetails, params.isFixedPrice, params.paymentMethod, params.paymentWindow, params.cryptoCurrency, params.paymentCountry, params.offerTypeField, params.predefinedAmount, params.paymentMethodGroup, params.paymentMethodLabel, params.showOnlyTrustedUser, params.countryLimitationList, params.countryLimitationType, params.requireMinPastTrades, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -7285,13 +7408,13 @@ export class OfferApi extends BaseAPI {
     /**
      * Deactivate an offer.
      * @summary offer/deactivate
-     * @param {string} offerHash 
+     * @param { OfferApiOfferDeactivateParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OfferApi
      */
-    public offerDeactivate(offerHash: string, options?: any): Promise<SuccessTrueResponse> {
-        const localVarFetchArgs = OfferApiFetchParamCreator.offerDeactivate(offerHash, options);
+    public offerDeactivate(params: OfferApiOfferDeactivateParams, options?: any): Promise<SuccessTrueResponse> {
+        const localVarFetchArgs = OfferApiFetchParamCreator.offerDeactivate(params.offerHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -7301,13 +7424,13 @@ export class OfferApi extends BaseAPI {
     /**
      * Delete an offer.
      * @summary offer/delete
-     * @param {string} offerHash 
+     * @param { OfferApiOfferDeleteParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OfferApi
      */
-    public offerDelete(offerHash: string, options?: any): Promise<SuccessTrueResponse> {
-        const localVarFetchArgs = OfferApiFetchParamCreator.offerDelete(offerHash, options);
+    public offerDelete(params: OfferApiOfferDeleteParams, options?: any): Promise<SuccessTrueResponse> {
+        const localVarFetchArgs = OfferApiFetchParamCreator.offerDelete(params.offerHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -7317,13 +7440,13 @@ export class OfferApi extends BaseAPI {
     /**
      * Fetch information for an offer.
      * @summary offer/get
-     * @param {string} offerHash 
+     * @param { OfferApiOfferGetParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OfferApi
      */
-    public offerGet(offerHash: string, options?: any): Promise<InlineResponse2002> {
-        const localVarFetchArgs = OfferApiFetchParamCreator.offerGet(offerHash, options);
+    public offerGet(params: OfferApiOfferGetParams, options?: any): Promise<InlineResponse2002> {
+        const localVarFetchArgs = OfferApiFetchParamCreator.offerGet(params.offerHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -7333,14 +7456,13 @@ export class OfferApi extends BaseAPI {
     /**
      * Return all your offers.
      * @summary offer/list
-     * @param {boolean} active 
-     * @param {string} offerType 
+     * @param { OfferApiOfferListParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OfferApi
      */
-    public offerList(active: boolean, offerType: string, options?: any): Promise<InlineResponse2005> {
-        const localVarFetchArgs = OfferApiFetchParamCreator.offerList(active, offerType, options);
+    public offerList(params: OfferApiOfferListParams, options?: any): Promise<InlineResponse2005> {
+        const localVarFetchArgs = OfferApiFetchParamCreator.offerList(params.active, params.offerType, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -7350,13 +7472,13 @@ export class OfferApi extends BaseAPI {
     /**
      * Return a price for an offer         (if offer happens to be in fiat currency other than USD, then it will be recalculated to it).
      * @summary offer/price
-     * @param {string} offerHash 
+     * @param { OfferApiOfferPriceParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OfferApi
      */
-    public offerPrice(offerHash: string, options?: any): Promise<InlineResponse2009> {
-        const localVarFetchArgs = OfferApiFetchParamCreator.offerPrice(offerHash, options);
+    public offerPrice(params: OfferApiOfferPriceParams, options?: any): Promise<InlineResponse2009> {
+        const localVarFetchArgs = OfferApiFetchParamCreator.offerPrice(params.offerHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -7366,13 +7488,13 @@ export class OfferApi extends BaseAPI {
     /**
      * Return all prices for offers for a given payment method.
      * @summary offer/prices
-     * @param {string} paymentMethod 
+     * @param { OfferApiOfferPricesParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OfferApi
      */
-    public offerPrices(paymentMethod: string, options?: any): Promise<InlineResponse20012> {
-        const localVarFetchArgs = OfferApiFetchParamCreator.offerPrices(paymentMethod, options);
+    public offerPrices(params: OfferApiOfferPricesParams, options?: any): Promise<InlineResponse20012> {
+        const localVarFetchArgs = OfferApiFetchParamCreator.offerPrices(params.paymentMethod, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -7382,11 +7504,12 @@ export class OfferApi extends BaseAPI {
     /**
      * Turn off all your offers.
      * @summary offer/turn-off
+     * @param { OfferApiOfferTurnOffParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OfferApi
      */
-    public offerTurnOff(options?: any): Promise<InlineResponse20015> {
+    public offerTurnOff(params: OfferApiOfferTurnOffParams, options?: any): Promise<InlineResponse20015> {
         const localVarFetchArgs = OfferApiFetchParamCreator.offerTurnOff(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -7397,11 +7520,12 @@ export class OfferApi extends BaseAPI {
     /**
      * Turn on all your offers.
      * @summary offer/turn-on
+     * @param { OfferApiOfferTurnOnParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OfferApi
      */
-    public offerTurnOn(options?: any): Promise<InlineResponse20015> {
+    public offerTurnOn(params: OfferApiOfferTurnOnParams, options?: any): Promise<InlineResponse20015> {
         const localVarFetchArgs = OfferApiFetchParamCreator.offerTurnOn(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -7412,34 +7536,13 @@ export class OfferApi extends BaseAPI {
     /**
      * Update an offer.
      * @summary offer/update
-     * @param {string} tags 
-     * @param {number} margin 
-     * @param {string} currency 
-     * @param {OfferUpdateRequestBodyOfferCap} offerCap 
-     * @param {number} rangeMax 
-     * @param {number} rangeMin 
-     * @param {Array<OfferDutyHours>} dutyHours 
-     * @param {string} offerHash 
-     * @param {number} fixedPrice 
-     * @param {number} locationId 
-     * @param {string} offerTerms 
-     * @param {string} tradeDetails 
-     * @param {string} paymentMethod 
-     * @param {number} paymentWindow 
-     * @param {string} paymentCountry 
-     * @param {string} predefinedAmount 
-     * @param {string} paymentMethodGroup 
-     * @param {string} paymentMethodLabel 
-     * @param {boolean} showOnlyTrustedUser 
-     * @param {string} countryLimitationList 
-     * @param {string} countryLimitationType 
-     * @param {boolean} requireMinPastTrades 
+     * @param { OfferApiOfferUpdateParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OfferApi
      */
-    public offerUpdate(tags: string, margin: number, currency: string, offerCap: OfferUpdateRequestBodyOfferCap, rangeMax: number, rangeMin: number, dutyHours: Array<OfferDutyHours>, offerHash: string, fixedPrice: number, locationId: number, offerTerms: string, tradeDetails: string, paymentMethod: string, paymentWindow: number, paymentCountry: string, predefinedAmount: string, paymentMethodGroup: string, paymentMethodLabel: string, showOnlyTrustedUser: boolean, countryLimitationList: string, countryLimitationType: string, requireMinPastTrades: boolean, options?: any): Promise<SuccessTrueResponse> {
-        const localVarFetchArgs = OfferApiFetchParamCreator.offerUpdate(tags, margin, currency, offerCap, rangeMax, rangeMin, dutyHours, offerHash, fixedPrice, locationId, offerTerms, tradeDetails, paymentMethod, paymentWindow, paymentCountry, predefinedAmount, paymentMethodGroup, paymentMethodLabel, showOnlyTrustedUser, countryLimitationList, countryLimitationType, requireMinPastTrades, options);
+    public offerUpdate(params: OfferApiOfferUpdateParams, options?: any): Promise<SuccessTrueResponse> {
+        const localVarFetchArgs = OfferApiFetchParamCreator.offerUpdate(params.tags, params.margin, params.currency, params.offerCap, params.rangeMax, params.rangeMin, params.dutyHours, params.offerHash, params.fixedPrice, params.locationId, params.offerTerms, params.tradeDetails, params.paymentMethod, params.paymentWindow, params.paymentCountry, params.predefinedAmount, params.paymentMethodGroup, params.paymentMethodLabel, params.showOnlyTrustedUser, params.countryLimitationList, params.countryLimitationType, params.requireMinPastTrades, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -7449,15 +7552,13 @@ export class OfferApi extends BaseAPI {
     /**
      * Updates an offer margin or fixed price value.         Which field to use depends on offer type if it is a fixed price or uses a margin.
      * @summary offer/update-price
-     * @param {number} margin 
-     * @param {string} offerHash 
-     * @param {number} fixedPrice 
+     * @param { OfferApiOfferUpdatePriceParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OfferApi
      */
-    public offerUpdatePrice(margin: number, offerHash: string, fixedPrice: number, options?: any): Promise<SuccessTrueResponse> {
-        const localVarFetchArgs = OfferApiFetchParamCreator.offerUpdatePrice(margin, offerHash, fixedPrice, options);
+    public offerUpdatePrice(params: OfferApiOfferUpdatePriceParams, options?: any): Promise<SuccessTrueResponse> {
+        const localVarFetchArgs = OfferApiFetchParamCreator.offerUpdatePrice(params.margin, params.offerHash, params.fixedPrice, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -7496,6 +7597,10 @@ export const OfferTagApiFetchParamCreator = {
     },
 };
 
+export type OfferTagApiOfferTagListParams = {
+}
+
+
 /**
  * OfferTagApi
  * @export
@@ -7506,11 +7611,12 @@ export class OfferTagApi extends BaseAPI {
     /**
      * Fetch all available tags that can be associated with offers.
      * @summary offer-tag/list
+     * @param { OfferTagApiOfferTagListParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OfferTagApi
      */
-    public offerTagList(options?: any): Promise<InlineResponse20016> {
+    public offerTagList(params: OfferTagApiOfferTagListParams, options?: any): Promise<InlineResponse20016> {
         const localVarFetchArgs = OfferTagApiFetchParamCreator.offerTagList(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -7629,6 +7735,19 @@ export const PaymentMethodApiFetchParamCreator = {
     },
 };
 
+export type PaymentMethodApiPaymentMethodFeeParams = {
+    slug: string;
+    currency: string;
+}
+
+export type PaymentMethodApiPaymentMethodGroupListParams = {
+    locale?: string;
+}
+
+export type PaymentMethodApiPaymentMethodListParams = {
+}
+
+
 /**
  * PaymentMethodApi
  * @export
@@ -7639,14 +7758,13 @@ export class PaymentMethodApi extends BaseAPI {
     /**
      * Fetch average positive margin for payment methods over last 3 and 10 days. Authentication is optional.
      * @summary payment-method/fee
-     * @param {string} slug 
-     * @param {string} currency 
+     * @param { PaymentMethodApiPaymentMethodFeeParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PaymentMethodApi
      */
-    public paymentMethodFee(slug: string, currency: string, options?: any): Promise<InlineResponse20029> {
-        const localVarFetchArgs = PaymentMethodApiFetchParamCreator.paymentMethodFee(slug, currency, options);
+    public paymentMethodFee(params: PaymentMethodApiPaymentMethodFeeParams, options?: any): Promise<InlineResponse20029> {
+        const localVarFetchArgs = PaymentMethodApiFetchParamCreator.paymentMethodFee(params.slug, params.currency, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -7656,13 +7774,13 @@ export class PaymentMethodApi extends BaseAPI {
     /**
      * Fetch a list of available payment method groups. Authentication is optional.
      * @summary payment-method-group/list
-     * @param {string} [locale] 
+     * @param { PaymentMethodApiPaymentMethodGroupListParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PaymentMethodApi
      */
-    public paymentMethodGroupList(locale?: string, options?: any): Promise<PaymentMethodGroupResponse> {
-        const localVarFetchArgs = PaymentMethodApiFetchParamCreator.paymentMethodGroupList(locale, options);
+    public paymentMethodGroupList(params: PaymentMethodApiPaymentMethodGroupListParams, options?: any): Promise<PaymentMethodGroupResponse> {
+        const localVarFetchArgs = PaymentMethodApiFetchParamCreator.paymentMethodGroupList(params.locale, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -7672,11 +7790,12 @@ export class PaymentMethodApi extends BaseAPI {
     /**
      * Fetch a list of available payment methods. Authentication is optional.
      * @summary payment-method/list
+     * @param { PaymentMethodApiPaymentMethodListParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PaymentMethodApi
      */
-    public paymentMethodList(options?: any): Promise<PaymentMethodListResponse> {
+    public paymentMethodList(params: PaymentMethodApiPaymentMethodListParams, options?: any): Promise<PaymentMethodListResponse> {
         const localVarFetchArgs = PaymentMethodApiFetchParamCreator.paymentMethodList(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -8182,6 +8301,61 @@ export const TradeApiFetchParamCreator = {
     },
 };
 
+export type TradeApiTradeCancelParams = {
+    tradeHash: string;
+}
+
+export type TradeApiTradeCompletedParams = {
+    page: number;
+    partner: string;
+}
+
+export type TradeApiTradeDisputeParams = {
+    reason: string;
+    tradeHash: string;
+    reasonType: string;
+}
+
+export type TradeApiTradeDisputeReasonsParams = {
+    tradeHash: string;
+}
+
+export type TradeApiTradeFundParams = {
+    tradeHash: string;
+}
+
+export type TradeApiTradeGetParams = {
+    tradeHash: string;
+}
+
+export type TradeApiTradeListParams = {
+}
+
+export type TradeApiTradeLocationsParams = {
+    tradeHash: string;
+}
+
+export type TradeApiTradePaidParams = {
+    tradeHash: string;
+}
+
+export type TradeApiTradeReleaseParams = {
+    tradeHash: string;
+    xPaxful2fa?: string;
+}
+
+export type TradeApiTradeReopenParams = {
+    tradeHash: string;
+}
+
+export type TradeApiTradeStartParams = {
+    fiat: number;
+    satoshi: number;
+    offerHash: string;
+    cryptoAmount: number;
+}
+
+
 /**
  * TradeApi
  * @export
@@ -8192,13 +8366,13 @@ export class TradeApi extends BaseAPI {
     /**
      * Cancel a trade.
      * @summary trade/cancel
-     * @param {string} tradeHash 
+     * @param { TradeApiTradeCancelParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradeApi
      */
-    public tradeCancel(tradeHash: string, options?: any): Promise<SuccessTrueResponse> {
-        const localVarFetchArgs = TradeApiFetchParamCreator.tradeCancel(tradeHash, options);
+    public tradeCancel(params: TradeApiTradeCancelParams, options?: any): Promise<SuccessTrueResponse> {
+        const localVarFetchArgs = TradeApiFetchParamCreator.tradeCancel(params.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -8208,14 +8382,13 @@ export class TradeApi extends BaseAPI {
     /**
      * Fetch a list of your completed trades, optionally limited by partner username.
      * @summary trade/completed
-     * @param {number} page 
-     * @param {string} partner 
+     * @param { TradeApiTradeCompletedParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradeApi
      */
-    public tradeCompleted(page: number, partner: string, options?: any): Promise<InlineResponse20022> {
-        const localVarFetchArgs = TradeApiFetchParamCreator.tradeCompleted(page, partner, options);
+    public tradeCompleted(params: TradeApiTradeCompletedParams, options?: any): Promise<InlineResponse20022> {
+        const localVarFetchArgs = TradeApiFetchParamCreator.tradeCompleted(params.page, params.partner, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -8225,15 +8398,13 @@ export class TradeApi extends BaseAPI {
     /**
      * Open a dispute.
      * @summary trade/dispute
-     * @param {string} reason 
-     * @param {string} tradeHash 
-     * @param {string} reasonType 
+     * @param { TradeApiTradeDisputeParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradeApi
      */
-    public tradeDispute(reason: string, tradeHash: string, reasonType: string, options?: any): Promise<SuccessTrueResponse> {
-        const localVarFetchArgs = TradeApiFetchParamCreator.tradeDispute(reason, tradeHash, reasonType, options);
+    public tradeDispute(params: TradeApiTradeDisputeParams, options?: any): Promise<SuccessTrueResponse> {
+        const localVarFetchArgs = TradeApiFetchParamCreator.tradeDispute(params.reason, params.tradeHash, params.reasonType, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -8243,13 +8414,13 @@ export class TradeApi extends BaseAPI {
     /**
      * Fetch a list of available dispute reasons.
      * @summary trade/dispute-reasons
-     * @param {string} tradeHash 
+     * @param { TradeApiTradeDisputeReasonsParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradeApi
      */
-    public tradeDisputeReasons(tradeHash: string, options?: any): Promise<InlineResponse20031> {
-        const localVarFetchArgs = TradeApiFetchParamCreator.tradeDisputeReasons(tradeHash, options);
+    public tradeDisputeReasons(params: TradeApiTradeDisputeReasonsParams, options?: any): Promise<InlineResponse20031> {
+        const localVarFetchArgs = TradeApiFetchParamCreator.tradeDisputeReasons(params.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -8259,13 +8430,13 @@ export class TradeApi extends BaseAPI {
     /**
      * Fund a deferred escrow trade.
      * @summary trade/fund
-     * @param {string} tradeHash 
+     * @param { TradeApiTradeFundParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradeApi
      */
-    public tradeFund(tradeHash: string, options?: any): Promise<SuccessTrueResponse> {
-        const localVarFetchArgs = TradeApiFetchParamCreator.tradeFund(tradeHash, options);
+    public tradeFund(params: TradeApiTradeFundParams, options?: any): Promise<SuccessTrueResponse> {
+        const localVarFetchArgs = TradeApiFetchParamCreator.tradeFund(params.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -8275,13 +8446,13 @@ export class TradeApi extends BaseAPI {
     /**
      * Fetch information for an active/completed trade.
      * @summary trade/get
-     * @param {string} tradeHash 
+     * @param { TradeApiTradeGetParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradeApi
      */
-    public tradeGet(tradeHash: string, options?: any): Promise<InlineResponse2003> {
-        const localVarFetchArgs = TradeApiFetchParamCreator.tradeGet(tradeHash, options);
+    public tradeGet(params: TradeApiTradeGetParams, options?: any): Promise<InlineResponse2003> {
+        const localVarFetchArgs = TradeApiFetchParamCreator.tradeGet(params.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -8291,11 +8462,12 @@ export class TradeApi extends BaseAPI {
     /**
      * List all your currently active trades.
      * @summary trade/list
+     * @param { TradeApiTradeListParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradeApi
      */
-    public tradeList(options?: any): Promise<InlineResponse2006> {
+    public tradeList(params: TradeApiTradeListParams, options?: any): Promise<InlineResponse2006> {
         const localVarFetchArgs = TradeApiFetchParamCreator.tradeList(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -8306,13 +8478,13 @@ export class TradeApi extends BaseAPI {
     /**
      * Fetch information for seller and buyer locations in a trade.             Restricted: User requesting the information must be a trade partner.
      * @summary trade/locations
-     * @param {string} tradeHash 
+     * @param { TradeApiTradeLocationsParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradeApi
      */
-    public tradeLocations(tradeHash: string, options?: any): Promise<InlineResponse20023> {
-        const localVarFetchArgs = TradeApiFetchParamCreator.tradeLocations(tradeHash, options);
+    public tradeLocations(params: TradeApiTradeLocationsParams, options?: any): Promise<InlineResponse20023> {
+        const localVarFetchArgs = TradeApiFetchParamCreator.tradeLocations(params.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -8322,13 +8494,13 @@ export class TradeApi extends BaseAPI {
     /**
      * Mark trade as PAID.
      * @summary trade/paid
-     * @param {string} tradeHash 
+     * @param { TradeApiTradePaidParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradeApi
      */
-    public tradePaid(tradeHash: string, options?: any): Promise<SuccessTrueResponse> {
-        const localVarFetchArgs = TradeApiFetchParamCreator.tradePaid(tradeHash, options);
+    public tradePaid(params: TradeApiTradePaidParams, options?: any): Promise<SuccessTrueResponse> {
+        const localVarFetchArgs = TradeApiFetchParamCreator.tradePaid(params.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -8338,14 +8510,13 @@ export class TradeApi extends BaseAPI {
     /**
      * Release crypto for a trade.
      * @summary trade/release
-     * @param {string} tradeHash 
-     * @param {string} [xPaxful2fa] If the endpoint is invoked with an access key which has been received using Sign in with      Paxful authorization flow and it happens that a user has 2FA enabled then you need to provide a code that you have      received from a user using this header.      The flow may look like this: you invoke trade/release endpoint, if you receive 1006 response code, that means user      has 2FA enabled, in this case in your application you prompt a user to provide you with a code.      Once you have received it, you issue trade/release once again and provide the code in this header.
+     * @param { TradeApiTradeReleaseParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradeApi
      */
-    public tradeRelease(tradeHash: string, xPaxful2fa?: string, options?: any): Promise<SuccessTrueResponse> {
-        const localVarFetchArgs = TradeApiFetchParamCreator.tradeRelease(tradeHash, xPaxful2fa, options);
+    public tradeRelease(params: TradeApiTradeReleaseParams, options?: any): Promise<SuccessTrueResponse> {
+        const localVarFetchArgs = TradeApiFetchParamCreator.tradeRelease(params.tradeHash, params.xPaxful2fa, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -8355,13 +8526,13 @@ export class TradeApi extends BaseAPI {
     /**
      * Reopen trade.
      * @summary trade/reopen
-     * @param {string} tradeHash 
+     * @param { TradeApiTradeReopenParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradeApi
      */
-    public tradeReopen(tradeHash: string, options?: any): Promise<SuccessTrueResponse> {
-        const localVarFetchArgs = TradeApiFetchParamCreator.tradeReopen(tradeHash, options);
+    public tradeReopen(params: TradeApiTradeReopenParams, options?: any): Promise<SuccessTrueResponse> {
+        const localVarFetchArgs = TradeApiFetchParamCreator.tradeReopen(params.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -8371,16 +8542,13 @@ export class TradeApi extends BaseAPI {
     /**
      * Start a trade.
      * @summary trade/start
-     * @param {number} fiat 
-     * @param {number} satoshi 
-     * @param {string} offerHash 
-     * @param {number} cryptoAmount 
+     * @param { TradeApiTradeStartParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradeApi
      */
-    public tradeStart(fiat: number, satoshi: number, offerHash: string, cryptoAmount: number, options?: any): Promise<InlineResponse20010> {
-        const localVarFetchArgs = TradeApiFetchParamCreator.tradeStart(fiat, satoshi, offerHash, cryptoAmount, options);
+    public tradeStart(params: TradeApiTradeStartParams, options?: any): Promise<InlineResponse20010> {
+        const localVarFetchArgs = TradeApiFetchParamCreator.tradeStart(params.fiat, params.satoshi, params.offerHash, params.cryptoAmount, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -8653,6 +8821,35 @@ export const TradeChatApiFetchParamCreator = {
     },
 };
 
+export type TradeChatApiTradeChatGetParams = {
+    tradeHash: string;
+}
+
+export type TradeChatApiTradeChatImageParams = {
+    size: string;
+    imageHash: string;
+}
+
+export type TradeChatApiTradeChatImageAddParams = {
+    file: string;
+    tradeHash: string;
+}
+
+export type TradeChatApiTradeChatImageUploadParams = {
+    file: Blob;
+    tradeHash: string;
+}
+
+export type TradeChatApiTradeChatLatestParams = {
+    tradeHash: string;
+}
+
+export type TradeChatApiTradeChatPostParams = {
+    message: string;
+    tradeHash: string;
+}
+
+
 /**
  * TradeChatApi
  * @export
@@ -8663,13 +8860,13 @@ export class TradeChatApi extends BaseAPI {
     /**
      * Fetch messages for a trade.
      * @summary trade-chat/get
-     * @param {string} tradeHash 
+     * @param { TradeChatApiTradeChatGetParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradeChatApi
      */
-    public tradeChatGet(tradeHash: string, options?: any): Promise<InlineResponse20017> {
-        const localVarFetchArgs = TradeChatApiFetchParamCreator.tradeChatGet(tradeHash, options);
+    public tradeChatGet(params: TradeChatApiTradeChatGetParams, options?: any): Promise<InlineResponse20017> {
+        const localVarFetchArgs = TradeChatApiFetchParamCreator.tradeChatGet(params.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -8679,14 +8876,13 @@ export class TradeChatApi extends BaseAPI {
     /**
      * Fetch an image attachment from a trade.
      * @summary trade-chat/image
-     * @param {string} size 
-     * @param {string} imageHash 
+     * @param { TradeChatApiTradeChatImageParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradeChatApi
      */
-    public tradeChatImage(size: string, imageHash: string, options?: any): Promise<Response> {
-        const localVarFetchArgs = TradeChatApiFetchParamCreator.tradeChatImage(size, imageHash, options);
+    public tradeChatImage(params: TradeChatApiTradeChatImageParams, options?: any): Promise<Response> {
+        const localVarFetchArgs = TradeChatApiFetchParamCreator.tradeChatImage(params.size, params.imageHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -8696,14 +8892,13 @@ export class TradeChatApi extends BaseAPI {
     /**
      * Attach image to a trade chat.
      * @summary trade-chat/image/add
-     * @param {string} file 
-     * @param {string} tradeHash 
+     * @param { TradeChatApiTradeChatImageAddParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradeChatApi
      */
-    public tradeChatImageAdd(file: string, tradeHash: string, options?: any): Promise<InlineResponse20021> {
-        const localVarFetchArgs = TradeChatApiFetchParamCreator.tradeChatImageAdd(file, tradeHash, options);
+    public tradeChatImageAdd(params: TradeChatApiTradeChatImageAddParams, options?: any): Promise<InlineResponse20021> {
+        const localVarFetchArgs = TradeChatApiFetchParamCreator.tradeChatImageAdd(params.file, params.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -8713,14 +8908,13 @@ export class TradeChatApi extends BaseAPI {
     /**
      * Upload image to a trade chat.      This endpoint can be used only with OAuth 2.0 authentiction method.
      * @summary trade-chat/image/upload
-     * @param {Blob} file 
-     * @param {string} tradeHash 
+     * @param { TradeChatApiTradeChatImageUploadParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradeChatApi
      */
-    public tradeChatImageUpload(file: Blob, tradeHash: string, options?: any): Promise<InlineResponse20021> {
-        const localVarFetchArgs = TradeChatApiFetchParamCreator.tradeChatImageUpload(file, tradeHash, options);
+    public tradeChatImageUpload(params: TradeChatApiTradeChatImageUploadParams, options?: any): Promise<InlineResponse20021> {
+        const localVarFetchArgs = TradeChatApiFetchParamCreator.tradeChatImageUpload(params.file, params.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -8730,13 +8924,13 @@ export class TradeChatApi extends BaseAPI {
     /**
      * Fetch latest messages for all active trades, or for one trade if trade_hash filter is specified.      Latest messages are messages posted in last 10 minutes.
      * @summary trade-chat/latest
-     * @param {string} tradeHash 
+     * @param { TradeChatApiTradeChatLatestParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradeChatApi
      */
-    public tradeChatLatest(tradeHash: string, options?: any): Promise<InlineResponse20025> {
-        const localVarFetchArgs = TradeChatApiFetchParamCreator.tradeChatLatest(tradeHash, options);
+    public tradeChatLatest(params: TradeChatApiTradeChatLatestParams, options?: any): Promise<InlineResponse20025> {
+        const localVarFetchArgs = TradeChatApiFetchParamCreator.tradeChatLatest(params.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -8746,14 +8940,13 @@ export class TradeChatApi extends BaseAPI {
     /**
      * Post message to a trade chat.
      * @summary trade-chat/post
-     * @param {string} message 
-     * @param {string} tradeHash 
+     * @param { TradeChatApiTradeChatPostParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradeChatApi
      */
-    public tradeChatPost(message: string, tradeHash: string, options?: any): Promise<InlineResponse20021> {
-        const localVarFetchArgs = TradeChatApiFetchParamCreator.tradeChatPost(message, tradeHash, options);
+    public tradeChatPost(params: TradeChatApiTradeChatPostParams, options?: any): Promise<InlineResponse20021> {
+        const localVarFetchArgs = TradeChatApiFetchParamCreator.tradeChatPost(params.message, params.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -8832,6 +9025,14 @@ export const TransactionsApiFetchParamCreator = {
     },
 };
 
+export type TransactionsApiTransactionsAllParams = {
+    page: number;
+    type: string;
+    limit: number;
+    cryptoCurrencyCode: string;
+}
+
+
 /**
  * TransactionsApi
  * @export
@@ -8842,16 +9043,13 @@ export class TransactionsApi extends BaseAPI {
     /**
      * Fetch a list of your transactions, optionally filtered by type.
      * @summary transactions/all
-     * @param {number} page 
-     * @param {string} type 
-     * @param {number} limit 
-     * @param {string} cryptoCurrencyCode 
+     * @param { TransactionsApiTransactionsAllParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TransactionsApi
      */
-    public transactionsAll(page: number, type: string, limit: number, cryptoCurrencyCode: string, options?: any): Promise<InlineResponse20024> {
-        const localVarFetchArgs = TransactionsApiFetchParamCreator.transactionsAll(page, type, limit, cryptoCurrencyCode, options);
+    public transactionsAll(params: TransactionsApiTransactionsAllParams, options?: any): Promise<InlineResponse20024> {
+        const localVarFetchArgs = TransactionsApiFetchParamCreator.transactionsAll(params.page, params.type, params.limit, params.cryptoCurrencyCode, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -9180,6 +9378,43 @@ export const UserApiFetchParamCreator = {
     },
 };
 
+export type UserApiCurrentUserParams = {
+}
+
+export type UserApiUserAffiliateParams = {
+}
+
+export type UserApiUserBlockParams = {
+    username: string;
+}
+
+export type UserApiUserBlockedListParams = {
+    page?: number;
+}
+
+export type UserApiUserInfoParams = {
+    username: string;
+}
+
+export type UserApiUserTouchParams = {
+}
+
+export type UserApiUserTrustParams = {
+    username: string;
+}
+
+export type UserApiUserTypesParams = {
+}
+
+export type UserApiUserUnblockParams = {
+    username: string;
+}
+
+export type UserApiUserUntrustParams = {
+    username: string;
+}
+
+
 /**
  * UserApi
  * @export
@@ -9190,11 +9425,12 @@ export class UserApi extends BaseAPI {
     /**
      * Fetch information for a current user.
      * @summary user/me
+     * @param { UserApiCurrentUserParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public currentUser(options?: any): Promise<InlineResponse200> {
+    public currentUser(params: UserApiCurrentUserParams, options?: any): Promise<InlineResponse200> {
         const localVarFetchArgs = UserApiFetchParamCreator.currentUser(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -9205,11 +9441,12 @@ export class UserApi extends BaseAPI {
     /**
      * Get user affiliate info
      * @summary user/affiliate
+     * @param { UserApiUserAffiliateParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public userAffiliate(options?: any): Promise<InlineResponse20018> {
+    public userAffiliate(params: UserApiUserAffiliateParams, options?: any): Promise<InlineResponse20018> {
         const localVarFetchArgs = UserApiFetchParamCreator.userAffiliate(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -9220,13 +9457,13 @@ export class UserApi extends BaseAPI {
     /**
      * Add username to blocked list
      * @summary user/block
-     * @param {string} username 
+     * @param { UserApiUserBlockParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public userBlock(username: string, options?: any): Promise<SuccessResponse> {
-        const localVarFetchArgs = UserApiFetchParamCreator.userBlock(username, options);
+    public userBlock(params: UserApiUserBlockParams, options?: any): Promise<SuccessResponse> {
+        const localVarFetchArgs = UserApiFetchParamCreator.userBlock(params.username, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -9236,13 +9473,13 @@ export class UserApi extends BaseAPI {
     /**
      * Fetch a list of your blocked users.
      * @summary user/blocked-list
-     * @param {number} [page] 
+     * @param { UserApiUserBlockedListParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public userBlockedList(page?: number, options?: any): Promise<InlineResponse20026> {
-        const localVarFetchArgs = UserApiFetchParamCreator.userBlockedList(page, options);
+    public userBlockedList(params: UserApiUserBlockedListParams, options?: any): Promise<InlineResponse20026> {
+        const localVarFetchArgs = UserApiFetchParamCreator.userBlockedList(params.page, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -9252,13 +9489,13 @@ export class UserApi extends BaseAPI {
     /**
      * Fetch information for a user.
      * @summary user/info
-     * @param {string} username 
+     * @param { UserApiUserInfoParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public userInfo(username: string, options?: any): Promise<InlineResponse2004> {
-        const localVarFetchArgs = UserApiFetchParamCreator.userInfo(username, options);
+    public userInfo(params: UserApiUserInfoParams, options?: any): Promise<InlineResponse2004> {
+        const localVarFetchArgs = UserApiFetchParamCreator.userInfo(params.username, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -9268,11 +9505,12 @@ export class UserApi extends BaseAPI {
     /**
      * Deprecated. You don't need to use this endpoint directly, last seen time is going to be updated     automatically if you use other API endpoints.     Refresh your last seen time. This endpoint has its own rate limit and is limited to 360 requests per hour     (every 10 second max).
      * @summary user/touch
+     * @param { UserApiUserTouchParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public userTouch(options?: any): Promise<SuccessResponse> {
+    public userTouch(params: UserApiUserTouchParams, options?: any): Promise<SuccessResponse> {
         const localVarFetchArgs = UserApiFetchParamCreator.userTouch(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -9283,13 +9521,13 @@ export class UserApi extends BaseAPI {
     /**
      * Add username to the trusted user list.
      * @summary user/trust
-     * @param {string} username 
+     * @param { UserApiUserTrustParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public userTrust(username: string, options?: any): Promise<SuccessResponse> {
-        const localVarFetchArgs = UserApiFetchParamCreator.userTrust(username, options);
+    public userTrust(params: UserApiUserTrustParams, options?: any): Promise<SuccessResponse> {
+        const localVarFetchArgs = UserApiFetchParamCreator.userTrust(params.username, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -9299,11 +9537,12 @@ export class UserApi extends BaseAPI {
     /**
      * Returns a list of available user types. For example - power_trader, expert_trader, etc.      This parameter can be used as “user_type” in offer/all endpoint.
      * @summary user/types
+     * @param { UserApiUserTypesParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public userTypes(options?: any): Promise<InlineResponse2007> {
+    public userTypes(params: UserApiUserTypesParams, options?: any): Promise<InlineResponse2007> {
         const localVarFetchArgs = UserApiFetchParamCreator.userTypes(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -9314,13 +9553,13 @@ export class UserApi extends BaseAPI {
     /**
      * Remove user from blocked list.
      * @summary user/unblock
-     * @param {string} username 
+     * @param { UserApiUserUnblockParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public userUnblock(username: string, options?: any): Promise<SuccessResponse> {
-        const localVarFetchArgs = UserApiFetchParamCreator.userUnblock(username, options);
+    public userUnblock(params: UserApiUserUnblockParams, options?: any): Promise<SuccessResponse> {
+        const localVarFetchArgs = UserApiFetchParamCreator.userUnblock(params.username, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -9330,13 +9569,13 @@ export class UserApi extends BaseAPI {
     /**
      * Remove username from the trusted list.
      * @summary user/untrust
-     * @param {string} username 
+     * @param { UserApiUserUntrustParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public userUntrust(username: string, options?: any): Promise<SuccessResponse> {
-        const localVarFetchArgs = UserApiFetchParamCreator.userUntrust(username, options);
+    public userUntrust(params: UserApiUserUntrustParams, options?: any): Promise<SuccessResponse> {
+        const localVarFetchArgs = UserApiFetchParamCreator.userUntrust(params.username, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -9564,6 +9803,31 @@ export const WalletApiFetchParamCreator = {
     },
 };
 
+export type WalletApiWalletBalanceParams = {
+    cryptoCurrencyCode: string;
+}
+
+export type WalletApiWalletConversionQuotesParams = {
+    convertTo: string;
+    convertFrom: string;
+}
+
+export type WalletApiWalletConvertParams = {
+    amount: number;
+    orderId: string;
+    quoteId: string;
+    convertTo: string;
+    convertFrom: string;
+}
+
+export type WalletApiWalletListAddressesParams = {
+    cryptoCurrencyCode?: string;
+}
+
+export type WalletApiWalletNewAddressParams = {
+}
+
+
 /**
  * WalletApi
  * @export
@@ -9574,13 +9838,13 @@ export class WalletApi extends BaseAPI {
     /**
      * Fetch an user balance.
      * @summary wallet/balance
-     * @param {string} cryptoCurrencyCode 
+     * @param { WalletApiWalletBalanceParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WalletApi
      */
-    public walletBalance(cryptoCurrencyCode: string, options?: any): Promise<InlineResponse20019> {
-        const localVarFetchArgs = WalletApiFetchParamCreator.walletBalance(cryptoCurrencyCode, options);
+    public walletBalance(params: WalletApiWalletBalanceParams, options?: any): Promise<InlineResponse20019> {
+        const localVarFetchArgs = WalletApiFetchParamCreator.walletBalance(params.cryptoCurrencyCode, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -9590,14 +9854,13 @@ export class WalletApi extends BaseAPI {
     /**
      * Get the current conversion quotes for supported crypto currency pairs.
      * @summary wallet/conversion-quotes
-     * @param {string} convertTo 
-     * @param {string} convertFrom 
+     * @param { WalletApiWalletConversionQuotesParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WalletApi
      */
-    public walletConversionQuotes(convertTo: string, convertFrom: string, options?: any): Promise<InlineResponse20033> {
-        const localVarFetchArgs = WalletApiFetchParamCreator.walletConversionQuotes(convertTo, convertFrom, options);
+    public walletConversionQuotes(params: WalletApiWalletConversionQuotesParams, options?: any): Promise<InlineResponse20033> {
+        const localVarFetchArgs = WalletApiFetchParamCreator.walletConversionQuotes(params.convertTo, params.convertFrom, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -9607,17 +9870,13 @@ export class WalletApi extends BaseAPI {
     /**
      * Convert from one crypto currency to another.
      * @summary wallet/convert
-     * @param {number} amount 
-     * @param {string} orderId 
-     * @param {string} quoteId 
-     * @param {string} convertTo 
-     * @param {string} convertFrom 
+     * @param { WalletApiWalletConvertParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WalletApi
      */
-    public walletConvert(amount: number, orderId: string, quoteId: string, convertTo: string, convertFrom: string, options?: any): Promise<InlineResponse20020> {
-        const localVarFetchArgs = WalletApiFetchParamCreator.walletConvert(amount, orderId, quoteId, convertTo, convertFrom, options);
+    public walletConvert(params: WalletApiWalletConvertParams, options?: any): Promise<InlineResponse20020> {
+        const localVarFetchArgs = WalletApiFetchParamCreator.walletConvert(params.amount, params.orderId, params.quoteId, params.convertTo, params.convertFrom, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -9627,13 +9886,13 @@ export class WalletApi extends BaseAPI {
     /**
      * Fetch list of your addresses.
      * @summary wallet/list-addresses
-     * @param {string} [cryptoCurrencyCode] 
+     * @param { WalletApiWalletListAddressesParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WalletApi
      */
-    public walletListAddresses(cryptoCurrencyCode?: string, options?: any): Promise<InlineResponse20032> {
-        const localVarFetchArgs = WalletApiFetchParamCreator.walletListAddresses(cryptoCurrencyCode, options);
+    public walletListAddresses(params: WalletApiWalletListAddressesParams, options?: any): Promise<InlineResponse20032> {
+        const localVarFetchArgs = WalletApiFetchParamCreator.walletListAddresses(params.cryptoCurrencyCode, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -9643,11 +9902,12 @@ export class WalletApi extends BaseAPI {
     /**
      * Generate a new wallet address (currently only BTC is supported).
      * @summary wallet/new-address
+     * @param { WalletApiWalletNewAddressParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WalletApi
      */
-    public walletNewAddress(options?: any): Promise<InlineResponse20030> {
+    public walletNewAddress(params: WalletApiWalletNewAddressParams, options?: any): Promise<InlineResponse20030> {
         const localVarFetchArgs = WalletApiFetchParamCreator.walletNewAddress(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -9658,31 +9918,31 @@ export class WalletApi extends BaseAPI {
 }
 
 export interface Apis {
-    CurrencyApi: CurrencyApi;
-    FeedbackApi: FeedbackApi;
-    KioskApi: KioskApi;
-    NotificationsApi: NotificationsApi;
-    OfferApi: OfferApi;
-    OfferTagApi: OfferTagApi;
-    PaymentMethodApi: PaymentMethodApi;
-    TradeApi: TradeApi;
-    TradeChatApi: TradeChatApi;
-    TransactionsApi: TransactionsApi;
-    UserApi: UserApi;
-    WalletApi: WalletApi;
+    currency: CurrencyApi;
+    feedback: FeedbackApi;
+    kiosk: KioskApi;
+    notifications: NotificationsApi;
+    offer: OfferApi;
+    offerTag: OfferTagApi;
+    paymentMethod: PaymentMethodApi;
+    trade: TradeApi;
+    tradeChat: TradeChatApi;
+    transactions: TransactionsApi;
+    user: UserApi;
+    wallet: WalletApi;
 }
 
 export default (configuration: ApiConfiguration, credentialStorage: CredentialStorage): Apis => ({
-    CurrencyApi: new CurrencyApi(configuration, credentialStorage),
-    FeedbackApi: new FeedbackApi(configuration, credentialStorage),
-    KioskApi: new KioskApi(configuration, credentialStorage),
-    NotificationsApi: new NotificationsApi(configuration, credentialStorage),
-    OfferApi: new OfferApi(configuration, credentialStorage),
-    OfferTagApi: new OfferTagApi(configuration, credentialStorage),
-    PaymentMethodApi: new PaymentMethodApi(configuration, credentialStorage),
-    TradeApi: new TradeApi(configuration, credentialStorage),
-    TradeChatApi: new TradeChatApi(configuration, credentialStorage),
-    TransactionsApi: new TransactionsApi(configuration, credentialStorage),
-    UserApi: new UserApi(configuration, credentialStorage),
-    WalletApi: new WalletApi(configuration, credentialStorage),
+    currency: new CurrencyApi(configuration, credentialStorage),
+    feedback: new FeedbackApi(configuration, credentialStorage),
+    kiosk: new KioskApi(configuration, credentialStorage),
+    notifications: new NotificationsApi(configuration, credentialStorage),
+    offer: new OfferApi(configuration, credentialStorage),
+    offerTag: new OfferTagApi(configuration, credentialStorage),
+    paymentMethod: new PaymentMethodApi(configuration, credentialStorage),
+    trade: new TradeApi(configuration, credentialStorage),
+    tradeChat: new TradeChatApi(configuration, credentialStorage),
+    transactions: new TransactionsApi(configuration, credentialStorage),
+    user: new UserApi(configuration, credentialStorage),
+    wallet: new WalletApi(configuration, credentialStorage),
 })
