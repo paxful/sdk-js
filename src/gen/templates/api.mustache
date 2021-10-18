@@ -190,6 +190,15 @@ export const {{classname}}FetchParamCreator = {
 {{/operation}}
 };
 
+{{#operation}}
+export type {{classname}}{{operationIdCamelCase}}Params = {
+    {{#allParams}}
+    {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};
+    {{/allParams}}
+}
+
+{{/operation}}
+
 /**
  * {{classname}}{{#description}}
  * {{{description}}}{{/description}}
@@ -204,15 +213,13 @@ export class {{classname}} extends BaseAPI {
      {{#summary}}
      * @summary {{&summary}}
      {{/summary}}
-     {{#allParams}}
-     * @param {{=<% %>=}}{<%&dataType%>}<%={{ }}=%> {{^required}}[{{/required}}{{paramName}}{{^required}}]{{/required}} {{description}}
-     {{/allParams}}
+     * @param { {{classname}}{{operationIdCamelCase}}Params } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof {{classname}}
      */
-    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options?: any): Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Response{{/returnType}}> {
-        const localVarFetchArgs = {{classname}}FetchParamCreator.{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options);
+    public {{nickname}}(params: {{classname}}{{operationIdCamelCase}}Params, options?: any): Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Response{{/returnType}}> {
+        const localVarFetchArgs = {{classname}}FetchParamCreator.{{nickname}}({{#allParams}}params.{{paramName}}, {{/allParams}}options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -225,12 +232,12 @@ export class {{classname}} extends BaseAPI {
 
 export interface Apis {
     {{#apiInfo}}{{#apis}}
-    {{classname}}: {{classname}};
+    {{classVarName}}: {{classname}};
     {{/apis}}{{/apiInfo}}
 }
 
 export default (configuration: ApiConfiguration, credentialStorage: CredentialStorage): Apis => ({
     {{#apiInfo}}{{#apis}}
-    {{classname}}: new {{classname}}(configuration, credentialStorage),
+    {{classVarName}}: new {{classname}}(configuration, credentialStorage),
     {{/apis}}{{/apiInfo}}
 })
