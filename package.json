@@ -38,6 +38,7 @@
     "ts-jest": "^26.5.4",
     "ts-node": "^9.1.1",
     "typedoc": "^0.20.34",
+    "fetch-mock-jest": "^1.5.1",
     "typescript": "^4.2.3"
   },
   "dependencies": {
