@@ -37,8 +37,17 @@ const createOAuthRequestTokenUrl = (config: ApiConfiguration, code?: string): Re
  */
 export default function retrieveImpersonatedCredentials(config: ApiConfiguration, code?: string): Promise<Credentials> {
     return fetch(createOAuthRequestTokenUrl(config, code))
-        .then(response => response.json() as Promise<AccountServiceTokenResponse>)
+        .then(async response => {
+            if (!response.ok) {
+                const errText = await response.text();
+                throw Error(`Invalid response, when trying to refresh token [${response.status}] ${errText}`);
+            }
+            return await response.json() as Promise<AccountServiceTokenResponse>
+        })
         .then((tokenResponse: AccountServiceTokenResponse) => {
+            if (!tokenResponse.access_token || !tokenResponse.expires_in) {
+                throw Error(`Invalid response, when trying to refresh token: server didn't returned a token`);
+            }
             return ({
                 accessToken: tokenResponse.access_token,
                 refreshToken: tokenResponse.refresh_token,
