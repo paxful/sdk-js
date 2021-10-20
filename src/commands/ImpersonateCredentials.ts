@@ -40,13 +40,13 @@ export default function retrieveImpersonatedCredentials(config: ApiConfiguration
         .then(async response => {
             if (!response.ok) {
                 const errText = await response.text();
-                throw Error(`Invalid response, when trying to refresh token [${response.status}] ${errText}`);
+                throw Error(`Invalid response received (expected 200, received ${response.status}) when trying to refresh token: ${errText}.`);
             }
             return await response.json() as Promise<AccountServiceTokenResponse>
         })
         .then((tokenResponse: AccountServiceTokenResponse) => {
             if (!tokenResponse.access_token || !tokenResponse.expires_in) {
-                throw Error(`Invalid response, when trying to refresh token: server didn't returned a token`);
+                throw Error(`Invalid response received when trying to refresh token - server didn't return a properly formatted token.`);
             }
             return ({
                 accessToken: tokenResponse.access_token,

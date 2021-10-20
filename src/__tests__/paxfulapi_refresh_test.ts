@@ -97,7 +97,9 @@ describe("With the Paxful API SDK", function () {
         }, {
             status: 422,
             body: JSON.stringify({
-                whatever: "lala"
+                access_token: "abc",
+                refresh_token: null,
+                expires_in: 100
             })
         });
 
