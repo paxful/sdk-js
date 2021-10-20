@@ -108,7 +108,7 @@ should use on the following methods:
 * `PaxfulApi.post(url: string, json?: AnyJson): AnyPromise`
 * `PaxfulApi.put(url: string, json?: AnyJson): AnyPromise`
 * `PaxfulApi.delete(url: string, json?: AnyJson): AnyPromise`
-* `upload(url: string, payload: InvokeBody, method="POST"): AnyPromise`
+* `PaxfulApi.upload(url: string, payload: InvokeBody, method="POST"): AnyPromise`
 * `PaxfulApi.download(url: string, payload: InvokeBody = {}, method="GET"): AnyPromise`
 
 ### Persistence
