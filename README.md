@@ -100,7 +100,7 @@ const myOffers = await paxfulApi.invoke("/paxful/v1/offer/all", { type: 'sell' }
 
 For working with `Paxful API` you'd need to use `invoke` method. `Paxful API` follows RPC standard and `invoke`
 takes care for you of handling specific of this protocol:
-* `PaxfulAPI.invoke(url: string, payload?: InvokeBody)`
+* `PaxfulAPI.invoke(url: string, payload?: InvokeBody): AnyPromise`
 
 If you would like to use SDK for working with new APIs (like `Webhooks API` that is soon to be released), you
 should use on the following methods:
