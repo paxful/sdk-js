@@ -57,7 +57,7 @@ export class PaxfulApi {
     }
 
     /**
-     * Invokes an API operation on behalf of currently authenticated user.
+     * Invokes an API operation on behalf of currently authenticated user. Designed for working with Paxful API.
      *
      * @param url - Url that should be called at api.paxful.com
      * @param payload - (Optional) Payload of the request
