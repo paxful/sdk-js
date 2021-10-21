@@ -218,8 +218,8 @@ export class {{classname}} extends BaseAPI {
      * @throws {RequiredError}
      * @memberof {{classname}}
      */
-    public {{nickname}}(params: {{classname}}{{operationIdCamelCase}}Params, options?: any): Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Response{{/returnType}}> {
-        const localVarFetchArgs = {{classname}}FetchParamCreator.{{nickname}}({{#allParams}}params.{{paramName}}, {{/allParams}}options);
+    public {{nickname}}({{#allParams.0}}params{{^requiredParams.0}}?{{/requiredParams.0}}: {{classname}}{{operationIdCamelCase}}Params, {{/allParams.0}}options?: any): Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Response{{/returnType}}> {
+        const localVarFetchArgs = {{classname}}FetchParamCreator.{{nickname}}({{#allParams}}params?.{{paramName}}, {{/allParams}}options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 

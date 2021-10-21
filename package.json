@@ -11,7 +11,8 @@
     "test": "jest --ci --testResultsProcessor='jest-junit' --passWithNoTests --colors --coverage",
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix",
-    "gen": "yarn gen-paxful && yarn gen-webhook",
+    "gen": "npm run gen-paxful && npm run gen-fix-names",
+    "gen-fix-names": "node src/gen/templates/fixNames.js",
     "gen-paxful": "swagger-codegen generate -t src/gen/templates -i schema.json -l typescript-fetch -o src/gen/paxful -D withInterfaces=true",
     "gen-webhook": "swagger-codegen generate -t src/gen/templates -i http://localhost:8000/public/v1/openapi.json -l typescript-fetch -o src/gen/webhook",
     "doc": "typedoc --out public -§`-readme README.md --exclude \"**/__tests__/**/*.+(ts|tsx|js)\" --exclude \"**/jest.config.js\" --excludeNotDocumented --name \"Paxful SDK (Javascript)\" --hideGenerator --disableSources --highlightTheme light-plus src/"
@@ -41,6 +42,7 @@
     "ts-jest": "^26.5.4",
     "ts-node": "^9.1.1",
     "typedoc": "^0.20.34",
+    "ts-morph": "^12.0.0",
     "typescript": "^4.2.3"
   },
   "dependencies": {
