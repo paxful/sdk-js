@@ -36,7 +36,7 @@ describe("trade flow", () => {
     payment_method: "1",
   };
 
-  it("gets all 'sell' offers", async () => {
+  it("Get all 'sell' offers", async () => {
     const response = await paxfulApiSeller.invoke("/paxful/v1/offer/all", {
       type: "sell",
     });
@@ -44,7 +44,7 @@ describe("trade flow", () => {
     expect(response.data.totalCount).toBeDefined();
   });
 
-  it("remove all old trades", async () => {
+  it("Remove all old trades", async () => {
     const response = await paxfulApiSeller.invoke("/paxful/v1/trade/list");
     response.data.count &&
     response.data.trades.map((trade: Trade) =>
@@ -55,20 +55,20 @@ describe("trade flow", () => {
     expect(response.status).toBe("success");
   });
 
-  it("create offer", async () => {
+  it("Create an offer", async () => {
     const response = await paxfulApiSeller.invoke("/paxful/v1/offer/create", offerData);
     offer_hash = response.data.offer_hash;
     expect(offer_hash).toBeDefined();
   });
 
-  it("get offer", async () => {
+  it("Get offer", async () => {
     const response = await paxfulApiBuyer.invoke("/paxful/v1/offer/get", {
       offer_hash: offer_hash,
     });
     expect(response.data.offer_hash).toBeDefined();
   });
 
-  it("start trade", async () => {
+  it("Start trade", async () => {
     const response = await paxfulApiBuyer.invoke("/paxful/v1/trade/start", {
       offer_hash: offer_hash,
       fiat: 25,
@@ -77,7 +77,7 @@ describe("trade flow", () => {
     expect(trade_hash).toBeDefined();
   });
 
-  it("send message", async () => {
+  it("Send message", async () => {
     const response = await paxfulApiBuyer.invoke("/paxful/v1/trade-chat/post", {
       trade_hash: trade_hash,
       message: textMessage,
@@ -85,7 +85,7 @@ describe("trade flow", () => {
     expect(response.status).toBe("success");
   });
 
-  it("read message", async () => {
+  it("Read message", async () => {
     const response = await paxfulApiSeller.invoke("/paxful/v1/trade-chat/get", {
       trade_hash: trade_hash,
     });
@@ -124,21 +124,21 @@ describe("trade flow", () => {
   //   console.log("image loaded:", response.data);
   // });
 
-  it("paid trade", async () => {
+  it("Pay trade", async () => {
     const response = await paxfulApiBuyer.invoke("/paxful/v1/trade/paid", {
       trade_hash: trade_hash,
     });
     expect(response.status).toBe("success");
   });
 
-  it("release bitcoin", async () => {
+  it("Release bitcoin", async () => {
     const response = await paxfulApiSeller.invoke("/paxful/v1/trade/release", {
       trade_hash: trade_hash,
     });
     expect(response.status).toBe("success");
   });
 
-  it("check wallet", async () => {
+  it("Check wallet balance", async () => {
     const response = await paxfulApiSeller.invoke("/paxful/v1/wallet/balance", {
       crypto_currency_code: "BTC",
     });
@@ -146,7 +146,7 @@ describe("trade flow", () => {
     expect(response.data.balance).toBeGreaterThan(0);
   });
 
-  it("deactivateOffer", async () => {
+  it("Deactivate offer", async () => {
     const response = await paxfulApiSeller.invoke("/paxful/v1/offer/deactivate", {
       offer_hash,
     });
