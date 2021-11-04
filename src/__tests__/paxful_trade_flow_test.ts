@@ -1,4 +1,6 @@
 import usePaxful from "../index";
+import { createReadStream, existsSync } from "fs";
+import { resolve } from "path";
 
 type Trade = {
   trade_hash: string;
