@@ -19,8 +19,8 @@ const paxfulApiBuyer = usePaxful({
 describe("trade flow", () => {
   let offer_hash: string;
   let trade_hash: string;
-  // let image_hash: string;
-  // const imagePath = "./src/__tests__/paxful.png";
+  let image_hash: string;
+  const imagePath = "./src/__tests__/paxful.png";
   const textMessage = "just test message";
   const offerData = {
     margin: 0,
@@ -92,37 +92,32 @@ describe("trade flow", () => {
     expect(response.status).toBe("success");
   });
 
-  // it("send image", async () => {
-  //   console.log(`sending image ${imagePath} to trade: ${trade_hash}`);
-  //   if (!existsSync(imagePath)) {
-  //     console.log("file not found:", imagePath);
-  //     return `file '${imagePath}' not found`;
-  //   }
-  //   console.log("file found:", imagePath);
-  //   const image = createReadStream(resolve(__dirname, imagePath));
-  //   const uploadPayload = {
-  //     trade_hash: trade_hash,
-  //     file: image,
-  //   };
-  //   console.log("containsBinary", containsBinary(uploadPayload));
-  //   const response = await paxfulApiSeller.invoke(
-  //     "/paxful/v1/trade-chat/image/upload",
-  //     uploadPayload
-  //   );
-  //   image_hash = response.data.image_hash;
-  //   console.log("updaload file:", response);
-  //   expect(image_hash).toBeDefined();
-  // });
-  //
-  // it("donwload image", async () => {
-  //   console.log("loading image from chat");
-  //   // temporary unawailable
-  //   const response = await paxfulApiBuyer.invoke("/paxful/v1/trade-chat/image", {
-  //     image_hash,
-  //     size: "3",
-  //   });
-  //   console.log("image loaded:", response.data);
-  // });
+  it("Send image", async () => {
+    if (!existsSync(imagePath)) {
+      return `file '${imagePath}' not found`;
+    }
+    const image = createReadStream(resolve(__dirname, imagePath));
+    const uploadPayload = {
+      trade_hash: trade_hash,
+      file: image,
+    };
+
+    const response = await paxfulApiSeller.invoke(
+      "/paxful/v1/trade-chat/image/upload",
+      uploadPayload
+    );
+    image_hash = response.data.image_hash;
+
+    expect(image_hash).toBeDefined();
+  });
+
+  it("donwload image", async () => {
+    // temporary unawailable
+    const response = await paxfulApiBuyer.invoke("/paxful/v1/trade-chat/image", {
+      image_hash,
+      size: "3",
+    });
+  });
 
   it("Pay trade", async () => {
     const response = await paxfulApiBuyer.invoke("/paxful/v1/trade/paid", {
