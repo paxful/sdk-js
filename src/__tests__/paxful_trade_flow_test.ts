@@ -140,7 +140,7 @@ describe("trade flow", () => {
       crypto_currency_code: "BTC",
     });
     expect(response.status).toBe("success");
-    expect(response.data.balance).toBeGreaterThan(0);
+    expect(parseInt(response.data.balance)).toBeGreaterThan(0);
   });
 
   it("Deactivate offer", async () => {
