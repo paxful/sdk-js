@@ -141,7 +141,7 @@ const paxfulApi = usePaxful({
 
 SDK also provides a support for using proxy servers to forward API requests. If you would like to enable it
 then you need to do two things:
-* install `simple-proxy-agent` library to your project
+* install [simple-proxy-agent](https://www.npmjs.com/package/simple-proxy-agent) library to your project
 * use `proxyAgent` configuration parameter when creating an instance of SDK to pass ProxyAgent object.
 
 You can install `simple-proxy-agent` library to your project by running:
