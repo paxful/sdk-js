@@ -14,7 +14,7 @@
     "gen": "npm run gen-paxful && npm run gen-fix-names",
     "gen-fix-names": "node src/gen/templates/fixNames.js",
     "gen-paxful": "swagger-codegen generate -t src/gen/templates -i schema.json -l typescript-fetch -o src/gen/paxful -D withInterfaces=true",
-    "gen-webhook": "swagger-codegen generate -t src/gen/templates -i http://localhost:8000/public/v1/openapi.json -l typescript-fetch -o src/gen/webhook",
+    "gen-webhook": "swagger-codegen generate -t src/gen/templates -i schema_webhook.json -l typescript-fetch -o src/gen/webhook -D withInterfaces=true",
     "doc": "typedoc --out public -§`-readme README.md --exclude \"**/__tests__/**/*.+(ts|tsx|js)\" --exclude \"**/jest.config.js\" --excludeNotDocumented --name \"Paxful SDK (Javascript)\" --hideGenerator --disableSources --highlightTheme light-plus src/"
   },
   "keywords": [],

@@ -193,7 +193,11 @@ export const {{classname}}FetchParamCreator = {
 {{#operation}}
 export type {{classname}}{{operationIdCamelCase}}Params = {
     {{#allParams}}
+    /**
+     * {{description}}
+     */
     {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};
+
     {{/allParams}}
 }
 

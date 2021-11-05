@@ -1,0 +1,679 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Webhook",
+    "description": "Webhook Service.",
+    "version": "1.0.25"
+  },
+  "paths": {
+    "/api/v1/applications/{application_id}/subscribe": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Subscribe current user to application's webhooks",
+        "description": "Webhooks must be preconfigured using POST /applications/{application_id}/webhooks",
+        "operationId": "user_subscribe",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Application Id",
+              "type": "string"
+            },
+            "name": "application_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwtAuth": []
+          },
+          {
+            "jwtAuth": []
+          }
+        ],
+        "x-service-auth-scopes": [],
+        "x-service-auth-user": true,
+        "x-service-public": null
+      }
+    },
+    "/api/v1/applications/{application_id}/unsubscribe": {
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Unsubscribe current user from application's webhooks",
+        "operationId": "user_unsubscribe",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Application Id",
+              "type": "string"
+            },
+            "name": "application_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwtAuth": []
+          }
+        ],
+        "x-service-auth-scopes": [],
+        "x-service-auth-user": true,
+        "x-service-public": null
+      }
+    },
+    "/api/v1/applications/{application_id}/user/webhooks": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Register user-specific webhooks",
+        "operationId": "add_user_webhooks",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Application Id",
+              "type": "string"
+            },
+            "name": "application_id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwtAuth": []
+          }
+        ],
+        "x-service-auth-scopes": [],
+        "x-service-auth-user": true,
+        "x-service-public": null
+      }
+    },
+    "/api/v1/applications/{application_id}/webhooks": {
+      "get": {
+        "tags": [
+          "developer"
+        ],
+        "summary": "Get application webhook configuration",
+        "operationId": "webhook_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Application Id",
+              "type": "string"
+            },
+            "name": "application_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebhookOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwtAuth": []
+          }
+        ],
+        "x-service-auth-scopes": [],
+        "x-service-auth-user": true,
+        "x-service-public": null
+      },
+      "put": {
+        "tags": [
+          "developer"
+        ],
+        "summary": "Update webhook configuration for application",
+        "operationId": "webhook_update",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Application Id",
+              "type": "string"
+            },
+            "name": "application_id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwtAuth": []
+          }
+        ],
+        "x-service-auth-scopes": [],
+        "x-service-auth-user": true,
+        "x-service-public": null
+      },
+      "post": {
+        "tags": [
+          "developer"
+        ],
+        "summary": "Create webhook configuration for application",
+        "description": "Endpoint can be safely called many times.\nIf configuration does not exist it will be created.\nIf does exist, updated.",
+        "operationId": "webhook_create",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Application Id",
+              "type": "string"
+            },
+            "name": "application_id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwtAuth": []
+          }
+        ],
+        "x-service-auth-scopes": [],
+        "x-service-auth-user": true,
+        "x-service-public": null
+      }
+    },
+    "/api/v1/applications/{application_id}/log": {
+      "get": {
+        "tags": [
+          "developer"
+        ],
+        "summary": "Get webhook http request log",
+        "operationId": "get_logs",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Application Id",
+              "type": "string"
+            },
+            "name": "application_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get Logs Api V1 Applications  Application Id  Log Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LogRecordOut"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwtAuth": []
+          }
+        ],
+        "x-service-auth-scopes": [],
+        "x-service-auth-user": true,
+        "x-service-public": null
+      }
+    },
+    "/api/v1/applications/{application_id}": {
+      "delete": {
+        "tags": [
+          "developer"
+        ],
+        "summary": "Remove webhook configuration for application",
+        "description": "Also removes user-specific webhooks associated with the application_id",
+        "operationId": "webhook_delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Application Id",
+              "type": "string"
+            },
+            "name": "application_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwtAuth": []
+          }
+        ],
+        "x-service-auth-scopes": [],
+        "x-service-auth-user": true,
+        "x-service-public": null
+      }
+    },
+    "/public/.well-known/public.key": {
+      "get": {
+        "tags": [
+          "developer"
+        ],
+        "summary": "Get public key",
+        "description": "Key may be used to validate webhook signature",
+        "operationId": "get_signature_public_key",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "EndpointIn": {
+        "title": "EndpointIn",
+        "required": [
+          "event_type",
+          "url"
+        ],
+        "type": "object",
+        "properties": {
+          "event_type": {
+            "title": "Event Type",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          },
+          "enabled": {
+            "title": "Enabled",
+            "type": "boolean",
+            "default": true
+          }
+        }
+      },
+      "EndpointOut": {
+        "title": "EndpointOut",
+        "required": [
+          "event_type",
+          "url",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "event_type": {
+            "title": "Event Type",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          },
+          "enabled": {
+            "title": "Enabled",
+            "type": "boolean",
+            "default": true
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          }
+        }
+      },
+      "HTTPValidationError": {
+        "title": "HTTPValidationError",
+        "type": "object",
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            }
+          }
+        }
+      },
+      "LogRecordOut": {
+        "title": "LogRecordOut",
+        "required": [
+          "application_id",
+          "endpoint_id",
+          "user_id",
+          "url",
+          "method",
+          "request_body",
+          "request_headers",
+          "request_try_no",
+          "response_status",
+          "response_headers",
+          "response_body",
+          "success",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "application_id": {
+            "title": "Application Id",
+            "type": "string"
+          },
+          "endpoint_id": {
+            "title": "Endpoint Id",
+            "type": "integer"
+          },
+          "user_id": {
+            "title": "User Id",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          },
+          "method": {
+            "title": "Method",
+            "type": "string"
+          },
+          "request_body": {
+            "title": "Request Body",
+            "type": "string"
+          },
+          "request_headers": {
+            "title": "Request Headers",
+            "type": "string"
+          },
+          "request_try_no": {
+            "title": "Request Try No",
+            "type": "integer"
+          },
+          "response_status": {
+            "title": "Response Status",
+            "type": "integer"
+          },
+          "response_headers": {
+            "title": "Response Headers",
+            "type": "string"
+          },
+          "response_body": {
+            "title": "Response Body",
+            "type": "string"
+          },
+          "success": {
+            "title": "Success",
+            "type": "boolean"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          }
+        }
+      },
+      "ValidationError": {
+        "title": "ValidationError",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "loc": {
+            "title": "Location",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        }
+      },
+      "WebhookIn": {
+        "title": "WebhookIn",
+        "required": [
+          "endpoints"
+        ],
+        "type": "object",
+        "properties": {
+          "endpoints": {
+            "title": "Endpoints",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EndpointIn"
+            }
+          }
+        }
+      },
+      "WebhookOut": {
+        "title": "WebhookOut",
+        "required": [
+          "application_id",
+          "developer_id",
+          "webhook_id",
+          "endpoints"
+        ],
+        "type": "object",
+        "properties": {
+          "application_id": {
+            "title": "Application Id",
+            "type": "string"
+          },
+          "developer_id": {
+            "title": "Developer Id",
+            "type": "string"
+          },
+          "user_id": {
+            "title": "User Id",
+            "type": "string"
+          },
+          "webhook_id": {
+            "title": "Webhook Id",
+            "type": "string"
+          },
+          "endpoints": {
+            "title": "Endpoints",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EndpointOut"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "jwtAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
