@@ -214,6 +214,8 @@ export class PaxfulApi {
         } else {
             process.env.PAXFUL_DATA_HOST = process.env.PAXFUL_DATA_HOST ?? defaultDataHost;
         }
+
+        console.log("HOSTS to connect", process.env.PAXFUL_OAUTH_HOST, process.env.PAXFUL_DATA_HOST)
     }
 
     private async saveToken(credentialsPromise: Promise<Credentials>): Promise<Credentials> {
