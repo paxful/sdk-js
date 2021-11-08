@@ -216,6 +216,7 @@ export class PaxfulApi {
         }
 
         console.log("HOSTS to connect", process.env.PAXFUL_OAUTH_HOST.slice(0, 20), process.env.PAXFUL_DATA_HOST.slice(0, 20))
+        console.log("HOSTS to connect", process.env.PAXFUL_CLIENT_ID.slice(0, 20), process.env.PAXFUL_CLIENT_SECRET.slice(0, 20))
     }
 
     private async saveToken(credentialsPromise: Promise<Credentials>): Promise<Credentials> {
