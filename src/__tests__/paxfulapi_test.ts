@@ -486,20 +486,6 @@ describe("With the Paxful API SDK", function () {
         expect(trades).toMatchObject(expectedTrades);
     });
 
-    it('I can see my offers in client grant flow', async function (){
-        (fetch as unknown as FetchMockSandbox).reset();
-        const credentials = {
-            clientId: process.env.PAXFUL_CLIENT_ID || "",
-            clientSecret: process.env.PAXFUL_CLIENT_SECRET || "",
-        };
-        const paxfulApi = usePaxful(credentials);
-        const offers = await paxfulApi.invoke('/paxful/v1/offer/all', {
-            offer_type: "buy"
-        });
-
-        expect(offers?.data?.offers.length).toBeGreaterThan(0);
-    });
-
     it('I can call make get() request', async function () {
         (fetch as unknown as FetchMockSandbox).once({
             url: /https:\/\/api\.paxful\.com\/webhook\/v1\/info/,
