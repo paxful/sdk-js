@@ -28,6 +28,7 @@ describe("With the Paxful API SDK", function () {
     });
 
     const GET_PROFILE_URL = "/oauth2/userinfo/";
+
     it("Client credentials reset flow. Get profile", async () => {
         fetchMock.once({
             url: /oauth2\/userinfo/,
@@ -195,4 +196,117 @@ describe("With the Paxful API SDK", function () {
             expiresAt: expect.anything()
         })
     })
+
+    it("CC wrong response: Client credentials are not saved if refresh response is wrong", async () => {
+        fetchMock.once({
+            name: 'correct_access_token',
+            url: /oauth2\/token/,
+            method: "POST"
+        }, {
+            status: 200,
+            body: JSON.stringify({
+                whatever: "lala"
+            })
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
+
+        await expect(paxfulApi.myCredentials()).rejects.toThrowError();
+
+        expect(credentialStorage.saveCredentials).not.toBeCalled();
+    });
+
+    it("CC wrong status: Client credentials are not saved if refresh response is wrong", async () => {
+        fetchMock.once({
+            name: 'correct_access_token',
+            url: /oauth2\/token/,
+            method: "POST"
+        }, {
+            status: 422,
+            body: JSON.stringify({
+                access_token: "abc",
+                refresh_token: null,
+                expires_in: 100
+            })
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
+
+        await expect(paxfulApi.myCredentials()).rejects.toThrowError();
+
+        expect(credentialStorage.saveCredentials).not.toBeCalled();
+    });
+
+
+
+    it("AC refresh: Client credentials are not saved if refresh response code is wrong", async () => {
+
+        credentialStorage.getCredentials.mockReturnValue({
+            accessToken: "cda",
+            refreshToken: "abc",
+            expiresAt: new Date()
+        });
+
+        fetchMock.once({
+            url: /oauth2\/userinfo/,
+            method: "GET"
+        }, {
+            status: 401,
+            body: ""
+        });
+
+        fetchMock.once({
+            name: 'correct_access_token',
+            url: /oauth2\/token/,
+            method: "POST"
+        }, {
+            status: 422,
+            body: JSON.stringify({
+                access_token: "abc",
+                refresh_token: "cda",
+                expires_in: 100
+            })
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
+        await expect(paxfulApi.get(GET_PROFILE_URL)).rejects.toThrowError();
+
+        expect(credentialStorage.saveCredentials).not.toBeCalled();
+    });
+
+
+    it("AC refresh: Client credentials are not saved if refresh response is wrong", async () => {
+
+        credentialStorage.getCredentials.mockReturnValue({
+            accessToken: "cda",
+            refreshToken: "abc",
+            expiresAt: new Date()
+        });
+
+        fetchMock.once({
+            url: /oauth2\/userinfo/,
+            method: "GET"
+        }, {
+            status: 401,
+            body: ""
+        });
+
+        fetchMock.once({
+            name: 'correct_access_token',
+            url: /oauth2\/token/,
+            method: "POST"
+        }, {
+            status: 200,
+            body: JSON.stringify({
+                some: "alal"
+            })
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
+        await expect(paxfulApi.get(GET_PROFILE_URL)).rejects.toThrowError();
+
+        expect(credentialStorage.saveCredentials).not.toBeCalled();
+    });
+
+
 });

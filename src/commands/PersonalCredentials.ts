@@ -3,6 +3,7 @@ import { URLSearchParams } from "url";
 
 import { AccountServiceTokenResponse, Credentials } from "../oauth";
 import { ApiConfiguration } from "../ApiConfiguration";
+import { handleErrors } from "./ErrorHandling";
 
 const createOAuthRequestTokenUrl = (config: ApiConfiguration): Request => {
     const form = new URLSearchParams();
@@ -30,10 +31,12 @@ const createOAuthRequestTokenUrl = (config: ApiConfiguration): Request => {
  */
 export default function retrievePersonalCredentials(config: ApiConfiguration): Promise<Credentials> {
     return fetch(createOAuthRequestTokenUrl(config))
-        .then(response => response.json() as Promise<AccountServiceTokenResponse>)
-        .then((tokenResponse: AccountServiceTokenResponse) => ({
-            accessToken: tokenResponse.access_token,
-            refreshToken: tokenResponse.refresh_token,
-            expiresAt: new Date(Date.now() + (tokenResponse.expires_in * 1000))
-        }));
+        .then(handleErrors("retrieve personal credentials"))
+        .then((tokenResponse: AccountServiceTokenResponse) => {
+            return ({
+                accessToken: tokenResponse.access_token,
+                refreshToken: tokenResponse.refresh_token,
+                expiresAt: new Date(Date.now() + (tokenResponse.expires_in * 1000))
+            })
+        });
 }
