@@ -5,6 +5,7 @@ import retrieveImpersonatedCredentials from "./ImpersonateCredentials";
 
 import { AccountServiceTokenResponse, Credentials, CredentialStorage } from "../oauth";
 import { ApiConfiguration } from "../ApiConfiguration";
+import { handleErrors } from "./ErrorHandling";
 
 const refreshAccessToken = async (credentials: Credentials, config: ApiConfiguration): Promise<Credentials> => {
     const form = new URLSearchParams();
@@ -25,17 +26,9 @@ const refreshAccessToken = async (credentials: Credentials, config: ApiConfigura
             agent: config.proxyAgent,
             body: form
         })
-    ).then(async response => {
-            if (!response.ok) {
-                const errText = await response.text();
-                throw Error(`Invalid response received (expected 200, received ${response.status}) when trying to refresh token: ${errText}.`);
-            }
-            return await response.json() as Promise<AccountServiceTokenResponse>
-        })
+    )
+        .then(handleErrors("refresh token"))
         .then((tokenResponse: AccountServiceTokenResponse) => {
-            if (!tokenResponse.access_token || !tokenResponse.expires_in) {
-                throw Error(`Invalid response received when trying to refresh token - server didn't return a properly formatted token.`);
-            }
             return ({
                 accessToken: tokenResponse.access_token,
                 refreshToken: tokenResponse.refresh_token,
