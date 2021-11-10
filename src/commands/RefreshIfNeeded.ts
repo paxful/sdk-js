@@ -25,12 +25,23 @@ const refreshAccessToken = async (credentials: Credentials, config: ApiConfigura
             agent: config.proxyAgent,
             body: form
         })
-    ).then(response => response.json() as Promise<AccountServiceTokenResponse>)
-        .then((tokenResponse: AccountServiceTokenResponse) => ({
-            accessToken: tokenResponse.access_token,
-            refreshToken: tokenResponse.refresh_token,
-            expiresAt: new Date(Date.now() + (tokenResponse.expires_in * 1000))
-        }));
+    ).then(async response => {
+            if (!response.ok) {
+                const errText = await response.text();
+                throw Error(`Invalid response received (expected 200, received ${response.status}) when trying to refresh token: ${errText}.`);
+            }
+            return await response.json() as Promise<AccountServiceTokenResponse>
+        })
+        .then((tokenResponse: AccountServiceTokenResponse) => {
+            if (!tokenResponse.access_token || !tokenResponse.expires_in) {
+                throw Error(`Invalid response received when trying to refresh token - server didn't return a properly formatted token.`);
+            }
+            return ({
+                accessToken: tokenResponse.access_token,
+                refreshToken: tokenResponse.refresh_token,
+                expiresAt: new Date(Date.now() + (tokenResponse.expires_in * 1000))
+            })
+        });
 }
 
 const createRefreshRequest = async (request: Request, config: ApiConfiguration, credentialStorage: CredentialStorage): Promise<Request> => {
