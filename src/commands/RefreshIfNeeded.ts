@@ -5,6 +5,7 @@ import retrieveImpersonatedCredentials from "./ImpersonateCredentials";
 
 import { AccountServiceTokenResponse, Credentials, CredentialStorage } from "../oauth";
 import { ApiConfiguration } from "../ApiConfiguration";
+import { handleErrors } from "./ErrorHandling";
 
 const refreshAccessToken = async (credentials: Credentials, config: ApiConfiguration): Promise<Credentials> => {
     const form = new URLSearchParams();
@@ -25,12 +26,15 @@ const refreshAccessToken = async (credentials: Credentials, config: ApiConfigura
             agent: config.proxyAgent,
             body: form
         })
-    ).then(response => response.json() as Promise<AccountServiceTokenResponse>)
-        .then((tokenResponse: AccountServiceTokenResponse) => ({
-            accessToken: tokenResponse.access_token,
-            refreshToken: tokenResponse.refresh_token,
-            expiresAt: new Date(Date.now() + (tokenResponse.expires_in * 1000))
-        }));
+    )
+        .then(handleErrors("refresh token"))
+        .then((tokenResponse: AccountServiceTokenResponse) => {
+            return ({
+                accessToken: tokenResponse.access_token,
+                refreshToken: tokenResponse.refresh_token,
+                expiresAt: new Date(Date.now() + (tokenResponse.expires_in * 1000))
+            })
+        });
 }
 
 const createRefreshRequest = async (request: Request, config: ApiConfiguration, credentialStorage: CredentialStorage): Promise<Request> => {

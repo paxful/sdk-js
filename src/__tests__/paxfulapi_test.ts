@@ -117,12 +117,16 @@ describe("With the Paxful API SDK", function () {
     });
 
     it('SDK points to Paxful production by default when using an empty string', function () {
+        const oldHost = process.env.PAXFUL_OAUTH_HOST;
+
         process.env.PAXFUL_OAUTH_HOST = "";
         const paxfulApi = usePaxful(credentials);
         const response = httpMocks.createResponse();
 
         paxfulApi.login(response);
         expect(response.getHeaders().location).toMatch(/https:\/\/accounts.paxful.com/);
+
+        process.env.PAXFUL_OAUTH_HOST = oldHost;
     });
 
     it('I can configure to connect to Paxful', function () {
@@ -265,6 +269,7 @@ describe("With the Paxful API SDK", function () {
     });
 
     it('I can get my trades if data host is empty', async function () {
+        const oldVal = process.env.PAXFUL_DATA_HOST;
         process.env.PAXFUL_DATA_HOST = "";
 
         mockCredentialsStorageReturnValue();
@@ -286,6 +291,8 @@ describe("With the Paxful API SDK", function () {
         const trades = await paxfulApi.invoke(paxfulTradeUrl);
 
         expect(trades).toMatchObject(expectedTrades);
+
+        process.env.PAXFUL_DATA_HOST = oldVal;
     });
 
     it('I can see an error if response is not a valid json', async function () {
@@ -477,20 +484,6 @@ describe("With the Paxful API SDK", function () {
         const trades = await paxfulApi.invoke('/paxful/v1/offer/create', newOffer);
 
         expect(trades).toMatchObject(expectedTrades);
-    });
-
-    it('I can see my offers in client grant flow', async function (){
-        (fetch as unknown as FetchMockSandbox).reset();
-        const credentials = {
-            clientId: process.env.PAXFUL_CLIENT_ID || "",
-            clientSecret: process.env.PAXFUL_CLIENT_SECRET || "",
-        };
-        const paxfulApi = usePaxful(credentials);
-        const offers = await paxfulApi.invoke('/paxful/v1/offer/all', {
-            offer_type: "buy"
-        });
-
-        expect(offers?.data?.offers.length).toBeGreaterThan(0);
     });
 
     it('I can call make get() request', async function () {

@@ -139,8 +139,18 @@ const paxfulApi = usePaxful({
 
 #### Proxy
 
-By default, we don't use any proxy configuration but if you need to use a proxy server to route requests,
-you can do that by specifying `proxyAgent` configuration parameter:
+SDK also provides a support for using proxy servers to forward API requests. If you would like to enable it
+then you need to do two things:
+* install [simple-proxy-agent](https://www.npmjs.com/package/simple-proxy-agent) library to your project
+* use `proxyAgent` configuration parameter when creating an instance of SDK to pass ProxyAgent object.
+
+You can install `simple-proxy-agent` library to your project by running:
+
+```bash
+npm install simple-proxy-agent
+```
+
+And here's a snippet of code showing how you could enable proxy support for SDK:
 
 ```typescript
 import ProxyAgent from "simple-proxy-agent";
@@ -153,6 +163,8 @@ const paxfulApi = usePaxful({
     proxyAgent: new ProxyAgent("YOUR PROXY URL HERE")
 });
 ```
+
+Both `Client Credentials` and `Authorization Code Grant` flows support working with proxy.
 
 ## Contributing
 ### Pre-requisites

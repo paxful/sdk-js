@@ -3,6 +3,7 @@ import { URLSearchParams } from "url";
 
 import { AccountServiceTokenResponse, Credentials } from "../oauth";
 import { ApiConfiguration } from "../ApiConfiguration";
+import { handleErrors } from "./ErrorHandling";
 
 const createOAuthRequestTokenUrl = (config: ApiConfiguration, code?: string): Request => {
     const form = new URLSearchParams();
@@ -37,17 +38,8 @@ const createOAuthRequestTokenUrl = (config: ApiConfiguration, code?: string): Re
  */
 export default function retrieveImpersonatedCredentials(config: ApiConfiguration, code?: string): Promise<Credentials> {
     return fetch(createOAuthRequestTokenUrl(config, code))
-        .then(async response => {
-            if (!response.ok) {
-                const errText = await response.text();
-                throw Error(`Invalid response received (expected 200, received ${response.status}) when trying to refresh token: ${errText}.`);
-            }
-            return await response.json() as Promise<AccountServiceTokenResponse>
-        })
+        .then(handleErrors("retrieve impersonated credentials"))
         .then((tokenResponse: AccountServiceTokenResponse) => {
-            if (!tokenResponse.access_token || !tokenResponse.expires_in) {
-                throw Error(`Invalid response received when trying to refresh token - server didn't return a properly formatted token.`);
-            }
             return ({
                 accessToken: tokenResponse.access_token,
                 refreshToken: tokenResponse.refresh_token,
