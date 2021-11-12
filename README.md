@@ -56,8 +56,8 @@ After you have instantiated an instance you can use its `invoke` method:
 const myOffers = await paxfulApi.invoke("/paxful/v1/offer/all", { type: 'sell' });
 ```
 
-**NB!** For client-credentials flow we recommend implementing a credentials storage and configuring SDK to use it. 
-For more details, please see `Persistence` section below.
+**NB!** Before going to production with you application you need to implement and start using credentials storage,
+please refer to `Persistence` section below for more details.
 
 ### Authorization Code Grant Flow
 
@@ -99,8 +99,8 @@ endpoints on behalf of a user in the same way as in `Client Credentials` flow:
 const myOffers = await paxfulApi.invoke("/paxful/v1/offer/all", { type: 'sell' });
 ```
 
-**NB!** For authorization code grant flow, for production usage, you need to implement a credentials storage and 
-configure SDK to use it. For more details, please see `Persistence` section below.
+**NB!** Before going to production with you application you need to implement and start using credentials storage,
+please refer to `Persistence` section below for more details.
 
 ### SDK methods
 
@@ -120,16 +120,16 @@ should use on the following methods:
 ### Persistence
 
 When you create an instance of SDK, in both flows, SDK will automatically create an in-memory storage for storing 
-credentials. When you are working with `Client Credentials` flow, that may not be much of an issue - if you
-stop a NodeJS application, then upon next start SDK will automatically fetch access token required for you account when
-you are making a first request, hence only additional latency added to first request. Situation changes when you're 
-using `Authorization Code Grant` - in this case you will lose access token that you have received when users 
-authorized your application and users will need to pass authentication flow again. In order to avoid that you may 
-implement `CredentialStorage` that would keep credentials in a storage of your liking (some kind of database) and 
-therefore fetched credentials would survive NodeJs application restarts. Given that every schema and application 
-requirements are different we are not shipping any implementation of `CredentialsStorage` out of the box beside 
-[in-memory one](src/oauth/CredentialStorage.ts#L9). The interface is very simple and contains only two methods - 
-`getCredentials` and `saveCredentials` thus implementing a proper storage for your application should take no time. 
+credentials. To ensure that your authentication requests aren't throttled from our end, before going to production with
+your application, you need to implement and start using credentials storage, as explained below. This is especially
+important for `Authorization Code Grant` flow - when using a default in-memory storage, if your application is restarted,
+you will lose access token that you have received when users authorized your application and users will need to go through
+authentication flow again. In order to avoid that you may implement `CredentialStorage` that would keep credentials in a
+storage of your liking (some kind of database) and therefore fetched credentials would survive NodeJs application restarts.
+Given that every schema and application requirements are different we are not shipping any implementation of
+`CredentialsStorage` out of the box beside[in-memory one](src/oauth/CredentialStorage.ts#L9). The interface is very
+simple and contains only two methods - `getCredentials` and `saveCredentials` thus implementing a proper storage for
+your application should take no time.
 
 Once you have implemented the interface, you may pass its instance as a second argument to `usePaxful` helper method,
 for example:
