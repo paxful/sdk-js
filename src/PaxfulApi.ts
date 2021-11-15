@@ -5,6 +5,7 @@ import { ApiConfiguration } from "./ApiConfiguration";
 import { authorize, retrieveImpersonatedCredentials, retrievePersonalCredentials, getProfile, executeRequestAuthorized } from "./commands";
 import { AnyJson, containsBinary, InvokeBody, RequestBuilder, AnyPromise } from "./commands/Invoke";
 import { InMemoryCredentialStorage } from "./oauth/CredentialStorage";
+import { fetchRefreshedCredentials } from "./commands/RefreshIfNeeded";
 
 /**
  * Interface responsable for exposing Paxful API integration.
@@ -37,6 +38,16 @@ export class PaxfulApi {
     public async impersonatedCredentials(code: string): Promise<Credentials> {
         return this.saveToken(
             retrieveImpersonatedCredentials(this.apiConfiguration, code)
+        );
+    }
+
+    /**
+     * Force credentials refresh
+     * @return a promise for {@link Credentials}
+     */
+    public async refreshCredentials(): Promise<Credentials> {
+        return this.saveToken(
+            fetchRefreshedCredentials(this.credentialStorage, this.apiConfiguration)
         );
     }
 

@@ -275,6 +275,65 @@ describe("With the Paxful API SDK", function () {
     });
 
 
+    it("AC refresh: manual refresh", async () => {
+        credentialStorage.getCredentials.mockReturnValue({
+            accessToken: "cda",
+            refreshToken: "abc",
+            expiresAt: new Date()
+        });
+
+        fetchMock.once({
+            name: 'correct_access_token',
+            url: /oauth2\/token/,
+            method: "POST"
+        }, {
+            status: 200,
+            body: JSON.stringify({
+                access_token: "eee",
+                refresh_token: "fff",
+                expires_in: 100
+            })
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
+        const creds = await paxfulApi.refreshCredentials();
+        expect(creds.accessToken).toEqual("eee");
+        expect(creds.refreshToken).toEqual("fff");
+
+        expect(credentialStorage.saveCredentials)
+
+        expect(credentialStorage.saveCredentials).toBeCalled();
+    });
+
+    it("CC refresh: manual refresh", async () => {
+        credentialStorage.getCredentials.mockReturnValue({
+            accessToken: "cda",
+            refreshToken: "",
+            expiresAt: new Date()
+        });
+
+        fetchMock.once({
+            name: 'correct_access_token',
+            url: /oauth2\/token/,
+            method: "POST"
+        }, {
+            status: 200,
+            body: JSON.stringify({
+                access_token: "eee",
+                refresh_token: "",
+                expires_in: 100
+            })
+        });
+
+        const paxfulApi = usePaxful(credentials, credentialStorage);
+        const creds = await paxfulApi.refreshCredentials();
+        expect(creds.accessToken).toEqual("eee");
+        expect(creds.refreshToken).toEqual("");
+
+        expect(credentialStorage.saveCredentials).toBeCalled();
+    });
+
+
     it("AC refresh: Client credentials are not saved if refresh response is wrong", async () => {
 
         credentialStorage.getCredentials.mockReturnValue({
