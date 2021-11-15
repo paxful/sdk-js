@@ -37,8 +37,9 @@ const refreshAccessToken = async (credentials: Credentials, config: ApiConfigura
         });
 }
 
-const createRefreshRequest = async (request: Request, config: ApiConfiguration, credentialStorage: CredentialStorage): Promise<Request> => {
-    let credentials: Credentials|undefined;
+export async function fetchRefreshedCredentials(credentialStorage: CredentialStorage, config: ApiConfiguration): Promise<Credentials> {
+    let credentials: Credentials | undefined;
+
     credentials = credentialStorage.getCredentials()
     if (!credentials) {
         throw Error("Misconfiguration: no credentials provided")
@@ -49,6 +50,12 @@ const createRefreshRequest = async (request: Request, config: ApiConfiguration, 
     } else {
         credentials = await retrieveImpersonatedCredentials(config);
     }
+
+    return credentials;
+}
+
+const createRefreshRequest = async (request: Request, config: ApiConfiguration, credentialStorage: CredentialStorage): Promise<Request> => {
+    const credentials = await fetchRefreshedCredentials(credentialStorage, config);
 
     credentialStorage.saveCredentials(credentials);
 
