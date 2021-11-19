@@ -26,6 +26,10 @@ jobs:
           PAXFUL_DATA_HOST: ${{ secrets.PAXFUL_DATA_HOST }}
           PAXFUL_CLIENT_ID: ${{ secrets.PAXFUL_CLIENT_ID }}
           PAXFUL_CLIENT_SECRET: ${{ secrets.PAXFUL_CLIENT_SECRET }}
+          SELLER_CLIENT_ID: ${{ secrets.SELLER_CLIENT_ID }}
+          SELLER_CLIENT_SECRET: ${{ secrets.SELLER_CLIENT_SECRET }}
+          BUYER_CLIENT_ID: ${{ secrets.BUYER_CLIENT_ID }}
+          BUYER_CLIENT_SECRET: ${{ secrets.BUYER_CLIENT_SECRET }}
       - run: echo "🎉 Tests completed."
   deploy:
     name: Publish
