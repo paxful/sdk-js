@@ -94,33 +94,6 @@ describe("trade flow", () => {
     expect(response.status).toBe("success");
   });
 
-  it("Send image", async () => {
-    if (!existsSync(imagePath)) {
-      return `file '${imagePath}' not found`;
-    }
-    const image = createReadStream(resolve(__dirname, imagePath));
-    const uploadPayload = {
-      trade_hash: trade_hash,
-      file: image,
-    };
-
-    const response = await paxfulApiSeller.invoke(
-      "/paxful/v1/trade-chat/image/upload",
-      uploadPayload
-    );
-    image_hash = response.data.image_hash;
-
-    expect(image_hash).toBeDefined();
-  });
-
-  it("donwload image", async () => {
-    // temporary unawailable
-    const response = await paxfulApiBuyer.invoke("/paxful/v1/trade-chat/image", {
-      image_hash,
-      size: "3",
-    });
-  });
-
   it("Pay trade", async () => {
     const response = await paxfulApiBuyer.invoke("/paxful/v1/trade/paid", {
       trade_hash: trade_hash,
