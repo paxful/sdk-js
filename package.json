@@ -11,10 +11,10 @@
     "test": "jest --ci --testResultsProcessor='jest-junit' --passWithNoTests --colors --coverage",
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix",
-    "gen": "npm run gen-paxful && npm run gen-fix-names",
+    "gen": "npm run gen-paxful && npm run gen-webhook && npm run gen-fix-names",
     "gen-fix-names": "node src/gen/templates/fixNames.js",
-    "gen-paxful": "swagger-codegen generate -t src/gen/templates -i schema.json -l typescript-fetch -o src/gen/paxful -D withInterfaces=true",
-    "gen-webhook": "swagger-codegen generate -t src/gen/templates -i schema_webhook.json -l typescript-fetch -o src/gen/webhook -D withInterfaces=true",
+    "gen-paxful": "java --add-opens=java.base/java.util=ALL-UNNAMED -cp ./src/gen/engine/target/pxSdk-swagger-codegen-1.0.0.jar:../swagger-codegen/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar io.swagger.codegen.v3.cli.SwaggerCodegen generate -t src/gen/templates -i schema.json -l pxSdk -o src/gen/paxful -D withInterfaces=true",
+    "gen-webhook": "java --add-opens=java.base/java.util=ALL-UNNAMED -cp ./src/gen/engine/target/pxSdk-swagger-codegen-1.0.0.jar:../swagger-codegen/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar io.swagger.codegen.v3.cli.SwaggerCodegen generate -t src/gen/templates -i schema_webhook.json -l pxSdk -o src/gen/webhook -D withInterfaces=true",
     "doc": "typedoc --out public -§`-readme README.md --exclude \"**/__tests__/**/*.+(ts|tsx|js)\" --exclude \"**/jest.config.js\" --excludeNotDocumented --name \"Paxful SDK (Javascript)\" --hideGenerator --disableSources --highlightTheme light-plus src/"
   },
   "keywords": [],

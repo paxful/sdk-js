@@ -158,6 +158,233 @@ export interface AffiliateTransactionsResponse {
 /**
  * 
  * @export
+ * @interface BankAccountGetResponse
+ */
+export interface BankAccountGetResponse extends BankAccountResponse {
+    /**
+     * This parameter will only be available when working with 'trade.chat.bank_account' webhook. When invoking bank-account/get this parameter will be missing from the response.
+     * @type {string}
+     * @memberof BankAccountGetResponse
+     */
+    tradeHash?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BankAccountListResponse
+ */
+export interface BankAccountListResponse {
+    /**
+     * 
+     * @type {Array<BankAccountResponse>}
+     * @memberof BankAccountListResponse
+     */
+    bankAccounts?: Array<BankAccountResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface BankAccountResponse
+ */
+export interface BankAccountResponse extends RequestBodyBankAccountId {
+    /**
+     * IBAN.
+     * @type {string}
+     * @memberof BankAccountResponse
+     */
+    iban?: string;
+    /**
+     * IFSC.
+     * @type {string}
+     * @memberof BankAccountResponse
+     */
+    ifsc?: string;
+    /**
+     * Clabe.
+     * @type {string}
+     * @memberof BankAccountResponse
+     */
+    clabe?: string;
+    /**
+     * Bank name.
+     * @type {string}
+     * @memberof BankAccountResponse
+     */
+    bankName?: string;
+    /**
+     * Bank ID.
+     * @type {string}
+     * @memberof BankAccountResponse
+     */
+    bankUuid?: string;
+    /**
+     * Swift code.
+     * @type {string}
+     * @memberof BankAccountResponse
+     */
+    swiftCode?: string;
+    /**
+     * ISO country code of the offer owner.
+     * @type {string}
+     * @memberof BankAccountResponse
+     */
+    countryIso: string;
+    /**
+     * Holder name.
+     * @type {string}
+     * @memberof BankAccountResponse
+     */
+    holderName: string;
+    /**
+     * Is personal or business account.
+     * @type {boolean}
+     * @memberof BankAccountResponse
+     */
+    isPersonal: boolean;
+    /**
+     * Bank account number.
+     * @type {string}
+     * @memberof BankAccountResponse
+     */
+    accountNumber?: string;
+    /**
+     * Routing number.
+     * @type {string}
+     * @memberof BankAccountResponse
+     */
+    routingNumber?: string;
+    /**
+     * Additional information about bank account with country-specific data.
+     * @type {string}
+     * @memberof BankAccountResponse
+     */
+    additionalInfo?: string;
+    /**
+     * 3 letter ISO code for fiat currency.
+     * @type {string}
+     * @memberof BankAccountResponse
+     */
+    fiatCurrencyCode: string;
+    /**
+     * International details.
+     * @type {Array<InternationalDetailsObject>}
+     * @memberof BankAccountResponse
+     */
+    internationalDetails?: Array<InternationalDetailsObject>;
+}
+/**
+ * 
+ * @export
+ * @interface BankObject
+ */
+export interface BankObject {
+    /**
+     * Bank name.
+     * @type {string}
+     * @memberof BankObject
+     */
+    bankName: string;
+    /**
+     * Bank uuid.
+     * @type {string}
+     * @memberof BankObject
+     */
+    bankUuid: string;
+}
+/**
+ * 
+ * @export
+ * @interface BankaccountUpdateBody
+ */
+export interface BankaccountUpdateBody extends RequestBodyBankAccountId {
+    /**
+     * IBAN.
+     * @type {string}
+     * @memberof BankaccountUpdateBody
+     */
+    iban?: string;
+    /**
+     * IFSC.
+     * @type {string}
+     * @memberof BankaccountUpdateBody
+     */
+    ifsc?: string;
+    /**
+     * Clabe.
+     * @type {string}
+     * @memberof BankaccountUpdateBody
+     */
+    clabe?: string;
+    /**
+     * Bank name.
+     * @type {string}
+     * @memberof BankaccountUpdateBody
+     */
+    bankName?: string;
+    /**
+     * Bank ID.
+     * @type {string}
+     * @memberof BankaccountUpdateBody
+     */
+    bankUuid?: string;
+    /**
+     * Swift code.
+     * @type {string}
+     * @memberof BankaccountUpdateBody
+     */
+    swiftCode?: string;
+    /**
+     * ISO country code of the offer owner.
+     * @type {string}
+     * @memberof BankaccountUpdateBody
+     */
+    countryIso: string;
+    /**
+     * Holder name.
+     * @type {string}
+     * @memberof BankaccountUpdateBody
+     */
+    holderName: string;
+    /**
+     * Is personal or business account.
+     * @type {boolean}
+     * @memberof BankaccountUpdateBody
+     */
+    isPersonal: boolean;
+    /**
+     * Bank account number.
+     * @type {string}
+     * @memberof BankaccountUpdateBody
+     */
+    accountNumber?: string;
+    /**
+     * Routing number.
+     * @type {string}
+     * @memberof BankaccountUpdateBody
+     */
+    routingNumber?: string;
+    /**
+     * Additional information about bank account with country-specific data.
+     * @type {string}
+     * @memberof BankaccountUpdateBody
+     */
+    additionalInfo?: string;
+    /**
+     * 3 letter ISO code for fiat currency.
+     * @type {string}
+     * @memberof BankaccountUpdateBody
+     */
+    fiatCurrencyCode: string;
+    /**
+     * International details.
+     * @type {Array<InternationalDetailsObject>}
+     * @memberof BankaccountUpdateBody
+     */
+    internationalDetails?: Array<InternationalDetailsObject>;
+}
+/**
+ * 
+ * @export
  * @interface CountResponse
  */
 export interface CountResponse {
@@ -436,6 +663,24 @@ export interface FeedbackList {
      */
     offerHash?: string;
     /**
+     * A hash (ID) of the trade.
+     * @type {string}
+     * @memberof FeedbackList
+     */
+    tradeHash?: string;
+    /**
+     * A unique identifier of a feedback author.
+     * @type {string}
+     * @memberof FeedbackList
+     */
+    authorUuid?: string;
+    /**
+     * A unique identifier of a feedback reciever.
+     * @type {string}
+     * @memberof FeedbackList
+     */
+    receiverUuid?: string;
+    /**
      * Replied message from receiver.
      * @type {string}
      * @memberof FeedbackList
@@ -512,10 +757,10 @@ export interface InlineResponse200 extends SuccessResponse {
 export interface InlineResponse2001 extends SuccessResponse {
     /**
      * 
-     * @type {OfferAllResponse}
+     * @type {Array<BankObject>}
      * @memberof InlineResponse2001
      */
-    data?: OfferAllResponse;
+    data?: Array<BankObject>;
 }
 /**
  * 
@@ -525,10 +770,10 @@ export interface InlineResponse2001 extends SuccessResponse {
 export interface InlineResponse20010 extends SuccessResponse {
     /**
      * 
-     * @type {TradeStartResponse}
+     * @type {OfferPriceResponse}
      * @memberof InlineResponse20010
      */
-    data?: TradeStartResponse;
+    data?: OfferPriceResponse;
 }
 /**
  * 
@@ -538,10 +783,10 @@ export interface InlineResponse20010 extends SuccessResponse {
 export interface InlineResponse20011 extends SuccessResponse {
     /**
      * 
-     * @type {OfferCreateResponse}
+     * @type {TradeStartResponse}
      * @memberof InlineResponse20011
      */
-    data?: OfferCreateResponse;
+    data?: TradeStartResponse;
 }
 /**
  * 
@@ -551,10 +796,10 @@ export interface InlineResponse20011 extends SuccessResponse {
 export interface InlineResponse20012 extends SuccessResponse {
     /**
      * 
-     * @type {OfferPricesResponse}
+     * @type {OfferCreateResponse}
      * @memberof InlineResponse20012
      */
-    data?: OfferPricesResponse;
+    data?: OfferCreateResponse;
 }
 /**
  * 
@@ -564,10 +809,10 @@ export interface InlineResponse20012 extends SuccessResponse {
 export interface InlineResponse20013 extends SuccessResponse {
     /**
      * 
-     * @type {CurrencyListResponse}
+     * @type {OfferPricesResponse}
      * @memberof InlineResponse20013
      */
-    data?: CurrencyListResponse;
+    data?: OfferPricesResponse;
 }
 /**
  * 
@@ -577,10 +822,10 @@ export interface InlineResponse20013 extends SuccessResponse {
 export interface InlineResponse20014 extends SuccessResponse {
     /**
      * 
-     * @type {FeedbackListResponse}
+     * @type {CurrencyListResponse}
      * @memberof InlineResponse20014
      */
-    data?: FeedbackListResponse;
+    data?: CurrencyListResponse;
 }
 /**
  * 
@@ -590,10 +835,10 @@ export interface InlineResponse20014 extends SuccessResponse {
 export interface InlineResponse20015 extends SuccessResponse {
     /**
      * 
-     * @type {CountResponse}
+     * @type {FeedbackListResponse}
      * @memberof InlineResponse20015
      */
-    data?: CountResponse;
+    data?: FeedbackListResponse;
 }
 /**
  * 
@@ -603,10 +848,10 @@ export interface InlineResponse20015 extends SuccessResponse {
 export interface InlineResponse20016 extends SuccessResponse {
     /**
      * 
-     * @type {OfferTagListResponse}
+     * @type {CountResponse}
      * @memberof InlineResponse20016
      */
-    data?: OfferTagListResponse;
+    data?: CountResponse;
 }
 /**
  * 
@@ -616,10 +861,10 @@ export interface InlineResponse20016 extends SuccessResponse {
 export interface InlineResponse20017 extends SuccessResponse {
     /**
      * 
-     * @type {TradeChatGetResponse}
+     * @type {OfferTagListResponse}
      * @memberof InlineResponse20017
      */
-    data?: TradeChatGetResponse;
+    data?: OfferTagListResponse;
 }
 /**
  * 
@@ -629,10 +874,10 @@ export interface InlineResponse20017 extends SuccessResponse {
 export interface InlineResponse20018 extends SuccessResponse {
     /**
      * 
-     * @type {UserAffiliateResponse}
+     * @type {TradeChatGetResponse}
      * @memberof InlineResponse20018
      */
-    data?: UserAffiliateResponse;
+    data?: TradeChatGetResponse;
 }
 /**
  * 
@@ -642,10 +887,10 @@ export interface InlineResponse20018 extends SuccessResponse {
 export interface InlineResponse20019 extends SuccessResponse {
     /**
      * 
-     * @type {WalletBalanceResponse}
+     * @type {UserAffiliateResponse}
      * @memberof InlineResponse20019
      */
-    data?: WalletBalanceResponse;
+    data?: UserAffiliateResponse;
 }
 /**
  * 
@@ -655,10 +900,10 @@ export interface InlineResponse20019 extends SuccessResponse {
 export interface InlineResponse2002 extends SuccessResponse {
     /**
      * 
-     * @type {OfferGetResponse}
+     * @type {OfferAllResponse}
      * @memberof InlineResponse2002
      */
-    data?: OfferGetResponse;
+    data?: OfferAllResponse;
 }
 /**
  * 
@@ -668,10 +913,10 @@ export interface InlineResponse2002 extends SuccessResponse {
 export interface InlineResponse20020 extends SuccessResponse {
     /**
      * 
-     * @type {WalletConvertResponse}
+     * @type {WalletBalanceResponse}
      * @memberof InlineResponse20020
      */
-    data?: WalletConvertResponse;
+    data?: WalletBalanceResponse;
 }
 /**
  * 
@@ -681,10 +926,10 @@ export interface InlineResponse20020 extends SuccessResponse {
 export interface InlineResponse20021 extends SuccessResponse {
     /**
      * 
-     * @type {TradeChatAddResponse}
+     * @type {WalletConvertResponse}
      * @memberof InlineResponse20021
      */
-    data?: TradeChatAddResponse;
+    data?: WalletConvertResponse;
 }
 /**
  * 
@@ -694,10 +939,10 @@ export interface InlineResponse20021 extends SuccessResponse {
 export interface InlineResponse20022 extends SuccessResponse {
     /**
      * 
-     * @type {TradeCompletedResponse}
+     * @type {TradeChatAddResponse}
      * @memberof InlineResponse20022
      */
-    data?: TradeCompletedResponse;
+    data?: TradeChatAddResponse;
 }
 /**
  * 
@@ -707,10 +952,10 @@ export interface InlineResponse20022 extends SuccessResponse {
 export interface InlineResponse20023 extends SuccessResponse {
     /**
      * 
-     * @type {TradeLocationsResponse}
+     * @type {TradeCompletedResponse}
      * @memberof InlineResponse20023
      */
-    data?: TradeLocationsResponse;
+    data?: TradeCompletedResponse;
 }
 /**
  * 
@@ -720,10 +965,10 @@ export interface InlineResponse20023 extends SuccessResponse {
 export interface InlineResponse20024 extends SuccessResponse {
     /**
      * 
-     * @type {TransactionsAllResponse}
+     * @type {TradeLocationsResponse}
      * @memberof InlineResponse20024
      */
-    data?: TransactionsAllResponse;
+    data?: TradeLocationsResponse;
 }
 /**
  * 
@@ -733,10 +978,10 @@ export interface InlineResponse20024 extends SuccessResponse {
 export interface InlineResponse20025 extends SuccessResponse {
     /**
      * 
-     * @type {TradeChatLatestResponse}
+     * @type {BankAccountGetResponse}
      * @memberof InlineResponse20025
      */
-    data?: TradeChatLatestResponse;
+    data?: BankAccountGetResponse;
 }
 /**
  * 
@@ -746,10 +991,10 @@ export interface InlineResponse20025 extends SuccessResponse {
 export interface InlineResponse20026 extends SuccessResponse {
     /**
      * 
-     * @type {UserBlockedListResponse}
+     * @type {TransactionsAllResponse}
      * @memberof InlineResponse20026
      */
-    data?: UserBlockedListResponse;
+    data?: TransactionsAllResponse;
 }
 /**
  * 
@@ -759,10 +1004,10 @@ export interface InlineResponse20026 extends SuccessResponse {
 export interface InlineResponse20027 extends SuccessResponse {
     /**
      * 
-     * @type {AffiliateTransactionsResponse}
+     * @type {Array<BankAccountResponse>}
      * @memberof InlineResponse20027
      */
-    data?: AffiliateTransactionsResponse;
+    data?: Array<BankAccountResponse>;
 }
 /**
  * 
@@ -772,10 +1017,10 @@ export interface InlineResponse20027 extends SuccessResponse {
 export interface InlineResponse20028 extends SuccessResponse {
     /**
      * 
-     * @type {NotificationsListResponse}
+     * @type {TradeChatLatestResponse}
      * @memberof InlineResponse20028
      */
-    data?: NotificationsListResponse;
+    data?: TradeChatLatestResponse;
 }
 /**
  * 
@@ -785,10 +1030,10 @@ export interface InlineResponse20028 extends SuccessResponse {
 export interface InlineResponse20029 extends SuccessResponse {
     /**
      * 
-     * @type {PaymentMethodFeeResponse}
+     * @type {UserBlockedListResponse}
      * @memberof InlineResponse20029
      */
-    data?: PaymentMethodFeeResponse;
+    data?: UserBlockedListResponse;
 }
 /**
  * 
@@ -798,10 +1043,10 @@ export interface InlineResponse20029 extends SuccessResponse {
 export interface InlineResponse2003 extends SuccessResponse {
     /**
      * 
-     * @type {TradeGetResponse}
+     * @type {OfferGetResponse}
      * @memberof InlineResponse2003
      */
-    data?: TradeGetResponse;
+    data?: OfferGetResponse;
 }
 /**
  * 
@@ -811,10 +1056,10 @@ export interface InlineResponse2003 extends SuccessResponse {
 export interface InlineResponse20030 extends SuccessResponse {
     /**
      * 
-     * @type {WalletNewAddressResponse}
+     * @type {AffiliateTransactionsResponse}
      * @memberof InlineResponse20030
      */
-    data?: WalletNewAddressResponse;
+    data?: AffiliateTransactionsResponse;
 }
 /**
  * 
@@ -824,10 +1069,10 @@ export interface InlineResponse20030 extends SuccessResponse {
 export interface InlineResponse20031 extends SuccessResponse {
     /**
      * 
-     * @type {TradeDisputeReasonsResponse}
+     * @type {NotificationsListResponse}
      * @memberof InlineResponse20031
      */
-    data?: TradeDisputeReasonsResponse;
+    data?: NotificationsListResponse;
 }
 /**
  * 
@@ -837,10 +1082,10 @@ export interface InlineResponse20031 extends SuccessResponse {
 export interface InlineResponse20032 extends SuccessResponse {
     /**
      * 
-     * @type {WalletListAddressesResponse}
+     * @type {PaymentMethodFeeResponse}
      * @memberof InlineResponse20032
      */
-    data?: WalletListAddressesResponse;
+    data?: PaymentMethodFeeResponse;
 }
 /**
  * 
@@ -850,10 +1095,10 @@ export interface InlineResponse20032 extends SuccessResponse {
 export interface InlineResponse20033 extends SuccessResponse {
     /**
      * 
-     * @type {WalletConversionQuotesResponse}
+     * @type {WalletNewAddressResponse}
      * @memberof InlineResponse20033
      */
-    data?: WalletConversionQuotesResponse;
+    data?: WalletNewAddressResponse;
 }
 /**
  * 
@@ -863,8 +1108,60 @@ export interface InlineResponse20033 extends SuccessResponse {
 export interface InlineResponse20034 extends SuccessResponse {
     /**
      * 
-     * @type {NotificationsUnreadCountResponse}
+     * @type {BankAccountResponse}
      * @memberof InlineResponse20034
+     */
+    data?: BankAccountResponse;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse20035
+ */
+export interface InlineResponse20035 extends SuccessResponse {
+    /**
+     * 
+     * @type {TradeDisputeReasonsResponse}
+     * @memberof InlineResponse20035
+     */
+    data?: TradeDisputeReasonsResponse;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse20036
+ */
+export interface InlineResponse20036 extends SuccessResponse {
+    /**
+     * 
+     * @type {WalletListAddressesResponse}
+     * @memberof InlineResponse20036
+     */
+    data?: WalletListAddressesResponse;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse20037
+ */
+export interface InlineResponse20037 extends SuccessResponse {
+    /**
+     * 
+     * @type {WalletConversionQuotesResponse}
+     * @memberof InlineResponse20037
+     */
+    data?: WalletConversionQuotesResponse;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse20038
+ */
+export interface InlineResponse20038 extends SuccessResponse {
+    /**
+     * 
+     * @type {NotificationsUnreadCountResponse}
+     * @memberof InlineResponse20038
      */
     data?: NotificationsUnreadCountResponse;
 }
@@ -876,10 +1173,10 @@ export interface InlineResponse20034 extends SuccessResponse {
 export interface InlineResponse2004 extends SuccessResponse {
     /**
      * 
-     * @type {UserInfoObject}
+     * @type {TradeGetResponse}
      * @memberof InlineResponse2004
      */
-    data?: UserInfoObject;
+    data?: TradeGetResponse;
 }
 /**
  * 
@@ -889,10 +1186,10 @@ export interface InlineResponse2004 extends SuccessResponse {
 export interface InlineResponse2005 extends SuccessResponse {
     /**
      * 
-     * @type {OfferListResponse}
+     * @type {UserInfoObject}
      * @memberof InlineResponse2005
      */
-    data?: OfferListResponse;
+    data?: UserInfoObject;
 }
 /**
  * 
@@ -902,10 +1199,10 @@ export interface InlineResponse2005 extends SuccessResponse {
 export interface InlineResponse2006 extends SuccessResponse {
     /**
      * 
-     * @type {TradeListResponse}
+     * @type {OfferListResponse}
      * @memberof InlineResponse2006
      */
-    data?: TradeListResponse;
+    data?: OfferListResponse;
 }
 /**
  * 
@@ -915,10 +1212,10 @@ export interface InlineResponse2006 extends SuccessResponse {
 export interface InlineResponse2007 extends SuccessResponse {
     /**
      * 
-     * @type {UserTypesResponse}
+     * @type {TradeListResponse}
      * @memberof InlineResponse2007
      */
-    data?: UserTypesResponse;
+    data?: TradeListResponse;
 }
 /**
  * 
@@ -928,10 +1225,10 @@ export interface InlineResponse2007 extends SuccessResponse {
 export interface InlineResponse2008 extends SuccessResponse {
     /**
      * 
-     * @type {Array<CryptoListResponse>}
+     * @type {UserTypesResponse}
      * @memberof InlineResponse2008
      */
-    data?: Array<CryptoListResponse>;
+    data?: UserTypesResponse;
 }
 /**
  * 
@@ -941,10 +1238,10 @@ export interface InlineResponse2008 extends SuccessResponse {
 export interface InlineResponse2009 extends SuccessResponse {
     /**
      * 
-     * @type {OfferPriceResponse}
+     * @type {Array<CryptoListResponse>}
      * @memberof InlineResponse2009
      */
-    data?: OfferPriceResponse;
+    data?: Array<CryptoListResponse>;
 }
 /**
  * 
@@ -1280,6 +1577,43 @@ export interface InlineResponse501 extends ErrorResponse {
 /**
  * 
  * @export
+ * @interface InternationalDetailsObject
+ */
+export interface InternationalDetailsObject {
+    /**
+     * Zip.
+     * @type {string}
+     * @memberof InternationalDetailsObject
+     */
+    zip?: string;
+    /**
+     * City.
+     * @type {string}
+     * @memberof InternationalDetailsObject
+     */
+    city?: string;
+    /**
+     * State.
+     * @type {string}
+     * @memberof InternationalDetailsObject
+     */
+    state?: string;
+    /**
+     * Address.
+     * @type {string}
+     * @memberof InternationalDetailsObject
+     */
+    address?: string;
+    /**
+     * Residency.
+     * @type {string}
+     * @memberof InternationalDetailsObject
+     */
+    residency?: string;
+}
+/**
+ * 
+ * @export
  * @interface NotificationsList
  */
 export interface NotificationsList {
@@ -1291,10 +1625,10 @@ export interface NotificationsList {
     id?: string;
     /**
      * Link to the page associated with the event.
-     * @type {number}
+     * @type {string}
      * @memberof NotificationsList
      */
-    link?: number;
+    link?: string;
     /**
      * Notification text.
      * @type {string}
@@ -1313,6 +1647,12 @@ export interface NotificationsList {
      * @memberof NotificationsList
      */
     subtext?: string;
+    /**
+     * Full link to the page associated with the event.
+     * @type {string}
+     * @memberof NotificationsList
+     */
+    fullLink?: string;
     /**
      * Timestamp of when a notification has been created.
      * @type {number}
@@ -1847,6 +2187,12 @@ export interface OfferObject {
      */
     cityName?: string;
     /**
+     * A flow type.
+     * @type {string}
+     * @memberof OfferObject
+     */
+    flowType?: OfferObject.FlowTypeEnum;
+    /**
      * How much time ago the offer owner has been seen last time, e.g seen-long-ago.
      * @type {string}
      * @memberof OfferObject
@@ -1937,6 +2283,12 @@ export interface OfferObject {
      */
     releaseTime?: number;
     /**
+     * List of bank accounts for the offer.
+     * @type {Array<BankAccountResponse>}
+     * @memberof OfferObject
+     */
+    bankAccounts?: Array<BankAccountResponse>;
+    /**
      * Deprecated. Use 'fiat_currency_code' instead. 3 letter ISO code for fiat currency, e.g 'USD'.
      * @type {string}
      * @memberof OfferObject
@@ -2009,7 +2361,7 @@ export interface OfferObject {
      */
     paymentMethodSlug?: string;
     /**
-     * For SELL offer type, this will be calculated median time of the difference in minutes between buyer presses PAID and seller released coins.  For BUY offer type, this will be calcuated median time of the difference in minutes between trade started and seller released coins.  This value will become available after at least 3 trades have been conducted using an offer.
+     * For SELL offer type, this will be calculated median time of the difference in minutes between buyer presses PAID and seller released coins. For BUY offer type, this will be calcuated median time of the difference in minutes between trade started and seller released coins. This value will become available after at least 3 trades have been conducted using an offer.
      * @type {string}
      * @memberof OfferObject
      */
@@ -2063,6 +2415,12 @@ export interface OfferObject {
      */
     fiatPricePerCrypto?: number;
     /**
+     * 
+     * @type {OfferObjectBankReferenceMessage}
+     * @memberof OfferObject
+     */
+    bankReferenceMessage?: OfferObjectBankReferenceMessage;
+    /**
      * Will be TRUE if a trade partner with connected VPN will be blocked.
      * @type {boolean}
      * @memberof OfferObject
@@ -2093,7 +2451,7 @@ export interface OfferObject {
      */
     showOnlyTrustedUser?: boolean;
     /**
-     * Type of limitation countries.  If 'allowed' is used then the offer will be visible ONLY for visitors from countries specified in the 'country_limitation_list'.  If 'disallowed' is used then this offer will NOT be visible for visitors from countries specified in the 'country_limitation_list'.
+     * Type of limitation countries. If 'allowed' is used then the offer will be visible ONLY for visitors from countries specified in the 'country_limitation_list'. If 'disallowed' is used then this offer will NOT be visible for visitors from countries specified in the 'country_limitation_list'.
      * @type {string}
      * @memberof OfferObject
      */
@@ -2169,6 +2527,16 @@ export namespace OfferObject {
      * @export
      * @enum {string}
      */
+    export enum FlowTypeEnum {
+        Default = <any> 'default',
+        Lite = <any> 'lite',
+        GccAuto = <any> 'gcc-auto',
+        BtAuto = <any> 'bt-auto'
+    }
+    /**
+     * @export
+     * @enum {string}
+     */
     export enum LastSeenEnum {
         LastSeen = <any> 'last-seen',
         SeenLongAgo = <any> 'seen-long-ago',
@@ -2182,6 +2550,41 @@ export namespace OfferObject {
     export enum OfferTypeEnum {
         Sell = <any> 'sell',
         Buy = <any> 'buy'
+    }
+}
+/**
+ * Describes what reference message you expect a trade partner to provide.
+ * @export
+ * @interface OfferObjectBankReferenceMessage
+ */
+export interface OfferObjectBankReferenceMessage {
+    /**
+     * Defines how you expect to have bank reference message handled when a transfer is made by a trade partner.  *     If 'no_message' is chosen they you expect a trader parter to provide nothing in description when bank transfer is made;  *     if 'exact_message' is used then you expect your trade partner to provide exactly this specific message in description of the transfer, if this option is chosen then 'message' field becomes mandatory (see below);  *     if 'no_preference' is used then you don’t have any expectations how a trade partner should handle providing description of the transfer - s/he may or may not provide it.
+     * @type {string}
+     * @memberof OfferObjectBankReferenceMessage
+     */
+    type: OfferObjectBankReferenceMessage.TypeEnum;
+    /**
+     * If 'exact_message' is used for 'type', then this field must be provided. When a fiat transfer is made this is something you expect to have provided in description of the transfer.
+     * @type {string}
+     * @memberof OfferObjectBankReferenceMessage
+     */
+    message?: string;
+}
+
+/**
+ * @export
+ * @namespace OfferObjectBankReferenceMessage
+ */
+export namespace OfferObjectBankReferenceMessage {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum TypeEnum {
+        NoMessage = <any> 'no_message',
+        ExactMessage = <any> 'exact_message',
+        NoPreference = <any> 'no_preference'
     }
 }
 /**
@@ -2368,6 +2771,12 @@ export interface OfferUpdateRequestBody {
      */
     currency?: string;
     /**
+     * A flow type for offer.
+     * @type {string}
+     * @memberof OfferUpdateRequestBody
+     */
+    flowType?: string;
+    /**
      * 
      * @type {OfferUpdateRequestBodyOfferCap}
      * @memberof OfferUpdateRequestBody
@@ -2416,6 +2825,12 @@ export interface OfferUpdateRequestBody {
      */
     offerTerms?: string;
     /**
+     * Comma-separated list of bank account UUIDs.
+     * @type {string}
+     * @memberof OfferUpdateRequestBody
+     */
+    bankAccounts?: string;
+    /**
      * Instructions for a trade partner. String up to 2500 characters.
      * @type {string}
      * @memberof OfferUpdateRequestBody
@@ -2452,11 +2867,17 @@ export interface OfferUpdateRequestBody {
      */
     paymentMethodGroup?: OfferUpdateRequestBody.PaymentMethodGroupEnum;
     /**
-     * A bank name will appear after the payment method. Maximum 25 characters and only letters, numbers, and dash. You can write several bank names separated by space, e.g. CBS SEB METROPOLITAN ALFA-BANK.
+     * A bank name will appear after the payment method. Maximum 25 characters and only letters, numbers, and dash. You can write several bank names separated by space, e.g. CBS SEB METROPOLITAN ALFA.
      * @type {string}
      * @memberof OfferUpdateRequestBody
      */
     paymentMethodLabel?: string;
+    /**
+     * 
+     * @type {OfferUpdateRequestBodyBankReferenceMessage}
+     * @memberof OfferUpdateRequestBody
+     */
+    bankReferenceMessage?: OfferUpdateRequestBodyBankReferenceMessage;
     /**
      * The offer will be shown only to users from the trusted list.
      * @type {boolean}
@@ -2497,6 +2918,41 @@ export namespace OfferUpdateRequestBody {
         CashDeposits = <any> 'cash-deposits',
         OnlineTransfers = <any> 'online-transfers',
         DebitcreditCards = <any> 'debitcredit-cards'
+    }
+}
+/**
+ * Required for bank-transfer payment method with flow_type 'bt-auto'. Describes what reference message you expect a trade partner to provide.
+ * @export
+ * @interface OfferUpdateRequestBodyBankReferenceMessage
+ */
+export interface OfferUpdateRequestBodyBankReferenceMessage {
+    /**
+     * Defines how you expect to have bank reference message handled when a transfer is made by a trade partner.  *     If 'no_message' is chosen they you expect a trader parter to provide nothing in description when bank transfer is made;  *     if 'exact_message' is used then you expect your trade partner to provide exactly this specific message in description of the transfer, if this option is chosen then 'message' field becomes mandatory (see below);  *     if 'no_preference' is used then you don’t have any expectations how a trade partner should handle providing description of the transfer - s/he may or may not provide it.
+     * @type {string}
+     * @memberof OfferUpdateRequestBodyBankReferenceMessage
+     */
+    type: OfferUpdateRequestBodyBankReferenceMessage.TypeEnum;
+    /**
+     * If 'exact_message' is used for 'type', then this field must be provided. When a fiat transfer is made this is something you expect to have provided in description of the transfer.
+     * @type {string}
+     * @memberof OfferUpdateRequestBodyBankReferenceMessage
+     */
+    message?: string;
+}
+
+/**
+ * @export
+ * @namespace OfferUpdateRequestBodyBankReferenceMessage
+ */
+export namespace OfferUpdateRequestBodyBankReferenceMessage {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum TypeEnum {
+        NoMessage = <any> 'no_message',
+        ExactMessage = <any> 'exact_message',
+        NoPreference = <any> 'no_preference'
     }
 }
 /**
@@ -2778,6 +3234,123 @@ export interface RequestBodyAffiliateTransactions {
 /**
  * 
  * @export
+ * @interface RequestBodyBankAccountCreate
+ */
+export interface RequestBodyBankAccountCreate {
+    /**
+     * IBAN.
+     * @type {string}
+     * @memberof RequestBodyBankAccountCreate
+     */
+    iban?: string;
+    /**
+     * IFSC.
+     * @type {string}
+     * @memberof RequestBodyBankAccountCreate
+     */
+    ifsc?: string;
+    /**
+     * Clabe.
+     * @type {string}
+     * @memberof RequestBodyBankAccountCreate
+     */
+    clabe?: string;
+    /**
+     * Bank name.
+     * @type {string}
+     * @memberof RequestBodyBankAccountCreate
+     */
+    bankName?: string;
+    /**
+     * Bank ID.
+     * @type {string}
+     * @memberof RequestBodyBankAccountCreate
+     */
+    bankUuid?: string;
+    /**
+     * Swift code.
+     * @type {string}
+     * @memberof RequestBodyBankAccountCreate
+     */
+    swiftCode?: string;
+    /**
+     * ISO country code of the offer owner.
+     * @type {string}
+     * @memberof RequestBodyBankAccountCreate
+     */
+    countryIso: string;
+    /**
+     * Holder name.
+     * @type {string}
+     * @memberof RequestBodyBankAccountCreate
+     */
+    holderName: string;
+    /**
+     * Is personal or business account.
+     * @type {boolean}
+     * @memberof RequestBodyBankAccountCreate
+     */
+    isPersonal: boolean;
+    /**
+     * Bank account number.
+     * @type {string}
+     * @memberof RequestBodyBankAccountCreate
+     */
+    accountNumber?: string;
+    /**
+     * Routing number.
+     * @type {string}
+     * @memberof RequestBodyBankAccountCreate
+     */
+    routingNumber?: string;
+    /**
+     * Additional information about bank account with country-specific data.
+     * @type {string}
+     * @memberof RequestBodyBankAccountCreate
+     */
+    additionalInfo?: string;
+    /**
+     * 3 letter ISO code for fiat currency.
+     * @type {string}
+     * @memberof RequestBodyBankAccountCreate
+     */
+    fiatCurrencyCode: string;
+    /**
+     * International details.
+     * @type {Array<InternationalDetailsObject>}
+     * @memberof RequestBodyBankAccountCreate
+     */
+    internationalDetails?: Array<InternationalDetailsObject>;
+}
+/**
+ * 
+ * @export
+ * @interface RequestBodyBankAccountId
+ */
+export interface RequestBodyBankAccountId {
+    /**
+     * Bank account uuid.
+     * @type {string}
+     * @memberof RequestBodyBankAccountId
+     */
+    bankAccountUuid: string;
+}
+/**
+ * 
+ * @export
+ * @interface RequestBodyBankList
+ */
+export interface RequestBodyBankList {
+    /**
+     * ISO country code of the offer owner.
+     * @type {string}
+     * @memberof RequestBodyBankList
+     */
+    countryIso: string;
+}
+/**
+ * 
+ * @export
  * @interface RequestBodyFeedbackGive
  */
 export interface RequestBodyFeedbackGive {
@@ -2999,7 +3572,7 @@ export interface RequestBodyOfferAll {
      */
     locationId?: number;
     /**
-     * ISO country code, e.g. 'US'. Filter offers by available payment methods in the given country. Please use 'WORLDWIDE' if you want to get offers from all countries.  For authenticated user by default automatically detected country will be used. For non-authenticated user 'US' will be used. This filter corresponds to 'Offer location' filter available on marketplace.
+     * ISO country code, e.g. 'US'. Filter offers by available payment methods in the given country. Please use 'WORLDWIDE' if you want to get offers from all countries. For authenticated user by default automatically detected country will be used. For non-authenticated user 'US' will be used. This filter corresponds to 'Offer location' filter available on marketplace.
      * @type {string}
      * @memberof RequestBodyOfferAll
      */
@@ -3095,6 +3668,12 @@ export interface RequestBodyOfferCreate {
      */
     currency: string;
     /**
+     * A flow type for offer.
+     * @type {string}
+     * @memberof RequestBodyOfferCreate
+     */
+    flowType?: string;
+    /**
      * A maximum value of the trade limit, i.e the largest amount of fiat that a trade can be started with. (Minimum value for the field 1).
      * @type {number}
      * @memberof RequestBodyOfferCreate
@@ -3124,6 +3703,12 @@ export interface RequestBodyOfferCreate {
      * @memberof RequestBodyOfferCreate
      */
     offerTerms: string;
+    /**
+     * Comma-separated list of bank account UUIDs.
+     * @type {string}
+     * @memberof RequestBodyOfferCreate
+     */
+    bankAccounts?: string;
     /**
      * Instructions for a trade partner. String up to 2500 characters.
      * @type {string}
@@ -3179,11 +3764,17 @@ export interface RequestBodyOfferCreate {
      */
     paymentMethodGroup?: RequestBodyOfferCreate.PaymentMethodGroupEnum;
     /**
-     * A bank name will appear after the payment method. Maximum 25 characters and only letters, numbers, and dash. You can write several bank names separated by space. For example: CBS SEB METROPOLITAN ALFA-BANK.
+     * A bank name will appear after the payment method. Maximum 25 characters and only letters, numbers, and dash. You can write several bank names separated by space. For example: CBS SEB METROPOLITAN ALFA.
      * @type {string}
      * @memberof RequestBodyOfferCreate
      */
     paymentMethodLabel?: string;
+    /**
+     * 
+     * @type {OfferUpdateRequestBodyBankReferenceMessage}
+     * @memberof RequestBodyOfferCreate
+     */
+    bankReferenceMessage?: OfferUpdateRequestBodyBankReferenceMessage;
     /**
      * The offer will be shown only to users from the trusted list.
      * @type {boolean}
@@ -3345,6 +3936,38 @@ export interface RequestBodyPaymentMethodFee {
      * @memberof RequestBodyPaymentMethodFee
      */
     currency?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RequestBodyTradeAddProof
+ */
+export interface RequestBodyTradeAddProof {
+    /**
+     * Url and mimetype for the attached file as proof.
+     * @type {Array<RequestBodyTradeAddProofFiles>}
+     * @memberof RequestBodyTradeAddProof
+     */
+    files: Array<RequestBodyTradeAddProofFiles>;
+}
+/**
+ * 
+ * @export
+ * @interface RequestBodyTradeAddProofFiles
+ */
+export interface RequestBodyTradeAddProofFiles {
+    /**
+     * 
+     * @type {string}
+     * @memberof RequestBodyTradeAddProofFiles
+     */
+    url?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RequestBodyTradeAddProofFiles
+     */
+    mimetype?: string;
 }
 /**
  * 
@@ -3565,11 +4188,30 @@ export interface RequestBodyTradeStart {
      */
     offerHash: string;
     /**
+     * Bank accounts that will be used for a given trade.
+     * @type {Array<RequestBodyTradeStartBankAccounts>}
+     * @memberof RequestBodyTradeStart
+     */
+    bankAccounts?: Array<RequestBodyTradeStartBankAccounts>;
+    /**
      * Trade amount in cryptocurrency. For BTC trade in Satoshi, for ETH trade in GWEI, for USDT trade in micro cents (e.g 1 usdt = 1000000 micro cents).
      * @type {number}
      * @memberof RequestBodyTradeStart
      */
     cryptoAmount?: number;
+}
+/**
+ * 
+ * @export
+ * @interface RequestBodyTradeStartBankAccounts
+ */
+export interface RequestBodyTradeStartBankAccounts {
+    /**
+     * 
+     * @type {string}
+     * @memberof RequestBodyTradeStartBankAccounts
+     */
+    to?: string;
 }
 /**
  * 
@@ -3696,7 +4338,7 @@ export interface RequestBodyWalletConvert {
      */
     amount: number;
     /**
-     * Unique ID (UUID) of the conversion, that your application needs to generate.  Having this parameter ensures idempotency of the operation - you can invoke the endpoint as many times with the same parameter, but conversion will be executed only once.  This helps to avoid accidental double conversions.
+     * Unique ID (UUID) of the conversion, that your application needs to generate. Having this parameter ensures idempotency of the operation - you can invoke the endpoint as many times with the same parameter, but conversion will be executed only once. This helps to avoid accidental double conversions.
      * @type {string}
      * @memberof RequestBodyWalletConvert
      */
@@ -3732,6 +4374,19 @@ export interface RequestBodyWalletListAddresses {
      * @memberof RequestBodyWalletListAddresses
      */
     cryptoCurrencyCode?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ResponseParamTradeHash
+ */
+export interface ResponseParamTradeHash {
+    /**
+     * This parameter will only be available when working with 'trade.chat.bank_account' webhook. When invoking bank-account/get this parameter will be missing from the response.
+     * @type {string}
+     * @memberof ResponseParamTradeHash
+     */
+    tradeHash?: string;
 }
 /**
  * 
@@ -3783,6 +4438,19 @@ export interface SuccessTrueResponseData {
      * @memberof SuccessTrueResponseData
      */
     success?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface TradeAddproofBody
+ */
+export interface TradeAddproofBody extends RequestBodyTradeAddProof {
+    /**
+     * A hash (ID) of the trade.
+     * @type {string}
+     * @memberof TradeAddproofBody
+     */
+    tradeHash: string;
 }
 /**
  * 
@@ -3928,6 +4596,55 @@ export interface TradeChatMessage {
      * @memberof TradeChatMessage
      */
     timestamp?: number;
+    /**
+     * A hash (ID) of the trade.
+     * @type {string}
+     * @memberof TradeChatMessage
+     */
+    tradeHash?: string;
+    /**
+     * A unique identifier of an author of a message.
+     * @type {string}
+     * @memberof TradeChatMessage
+     */
+    authorUuid?: string;
+    /**
+     * When a dispute is started, each trade partner has an option to share attachments for a moderator only. If the trade partner chooses this option and shares the attachment to a moderator only, the parameter value is TRUE. Otherwise, it's FALSE.
+     * @type {boolean}
+     * @memberof TradeChatMessage
+     */
+    isForModerator?: boolean;
+    /**
+     * If the message is sent by the moderator (admin), the parameter value is TRUE. Otherwise, it’s FALSE.
+     * @type {boolean}
+     * @memberof TradeChatMessage
+     */
+    sentByModerator?: boolean;
+    /**
+     * 
+     * @type {TradeChatMessageSecurityAwareness}
+     * @memberof TradeChatMessage
+     */
+    securityAwareness?: TradeChatMessageSecurityAwareness;
+}
+/**
+ * When a trade partner sends a message that the system considers as potentially risky, the system marks a message or attachment with a security icon or sends a security message (e.g. if a trade partner sends a third-party link).
+ * @export
+ * @interface TradeChatMessageSecurityAwareness
+ */
+export interface TradeChatMessageSecurityAwareness {
+    /**
+     * A security awareness type, e.g. phishing_awareness
+     * @type {string}
+     * @memberof TradeChatMessageSecurityAwareness
+     */
+    type?: string;
+    /**
+     * A user message type, e.g. moderator_msg, obvious_link, attachment.
+     * @type {string}
+     * @memberof TradeChatMessageSecurityAwareness
+     */
+    messageType?: string;
 }
 /**
  * 
@@ -4402,6 +5119,12 @@ export interface TradeObject {
      */
     tradeStatus?: TradeObject.TradeStatusEnum;
     /**
+     * Bank accounts that will be used for a given trade.
+     * @type {Array<TradeObjectBankAccounts>}
+     * @memberof TradeObject
+     */
+    bankAccounts?: Array<TradeObjectBankAccounts>;
+    /**
      * Instructions for a trade partner.
      * @type {string}
      * @memberof TradeObject
@@ -4486,7 +5209,7 @@ export interface TradeObject {
      */
     fiatCurrencyCode?: string;
     /**
-     * Deprecated. Use 'fiat_price_per_crypto' and 'crypto_currency_code'.  Fiat price of the offer per BTC (taken from the offer page).
+     * Deprecated. Use 'fiat_price_per_crypto' and 'crypto_currency_code'. Fiat price of the offer per BTC (taken from the offer page).
      * @type {number}
      * @memberof TradeObject
      */
@@ -4689,6 +5412,25 @@ export namespace TradeObject {
 /**
  * 
  * @export
+ * @interface TradeObjectBankAccounts
+ */
+export interface TradeObjectBankAccounts {
+    /**
+     * Bank account to which money will be transferred.
+     * @type {Array<BankAccountResponse>}
+     * @memberof TradeObjectBankAccounts
+     */
+    to?: Array<BankAccountResponse>;
+    /**
+     * Bank account from which money will be transferred.
+     * @type {Array<BankAccountResponse>}
+     * @memberof TradeObjectBankAccounts
+     */
+    from?: Array<BankAccountResponse>;
+}
+/**
+ * 
+ * @export
  * @interface TradeObjectBuyerFullName
  */
 export interface TradeObjectBuyerFullName {
@@ -4746,6 +5488,19 @@ export interface TradeStartResponse {
 /**
  * 
  * @export
+ * @interface TradeUsebankaccountBody
+ */
+export interface TradeUsebankaccountBody extends RequestBodyBankAccountId {
+    /**
+     * A hash (ID) of the trade.
+     * @type {string}
+     * @memberof TradeUsebankaccountBody
+     */
+    tradeHash: string;
+}
+/**
+ * 
+ * @export
  * @interface Transaction
  */
 export interface Transaction {
@@ -4780,7 +5535,7 @@ export interface Transaction {
      */
     sentTo?: string;
     /**
-     * User note from transaction history.  Being on marketplace (https://paxful.com/account/transactions) a user is able to leave notes to certain transactions. If such were left, then they will be returned in this field.
+     * User note from transaction history. Being on marketplace (https://paxful.com/account/transactions) a user is able to leave notes to certain transactions. If such were left, then they will be returned in this field.
      * @type {string}
      * @memberof Transaction
      */
@@ -5006,6 +5761,12 @@ export interface UserBlockedListResponse {
  */
 export interface UserInfoObject {
     /**
+     * A unique identifier of a user. User can change his/her username once after registration, hence if you need a reliable identifier of a user that will never be changed then use this parameter.
+     * @type {string}
+     * @memberof UserInfoObject
+     */
+    uid?: string;
+    /**
      * Time when a user joined, e.g. '3 months ago'.
      * @type {string}
      * @memberof UserInfoObject
@@ -5144,6 +5905,12 @@ export interface UserInfoObject {
  * @interface UserMeObject
  */
 export interface UserMeObject {
+    /**
+     * A unique identifier of a user. User can change his/her username once after registration, hence if you need a reliable identifier of a user that will never be changed then use this parameter.
+     * @type {string}
+     * @memberof UserMeObject
+     */
+    uid?: string;
     /**
      * Time when a user joined, e.g. '3 months ago'.
      * @type {string}
@@ -5535,6 +6302,484 @@ export interface WalletNewAddressResponse {
     cryptoCurrencyCode?: string;
 }
 /**
+ * BankApi - fetch parameter creator
+ * @export
+ */
+export const BankApiFetchParamCreator = {
+    /**
+     * Fetch all available banks for the specified country.
+     * @summary bank/list
+     * @param {string} [countryIso] ISO country code of the offer owner.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    bankList(countryIso?: string, options: any = {}): FetchArgs {
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/bank/list`;
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        const localVarFormParams = new url.URLSearchParams();
+        if (countryIso !== undefined) {
+            localVarFormParams.set('country_iso', countryIso as any);
+        }
+
+        localVarHeaderParameter['Content-Type'] = 'application/x-www-form-urlencoded';
+
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+        localVarRequestOptions.body = localVarFormParams.toString();
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+};
+
+export type BankApiBankListParams = {
+    /**
+     * ISO country code of the offer owner.
+     */
+    countryIso?: string;
+
+}
+
+
+/**
+ * BankApi
+ * @export
+ * @class BankApi
+ * @extends {BaseAPI}
+ */
+export class BankApi extends BaseAPI {
+    /**
+     * Fetch all available banks for the specified country.
+     * @summary bank/list
+     * @param { BankApiBankListParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BankApi
+     */
+    public list(params?: BankApiBankListParams, options?: any): Promise<InlineResponse2001> {
+        const localVarFetchArgs = BankApiFetchParamCreator.bankList(params?.countryIso, options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+}
+/**
+ * BankAccountApi - fetch parameter creator
+ * @export
+ */
+export const BankAccountApiFetchParamCreator = {
+    /**
+     * Create bank account.
+     * @summary bank-account/create
+     * @param {string} [iban] IBAN.
+     * @param {string} [ifsc] IFSC.
+     * @param {string} [clabe] Clabe.
+     * @param {string} [bankName] Bank name.
+     * @param {string} [bankUuid] Bank ID.
+     * @param {string} [swiftCode] Swift code.
+     * @param {string} [countryIso] ISO country code of the offer owner.
+     * @param {string} [holderName] Holder name.
+     * @param {boolean} [isPersonal] Is personal or business account.
+     * @param {string} [accountNumber] Bank account number.
+     * @param {string} [routingNumber] Routing number.
+     * @param {string} [additionalInfo] Additional information about bank account with country-specific data.
+     * @param {string} [fiatCurrencyCode] 3 letter ISO code for fiat currency.
+     * @param {Array<InternationalDetailsObject>} [internationalDetails] International details.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    bankAccountCreate(iban?: string, ifsc?: string, clabe?: string, bankName?: string, bankUuid?: string, swiftCode?: string, countryIso?: string, holderName?: string, isPersonal?: boolean, accountNumber?: string, routingNumber?: string, additionalInfo?: string, fiatCurrencyCode?: string, internationalDetails?: Array<InternationalDetailsObject>, options: any = {}): FetchArgs {
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/bank-account/create`;
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        const localVarFormParams = new url.URLSearchParams();
+        if (iban !== undefined) {
+            localVarFormParams.set('iban', iban as any);
+        }
+
+        if (ifsc !== undefined) {
+            localVarFormParams.set('ifsc', ifsc as any);
+        }
+
+        if (clabe !== undefined) {
+            localVarFormParams.set('clabe', clabe as any);
+        }
+
+        if (bankName !== undefined) {
+            localVarFormParams.set('bank_name', bankName as any);
+        }
+
+        if (bankUuid !== undefined) {
+            localVarFormParams.set('bank_uuid', bankUuid as any);
+        }
+
+        if (swiftCode !== undefined) {
+            localVarFormParams.set('swift_code', swiftCode as any);
+        }
+
+        if (countryIso !== undefined) {
+            localVarFormParams.set('country_iso', countryIso as any);
+        }
+
+        if (holderName !== undefined) {
+            localVarFormParams.set('holder_name', holderName as any);
+        }
+
+        if (isPersonal !== undefined) {
+            localVarFormParams.set('is_personal', isPersonal as any);
+        }
+
+        if (accountNumber !== undefined) {
+            localVarFormParams.set('account_number', accountNumber as any);
+        }
+
+        if (routingNumber !== undefined) {
+            localVarFormParams.set('routing_number', routingNumber as any);
+        }
+
+        if (additionalInfo !== undefined) {
+            localVarFormParams.set('additional_info', additionalInfo as any);
+        }
+
+        if (fiatCurrencyCode !== undefined) {
+            localVarFormParams.set('fiat_currency_code', fiatCurrencyCode as any);
+        }
+
+        if (internationalDetails) {
+            internationalDetails.forEach((element) => {
+                localVarFormParams.append('international_details', element as any);
+            })
+        }
+
+        localVarHeaderParameter['Content-Type'] = 'application/x-www-form-urlencoded';
+
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+        localVarRequestOptions.body = localVarFormParams.toString();
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Delete bank account.
+     * @summary bank-account/delete
+     * @param {string} [bankAccountUuid] Bank account uuid.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    bankAccountDelete(bankAccountUuid?: string, options: any = {}): FetchArgs {
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/bank-account/delete`;
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        const localVarFormParams = new url.URLSearchParams();
+        if (bankAccountUuid !== undefined) {
+            localVarFormParams.set('bank_account_uuid', bankAccountUuid as any);
+        }
+
+        localVarHeaderParameter['Content-Type'] = 'application/x-www-form-urlencoded';
+
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+        localVarRequestOptions.body = localVarFormParams.toString();
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Show bank account.
+     * @summary bank-account/get
+     * @param {string} [bankAccountUuid] Bank account uuid.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    bankAccountGet(bankAccountUuid?: string, options: any = {}): FetchArgs {
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/bank-account/get`;
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        const localVarFormParams = new url.URLSearchParams();
+        if (bankAccountUuid !== undefined) {
+            localVarFormParams.set('bank_account_uuid', bankAccountUuid as any);
+        }
+
+        localVarHeaderParameter['Content-Type'] = 'application/x-www-form-urlencoded';
+
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+        localVarRequestOptions.body = localVarFormParams.toString();
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Fetch all available bank accounts.
+     * @summary bank-account/list
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    bankAccountList(options: any = {}): FetchArgs {
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/bank-account/list`;
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Update bank account.
+     * @summary bank-account/update
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    bankAccountUpdate(options: any = {}): FetchArgs {
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/bank-account/update`;
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+};
+
+export type BankAccountApiBankAccountCreateParams = {
+    /**
+     * IBAN.
+     */
+    iban?: string;
+
+    /**
+     * IFSC.
+     */
+    ifsc?: string;
+
+    /**
+     * Clabe.
+     */
+    clabe?: string;
+
+    /**
+     * Bank name.
+     */
+    bankName?: string;
+
+    /**
+     * Bank ID.
+     */
+    bankUuid?: string;
+
+    /**
+     * Swift code.
+     */
+    swiftCode?: string;
+
+    /**
+     * ISO country code of the offer owner.
+     */
+    countryIso?: string;
+
+    /**
+     * Holder name.
+     */
+    holderName?: string;
+
+    /**
+     * Is personal or business account.
+     */
+    isPersonal?: boolean;
+
+    /**
+     * Bank account number.
+     */
+    accountNumber?: string;
+
+    /**
+     * Routing number.
+     */
+    routingNumber?: string;
+
+    /**
+     * Additional information about bank account with country-specific data.
+     */
+    additionalInfo?: string;
+
+    /**
+     * 3 letter ISO code for fiat currency.
+     */
+    fiatCurrencyCode?: string;
+
+    /**
+     * International details.
+     */
+    internationalDetails?: Array<InternationalDetailsObject>;
+
+}
+
+export type BankAccountApiBankAccountDeleteParams = {
+    /**
+     * Bank account uuid.
+     */
+    bankAccountUuid?: string;
+
+}
+
+export type BankAccountApiBankAccountGetParams = {
+    /**
+     * Bank account uuid.
+     */
+    bankAccountUuid?: string;
+
+}
+
+export type BankAccountApiBankAccountListParams = {
+}
+
+export type BankAccountApiBankAccountUpdateParams = {
+}
+
+
+/**
+ * BankAccountApi
+ * @export
+ * @class BankAccountApi
+ * @extends {BaseAPI}
+ */
+export class BankAccountApi extends BaseAPI {
+    /**
+     * Create bank account.
+     * @summary bank-account/create
+     * @param { BankAccountApiBankAccountCreateParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BankAccountApi
+     */
+    public create(params?: BankAccountApiBankAccountCreateParams, options?: any): Promise<InlineResponse20034> {
+        const localVarFetchArgs = BankAccountApiFetchParamCreator.bankAccountCreate(params?.iban, params?.ifsc, params?.clabe, params?.bankName, params?.bankUuid, params?.swiftCode, params?.countryIso, params?.holderName, params?.isPersonal, params?.accountNumber, params?.routingNumber, params?.additionalInfo, params?.fiatCurrencyCode, params?.internationalDetails, options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Delete bank account.
+     * @summary bank-account/delete
+     * @param { BankAccountApiBankAccountDeleteParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BankAccountApi
+     */
+    public delete(params?: BankAccountApiBankAccountDeleteParams, options?: any): Promise<ModelObject> {
+        const localVarFetchArgs = BankAccountApiFetchParamCreator.bankAccountDelete(params?.bankAccountUuid, options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Show bank account.
+     * @summary bank-account/get
+     * @param { BankAccountApiBankAccountGetParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BankAccountApi
+     */
+    public get(params?: BankAccountApiBankAccountGetParams, options?: any): Promise<InlineResponse20025> {
+        const localVarFetchArgs = BankAccountApiFetchParamCreator.bankAccountGet(params?.bankAccountUuid, options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Fetch all available bank accounts.
+     * @summary bank-account/list
+     * @param { BankAccountApiBankAccountListParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BankAccountApi
+     */
+    public list(options?: any): Promise<InlineResponse20027> {
+        const localVarFetchArgs = BankAccountApiFetchParamCreator.bankAccountList(options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Update bank account.
+     * @summary bank-account/update
+     * @param { BankAccountApiBankAccountUpdateParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BankAccountApi
+     */
+    public update(options?: any): Promise<InlineResponse20034> {
+        const localVarFetchArgs = BankAccountApiFetchParamCreator.bankAccountUpdate(options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+}
+/**
  * CurrencyApi - fetch parameter creator
  * @export
  */
@@ -5573,7 +6818,7 @@ export const CurrencyApiFetchParamCreator = {
     currencyBtc(response?: string, options: any = {}): FetchArgs {
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/currency/btc`;
         const localVarUrlObj = url.parse(localVarPath, true);
-        const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+        const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
         const localVarHeaderParameter = {};
         const localVarQueryParameter = {};
         if (response !== undefined) {
@@ -5595,12 +6840,45 @@ export const CurrencyApiFetchParamCreator = {
     /**
      * Fetch all marketplace supported fiat currencies and their corresponding rates in crypto and USD.      Authentication is optional.
      * @summary currency/list
-     * @param {string} [locale] 
+     * @param {string} [locale] Locale code, e.g. ru, pt_BR.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     currencyList(locale?: string, options: any = {}): FetchArgs {
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/currency/list`;
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        const localVarFormParams = new url.URLSearchParams();
+        if (locale !== undefined) {
+            localVarFormParams.set('locale', locale as any);
+        }
+
+        localVarHeaderParameter['Content-Type'] = 'application/x-www-form-urlencoded';
+
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+        localVarRequestOptions.body = localVarFormParams.toString();
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Fetch all marketplace supported fiat currencies and their corresponding rates in crypto and USD.     Authentication is required.
+     * @summary currency/list-auth
+     * @param {string} [locale] Locale code, e.g. ru, pt_BR.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    currencyListAuth(locale?: string, options: any = {}): FetchArgs {
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/currency/list-auth`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
         const localVarHeaderParameter = {};
@@ -5655,11 +6933,27 @@ export type CurrencyApiCryptoListParams = {
 }
 
 export type CurrencyApiCurrencyBtcParams = {
+    /**
+     * 
+     */
     response?: string;
+
 }
 
 export type CurrencyApiCurrencyListParams = {
+    /**
+     * Locale code, e.g. ru, pt_BR.
+     */
     locale?: string;
+
+}
+
+export type CurrencyApiCurrencyListAuthParams = {
+    /**
+     * Locale code, e.g. ru, pt_BR.
+     */
+    locale?: string;
+
 }
 
 export type CurrencyApiCurrencyRatesParams = {
@@ -5681,7 +6975,7 @@ export class CurrencyApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CurrencyApi
      */
-    public cryptoList(options?: any): Promise<InlineResponse2008> {
+    public cryptoList(options?: any): Promise<InlineResponse2009> {
         const localVarFetchArgs = CurrencyApiFetchParamCreator.cryptoList(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -5713,8 +7007,24 @@ export class CurrencyApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CurrencyApi
      */
-    public list(params?: CurrencyApiCurrencyListParams, options?: any): Promise<InlineResponse20013> {
+    public list(params?: CurrencyApiCurrencyListParams, options?: any): Promise<InlineResponse20014> {
         const localVarFetchArgs = CurrencyApiFetchParamCreator.currencyList(params?.locale, options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Fetch all marketplace supported fiat currencies and their corresponding rates in crypto and USD.     Authentication is required.
+     * @summary currency/list-auth
+     * @param { CurrencyApiCurrencyListAuthParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CurrencyApi
+     */
+    public listAuth(params?: CurrencyApiCurrencyListAuthParams, options?: any): Promise<InlineResponse20014> {
+        const localVarFetchArgs = CurrencyApiFetchParamCreator.currencyListAuth(params?.locale, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -5746,9 +7056,9 @@ export const FeedbackApiFetchParamCreator = {
     /**
      * Give a feedback for a trade.             NB! Message should be encoded as required per RFC 3986 (i.e. spaces should look like %20).
      * @summary feedback/give
-     * @param {number} rating 
-     * @param {string} message 
-     * @param {string} tradeHash 
+     * @param {number} rating Rating. Possible values: 1(positive), -1(negative).
+     * @param {string} message Feedback message.
+     * @param {string} tradeHash A hash (ID) of the trade.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -5801,11 +7111,13 @@ export const FeedbackApiFetchParamCreator = {
     /**
      * Fetch all feedback either for a user or an offer. Latest feedback is returned first.
      * @summary feedback/list
-     * @param {number} [page] 
-     * @param {string} [role] 
-     * @param {number} [rating] 
-     * @param {string} [username] 
-     * @param {string} [offerHash] 
+     * @param {number} [page] A page to return, 10 feedback per page.
+     * @param {string} [role] What kind of feedack to fetch - either from &#x27;buyers&#x27; or &#x27;sellers&#x27;. Possible values: &#x27;buyer&#x27;, &#x27;seller&#x27;.
+     * @param {number} [rating] Rating. Possible values: 1(positive), -1(negative).
+     * @param {string} [username] Username of a trader who you want to fetch feedback for.
+Either this filter or &#x27;offer_hash&#x27; has to be used, if both are provided then an error will be returned.
+     * @param {string} [offerHash] A hash (ID) of an offer.
+Either this filter or &#x27;username&#x27; has to be used, if both are provided then an error will be returned.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -5854,8 +7166,8 @@ export const FeedbackApiFetchParamCreator = {
     /**
      * Reply to feedback.
      * @summary feedback/reply
-     * @param {string} message 
-     * @param {string} tradeHash 
+     * @param {string} message Reply message.
+     * @param {string} tradeHash A hash (ID) of the trade.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -5900,22 +7212,64 @@ export const FeedbackApiFetchParamCreator = {
 };
 
 export type FeedbackApiFeedbackGiveParams = {
+    /**
+     * Rating. Possible values: 1(positive), -1(negative).
+     */
     rating: number;
+
+    /**
+     * Feedback message.
+     */
     message: string;
+
+    /**
+     * A hash (ID) of the trade.
+     */
     tradeHash: string;
+
 }
 
 export type FeedbackApiFeedbackListParams = {
+    /**
+     * A page to return, 10 feedback per page.
+     */
     page?: number;
+
+    /**
+     * What kind of feedack to fetch - either from &#x27;buyers&#x27; or &#x27;sellers&#x27;. Possible values: &#x27;buyer&#x27;, &#x27;seller&#x27;.
+     */
     role?: string;
+
+    /**
+     * Rating. Possible values: 1(positive), -1(negative).
+     */
     rating?: number;
+
+    /**
+     * Username of a trader who you want to fetch feedback for.
+Either this filter or &#x27;offer_hash&#x27; has to be used, if both are provided then an error will be returned.
+     */
     username?: string;
+
+    /**
+     * A hash (ID) of an offer.
+Either this filter or &#x27;username&#x27; has to be used, if both are provided then an error will be returned.
+     */
     offerHash?: string;
+
 }
 
 export type FeedbackApiFeedbackReplyParams = {
+    /**
+     * Reply message.
+     */
     message: string;
+
+    /**
+     * A hash (ID) of the trade.
+     */
     tradeHash: string;
+
 }
 
 
@@ -5950,7 +7304,7 @@ export class FeedbackApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FeedbackApi
      */
-    public list(params?: FeedbackApiFeedbackListParams, options?: any): Promise<InlineResponse20014> {
+    public list(params?: FeedbackApiFeedbackListParams, options?: any): Promise<InlineResponse20015> {
         const localVarFetchArgs = FeedbackApiFetchParamCreator.feedbackList(params?.page, params?.role, params?.rating, params?.username, params?.offerHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -5983,7 +7337,7 @@ export const KioskApiFetchParamCreator = {
     /**
      * Fetch a list of your Kiosk affiliate transactions. Two types of transactions returned:     commissions you have earned when people trade through your Kiosk,     transfers between affiliate wallet and main wallet.
      * @summary kiosk/transactions
-     * @param {number} [page] 
+     * @param {number} [page] Requested page, by default is 1
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -6016,7 +7370,11 @@ export const KioskApiFetchParamCreator = {
 };
 
 export type KioskApiKioskTransactionsParams = {
+    /**
+     * Requested page, by default is 1
+     */
     page?: number;
+
 }
 
 
@@ -6035,7 +7393,7 @@ export class KioskApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KioskApi
      */
-    public transactions(params?: KioskApiKioskTransactionsParams, options?: any): Promise<InlineResponse20027> {
+    public transactions(params?: KioskApiKioskTransactionsParams, options?: any): Promise<InlineResponse20030> {
         const localVarFetchArgs = KioskApiFetchParamCreator.kioskTransactions(params?.page, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -6052,8 +7410,8 @@ export const NotificationsApiFetchParamCreator = {
     /**
      * Fetch user's notifications, ordered by creation date (latest at the top).
      * @summary notifications/list
-     * @param {number} [page] 
-     * @param {boolean} [isRead] 
+     * @param {number} [page] Requested page, by default is 1. Every page returns up to 50 notifications.
+     * @param {boolean} [isRead] If FALSE then only unread notifications will be returned. If filter is not specified, then both read and unread ones will be returned.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -6138,8 +7496,16 @@ export const NotificationsApiFetchParamCreator = {
 };
 
 export type NotificationsApiNotificationsListParams = {
+    /**
+     * Requested page, by default is 1. Every page returns up to 50 notifications.
+     */
     page?: number;
+
+    /**
+     * If FALSE then only unread notifications will be returned. If filter is not specified, then both read and unread ones will be returned.
+     */
     isRead?: boolean;
+
 }
 
 export type NotificationsApiNotificationsMarkReadParams = {
@@ -6164,7 +7530,7 @@ export class NotificationsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof NotificationsApi
      */
-    public list(params?: NotificationsApiNotificationsListParams, options?: any): Promise<InlineResponse20028> {
+    public list(params?: NotificationsApiNotificationsListParams, options?: any): Promise<InlineResponse20031> {
         const localVarFetchArgs = NotificationsApiFetchParamCreator.notificationsList(params?.page, params?.isRead, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -6196,7 +7562,7 @@ export class NotificationsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof NotificationsApi
      */
-    public unreadCount(options?: any): Promise<InlineResponse20034> {
+    public unreadCount(options?: any): Promise<InlineResponse20038> {
         const localVarFetchArgs = NotificationsApiFetchParamCreator.notificationsUnreadCount(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -6213,7 +7579,7 @@ export const OfferApiFetchParamCreator = {
     /**
      * Activate an offer.
      * @summary offer/activate
-     * @param {string} offerHash 
+     * @param {string} offerHash A hash (ID) of the offer.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -6250,25 +7616,29 @@ export const OfferApiFetchParamCreator = {
     /**
      * Fetch offers. Authentication is optional         (replaces deprecated method of /buy-bitcoin?format=json, results are cached for 1 minute).
      * @summary offer/all
-     * @param {string} type 
-     * @param {string} group 
-     * @param {number} limit 
-     * @param {number} offset 
-     * @param {number} fiatMin 
-     * @param {number} geonameId 
-     * @param {number} marginMax 
-     * @param {number} marginMin 
-     * @param {string} offerType 
-     * @param {string} userTypes 
-     * @param {number} locationId 
-     * @param {string} userCountry 
-     * @param {string} currencyCode 
-     * @param {string} paymentMethod 
-     * @param {number} fiatAmountMax 
-     * @param {number} fiatAmountMin 
-     * @param {string} cryptoCurrencyCode 
-     * @param {number} fiatFixedPriceMax 
-     * @param {number} fiatFixedPriceMin 
+     * @param {string} type Will return offers of given type without applying a domain logic that &#x27;offer_type&#x27; filter has. If you specify &#x27;sell&#x27; then offers with this type will be returned and so on. See also offer_type filter. Either &#x27;offer_type&#x27; or &#x27;type&#x27; filter needs to be provided. If &#x27;offer_type&#x27; filter is provided then this filter will be ignored. Possible values: &#x27;buy&#x27;, &#x27;sell&#x27;.
+     * @param {string} group A group of payment methods(slug). For a list of available payment method groups please refer to payment-method-group/list endpoint.
+     * @param {number} limit How many offers to return.
+     * @param {number} offset An offset for a result.
+     * @param {number} fiatMin Will return offers where this value either fits into trade limits or equals to a predefined amount.
+     * @param {number} geonameId Deprecated field. Please use location_id.
+     * @param {number} marginMax Search offers with margin less than the value. Ignored when offer is of fixed price.
+     * @param {number} marginMin Search offers with margin greater than the value. Ignored when offer is of fixed price.
+     * @param {string} offerType If you would like to get offers that you can use &lt;b&gt;to buy crypto&lt;/b&gt;, then in fact you need to see offers &lt;b&gt;where other vendors are selling crypto&lt;/b&gt;, hence you need to specify &#x27;buy&#x27; to get &#x27;sell&#x27; offers and vice versa. If you just would like to get offers filtered by type they have, then you can use &#x27;type&#x27; parameter instead. Either &#x27;offer_type&#x27; or &#x27;type&#x27; filter needs to be provided. If this filter is provided then &#x27;type&#x27; will be ignored.
+     * @param {string} userTypes Comma separated list of user types whose offers to return - i.e. power_trader, expert_trader. For a list of all available user types please refer to user/types endpoint. You can also provide “all” value, in this case offers of users of either available type will be returned.
+     * @param {number} locationId Location id is needed to search
+for offers with specific payment methods, e.g. Cash in Person, Gold. If payment method is another - parameter will be ignored.
+You can find location ids here: https://www.geonames.org/.
+For better experience use locations ids of countries and cities.
+     * @param {string} userCountry ISO country code, e.g. &#x27;US&#x27;. Filter offers by available payment methods in the given country. Please use &#x27;WORLDWIDE&#x27; if you want to get offers from all countries.
+For authenticated user by default automatically detected country will be used. For non-authenticated user &#x27;US&#x27; will be used. This filter corresponds to &#x27;Offer location&#x27; filter available on marketplace.
+     * @param {string} currencyCode 3 letter ISO code for fiat currency. &#x27;USD&#x27; or any other. Case insensitive.
+     * @param {string} paymentMethod A slug of the payment method. To see a list of payment method slugs please refer to payment-method/list endpoint.
+     * @param {number} fiatAmountMax Search offers with trade limit less than the value.
+     * @param {number} fiatAmountMin Search offers with trade limit greater than the value.
+     * @param {string} cryptoCurrencyCode A filter by crypto currency code, default is &#x27;btc&#x27;. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
+     * @param {number} fiatFixedPriceMax Search offers with fiat price per crypto less than the value.
+     * @param {number} fiatFixedPriceMin Search offers with fiat price per crypto greater than the value.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -6449,32 +7819,38 @@ export const OfferApiFetchParamCreator = {
     /**
      * Create an offer.
      * @summary offer/create
-     * @param {string} tags 
-     * @param {number} margin 
-     * @param {string} currency 
-     * @param {number} rangeMax 
-     * @param {number} rangeMin 
-     * @param {number} fixedPrice 
-     * @param {number} locationId 
-     * @param {string} offerTerms 
-     * @param {string} tradeDetails 
-     * @param {boolean} isFixedPrice 
-     * @param {string} paymentMethod 
-     * @param {number} paymentWindow 
-     * @param {string} cryptoCurrency 
-     * @param {string} paymentCountry 
-     * @param {string} offerTypeField 
-     * @param {string} predefinedAmount 
-     * @param {string} paymentMethodGroup 
-     * @param {string} paymentMethodLabel 
-     * @param {boolean} showOnlyTrustedUser 
-     * @param {string} countryLimitationList 
-     * @param {string} countryLimitationType 
-     * @param {number} requireMinPastTrades 
+     * @param {string} tags Comma-separated list of tags. For a list of available tags please refer to offer-tag/list and use &#x27;slug&#x27; parameter.
+     * @param {number} margin A percent that determines differences between market price and the price of the offer.
+     * @param {string} currency 3 letter ISO code for fiat currency. &#x27;USD&#x27; or any other. Case insensitive.
+     * @param {string} flowType A flow type for offer.
+     * @param {number} rangeMax A maximum value of the trade limit, i.e the largest amount of fiat that a trade can be started with. (Minimum value for the field 1).
+     * @param {number} rangeMin A minimum value of the trade limit, i.e the smallest amount of fiat that a trade can be started with. (Minimum value for the field 1).
+     * @param {number} fixedPrice Should be used only if the offer is created as a fixed price offer. If this parameter is used then &#x27;margin&#x27; should not be specified.
+     * @param {number} locationId Location id is needed to search for offers with specific payment methods,
+e.g. Cash in Person, Gold. If payment method is another - parameter will be ignored.
+You can find location ids here: https://www.geonames.org/.
+For better experience use locations ids of countries and cities.
+     * @param {string} offerTerms Terms of the offer for a trade partner. String up to 2500 characters.
+     * @param {string} bankAccounts Comma-separated list of bank account UUIDs.
+     * @param {string} tradeDetails Instructions for a trade partner. String up to 2500 characters.
+     * @param {boolean} isFixedPrice Fixes the price of your cryptocurrency, rather than using the market price. If this field is used, then you should also specify a value for &#x27;fixed_price&#x27;.
+     * @param {string} paymentMethod A slug of the payment method. To see a list of payment method slugs please refer to payment-method/list endpoint.
+     * @param {number} paymentWindow How much time the trade partner has to make the payment and click &#x27;Paid&#x27; before the trade is automatically canceled. Integer between 30 to 43200.
+     * @param {string} cryptoCurrency A cryptocurrency that this offer will use, a code should be specified. For example - btc, eth. If not set, then &#x27;btc&#x27; will be used as a default.
+     * @param {string} paymentCountry 3 letter ISO country code (e.g. USA, EST, fra, etc.). If the payment method is country-specific, specify the most relevant country associated with this payment method.
+     * @param {string} offerTypeField An offer type. Possible values: &#x27;buy&#x27;, &#x27;sell&#x27;.
+     * @param {string} predefinedAmount Comma-separated predefined amounts of fiat currency, i.e. 20,30,50. If not specified, then a user can enter any amount within the offer range.
+     * @param {string} paymentMethodGroup A group of payment methods. For a list of available payment method groups please refer to payment-method-group/list endpoint.
+     * @param {string} paymentMethodLabel A bank name will appear after the payment method. Maximum 25 characters and only letters, numbers, and dash. You can write several bank names separated by space. For example: CBS SEB METROPOLITAN ALFA.
+     * @param {OfferUpdateRequestBodyBankReferenceMessage} bankReferenceMessage 
+     * @param {boolean} showOnlyTrustedUser The offer will be shown only to users from the trusted list.
+     * @param {string} countryLimitationList Comma-separated list of &#x27;ISO Alpha-2&#x27; country codes.
+     * @param {string} countryLimitationType Type of limitation countries. Valid values are &#x27;allowed&#x27; or &#x27;disallowed&#x27;. If &#x27;allowed&#x27; is used then the offer will be visible ONLY for visitors from countries specified in the &#x27;country_limitation_list&#x27;. If &#x27;disallowed&#x27; is used then this offer will NOT be visible for visitors from countries specified in the &#x27;country_limitation_list&#x27;.
+     * @param {number} requireMinPastTrades The offer will be shown only to users with a given amount of past trades.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    offerCreate(tags: string, margin: number, currency: string, rangeMax: number, rangeMin: number, fixedPrice: number, locationId: number, offerTerms: string, tradeDetails: string, isFixedPrice: boolean, paymentMethod: string, paymentWindow: number, cryptoCurrency: string, paymentCountry: string, offerTypeField: string, predefinedAmount: string, paymentMethodGroup: string, paymentMethodLabel: string, showOnlyTrustedUser: boolean, countryLimitationList: string, countryLimitationType: string, requireMinPastTrades: number, options: any = {}): FetchArgs {
+    offerCreate(tags: string, margin: number, currency: string, flowType: string, rangeMax: number, rangeMin: number, fixedPrice: number, locationId: number, offerTerms: string, bankAccounts: string, tradeDetails: string, isFixedPrice: boolean, paymentMethod: string, paymentWindow: number, cryptoCurrency: string, paymentCountry: string, offerTypeField: string, predefinedAmount: string, paymentMethodGroup: string, paymentMethodLabel: string, bankReferenceMessage: OfferUpdateRequestBodyBankReferenceMessage, showOnlyTrustedUser: boolean, countryLimitationList: string, countryLimitationType: string, requireMinPastTrades: number, options: any = {}): FetchArgs {
         // verify required parameter 'tags' is not null or undefined
         if (tags === null || tags === undefined) {
             throw new RequiredError('tags','Required parameter tags was null or undefined when calling offerCreate.');
@@ -6486,6 +7862,10 @@ export const OfferApiFetchParamCreator = {
         // verify required parameter 'currency' is not null or undefined
         if (currency === null || currency === undefined) {
             throw new RequiredError('currency','Required parameter currency was null or undefined when calling offerCreate.');
+        }
+        // verify required parameter 'flowType' is not null or undefined
+        if (flowType === null || flowType === undefined) {
+            throw new RequiredError('flowType','Required parameter flowType was null or undefined when calling offerCreate.');
         }
         // verify required parameter 'rangeMax' is not null or undefined
         if (rangeMax === null || rangeMax === undefined) {
@@ -6506,6 +7886,10 @@ export const OfferApiFetchParamCreator = {
         // verify required parameter 'offerTerms' is not null or undefined
         if (offerTerms === null || offerTerms === undefined) {
             throw new RequiredError('offerTerms','Required parameter offerTerms was null or undefined when calling offerCreate.');
+        }
+        // verify required parameter 'bankAccounts' is not null or undefined
+        if (bankAccounts === null || bankAccounts === undefined) {
+            throw new RequiredError('bankAccounts','Required parameter bankAccounts was null or undefined when calling offerCreate.');
         }
         // verify required parameter 'tradeDetails' is not null or undefined
         if (tradeDetails === null || tradeDetails === undefined) {
@@ -6547,6 +7931,10 @@ export const OfferApiFetchParamCreator = {
         if (paymentMethodLabel === null || paymentMethodLabel === undefined) {
             throw new RequiredError('paymentMethodLabel','Required parameter paymentMethodLabel was null or undefined when calling offerCreate.');
         }
+        // verify required parameter 'bankReferenceMessage' is not null or undefined
+        if (bankReferenceMessage === null || bankReferenceMessage === undefined) {
+            throw new RequiredError('bankReferenceMessage','Required parameter bankReferenceMessage was null or undefined when calling offerCreate.');
+        }
         // verify required parameter 'showOnlyTrustedUser' is not null or undefined
         if (showOnlyTrustedUser === null || showOnlyTrustedUser === undefined) {
             throw new RequiredError('showOnlyTrustedUser','Required parameter showOnlyTrustedUser was null or undefined when calling offerCreate.');
@@ -6581,6 +7969,10 @@ export const OfferApiFetchParamCreator = {
             localVarFormParams.set('currency', currency as any);
         }
 
+        if (flowType !== undefined) {
+            localVarFormParams.set('flow_type', flowType as any);
+        }
+
         if (rangeMax !== undefined) {
             localVarFormParams.set('range_max', rangeMax as any);
         }
@@ -6599,6 +7991,10 @@ export const OfferApiFetchParamCreator = {
 
         if (offerTerms !== undefined) {
             localVarFormParams.set('offer_terms', offerTerms as any);
+        }
+
+        if (bankAccounts !== undefined) {
+            localVarFormParams.set('bank_accounts', bankAccounts as any);
         }
 
         if (tradeDetails !== undefined) {
@@ -6641,6 +8037,10 @@ export const OfferApiFetchParamCreator = {
             localVarFormParams.set('payment_method_label', paymentMethodLabel as any);
         }
 
+        if (bankReferenceMessage !== undefined) {
+            localVarFormParams.set('bank_reference_message', bankReferenceMessage as any);
+        }
+
         if (showOnlyTrustedUser !== undefined) {
             localVarFormParams.set('show_only_trusted_user', showOnlyTrustedUser as any);
         }
@@ -6675,7 +8075,7 @@ export const OfferApiFetchParamCreator = {
     /**
      * Deactivate an offer.
      * @summary offer/deactivate
-     * @param {string} offerHash 
+     * @param {string} offerHash A hash (ID) of the offer.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -6712,7 +8112,7 @@ export const OfferApiFetchParamCreator = {
     /**
      * Delete an offer.
      * @summary offer/delete
-     * @param {string} offerHash 
+     * @param {string} offerHash A hash (ID) of the offer.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -6749,7 +8149,7 @@ export const OfferApiFetchParamCreator = {
     /**
      * Fetch information for an offer.
      * @summary offer/get
-     * @param {string} offerHash 
+     * @param {string} offerHash A hash (ID) of the offer.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -6786,8 +8186,8 @@ export const OfferApiFetchParamCreator = {
     /**
      * Return all your offers.
      * @summary offer/list
-     * @param {boolean} active 
-     * @param {string} offerType 
+     * @param {boolean} active A filter by active/not active offers, by default all offers are displayed.
+     * @param {string} offerType An offer type. Possible values: &#x27;buy&#x27;, &#x27;sell&#x27;.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -6832,7 +8232,7 @@ export const OfferApiFetchParamCreator = {
     /**
      * Return a price for an offer         (if offer happens to be in fiat currency other than USD, then it will be recalculated to it).
      * @summary offer/price
-     * @param {string} offerHash 
+     * @param {string} offerHash A hash (ID) of the offer.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -6869,7 +8269,7 @@ export const OfferApiFetchParamCreator = {
     /**
      * Return all prices for offers for a given payment method.
      * @summary offer/prices
-     * @param {string} paymentMethod 
+     * @param {string} paymentMethod A slug of the payment method. To see a list of payment method slugs please refer to payment-method/list endpoint.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -6954,32 +8354,38 @@ export const OfferApiFetchParamCreator = {
     /**
      * Update an offer.
      * @summary offer/update
-     * @param {string} tags 
-     * @param {number} margin 
-     * @param {string} currency 
+     * @param {string} tags Comma-separated list of tags. For a list of available tags please refer to offer-tag/list and use &#x27;slug&#x27; parameter.
+     * @param {number} margin A percent that determines differences between market price and the price of the offer.
+     * @param {string} currency 3 letter ISO code of fiat currency, e.g. USD. Case insensitive.
+     * @param {string} flowType A flow type for offer.
      * @param {OfferUpdateRequestBodyOfferCap} offerCap 
-     * @param {number} rangeMax 
-     * @param {number} rangeMin 
-     * @param {Array<OfferDutyHours>} dutyHours 
-     * @param {string} offerHash 
-     * @param {number} fixedPrice 
-     * @param {number} locationId 
-     * @param {string} offerTerms 
-     * @param {string} tradeDetails 
-     * @param {string} paymentMethod 
-     * @param {number} paymentWindow 
-     * @param {string} paymentCountry 
-     * @param {string} predefinedAmount 
-     * @param {string} paymentMethodGroup 
-     * @param {string} paymentMethodLabel 
-     * @param {boolean} showOnlyTrustedUser 
-     * @param {string} countryLimitationList 
-     * @param {string} countryLimitationType 
-     * @param {boolean} requireMinPastTrades 
+     * @param {number} rangeMax A maximum value of the trade limit, i.e the largest amount of fiat that a trade can be started with. (Minimum value for the field 1).
+     * @param {number} rangeMin A minimum value of the trade limit, i.e the smallest amount of fiat that a trade can be started with. (Minimum value for the field 1).
+     * @param {Array<OfferDutyHours>} dutyHours An array of intervals when the offer is active for the week.
+     * @param {string} offerHash A hash (ID) of the offer.
+     * @param {number} fixedPrice Should be used only if the offer is created as a fixed price offer. If this parameter is used then &#x27;margin&#x27; should not be specified.
+     * @param {number} locationId Location id is needed to search for offers with specific payment methods,
+e.g. Cash in Person, Gold. If payment method is another - parameter will be ignored.
+You can find location ids here: https://www.geonames.org/.
+For better experience use locations ids of countries and cities.
+     * @param {string} offerTerms Terms of the offer for a trade partner. String up to 2500 characters.
+     * @param {string} bankAccounts Comma-separated list of bank account UUIDs.
+     * @param {string} tradeDetails Instructions for a trade partner. String up to 2500 characters.
+     * @param {string} paymentMethod A slug of the payment method. To see a list of payment method slugs please refer to payment-method/list endpoint.
+     * @param {number} paymentWindow How much time the trade partner has to make the payment and click &#x27;Paid&#x27; before the trade is automatically canceled. Integer between 30 to 43200.
+     * @param {string} paymentCountry 3 letter ISO country code (e.g. USA, EST, fra, etc.). If the payment method is country-specific, specify the most relevant country associated with this payment method.
+     * @param {string} predefinedAmount Comma-separated predefined amounts of fiat currency, i.e. 20,30,50. If not specified, then a user can enter any amount within the offer range.
+     * @param {string} paymentMethodGroup A group of payment methods. For a list of available payment method groups please refer to payment-method-group/list endpoint.
+     * @param {string} paymentMethodLabel A bank name will appear after the payment method. Maximum 25 characters and only letters, numbers, and dash. You can write several bank names separated by space, e.g. CBS SEB METROPOLITAN ALFA.
+     * @param {OfferUpdateRequestBodyBankReferenceMessage} bankReferenceMessage 
+     * @param {boolean} showOnlyTrustedUser The offer will be shown only to users from the trusted list.
+     * @param {string} countryLimitationList Comma-separated list of &#x27;ISO Alpha-2&#x27; country codes.
+     * @param {string} countryLimitationType Type of limitation countries. Valid values are &#x27;allowed&#x27; or &#x27;disallowed&#x27;. If &#x27;allowed&#x27; is used then the offer will be visible ONLY for visitors from countries specified in the &#x27;country_limitation_list&#x27;. If &#x27;disallowed&#x27; is used then this offer will NOT be visible for visitors from countries specified in the &#x27;country_limitation_list&#x27;.
+     * @param {boolean} requireMinPastTrades The offer will be shown only to users with a given amount of past trades.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    offerUpdate(tags: string, margin: number, currency: string, offerCap: OfferUpdateRequestBodyOfferCap, rangeMax: number, rangeMin: number, dutyHours: Array<OfferDutyHours>, offerHash: string, fixedPrice: number, locationId: number, offerTerms: string, tradeDetails: string, paymentMethod: string, paymentWindow: number, paymentCountry: string, predefinedAmount: string, paymentMethodGroup: string, paymentMethodLabel: string, showOnlyTrustedUser: boolean, countryLimitationList: string, countryLimitationType: string, requireMinPastTrades: boolean, options: any = {}): FetchArgs {
+    offerUpdate(tags: string, margin: number, currency: string, flowType: string, offerCap: OfferUpdateRequestBodyOfferCap, rangeMax: number, rangeMin: number, dutyHours: Array<OfferDutyHours>, offerHash: string, fixedPrice: number, locationId: number, offerTerms: string, bankAccounts: string, tradeDetails: string, paymentMethod: string, paymentWindow: number, paymentCountry: string, predefinedAmount: string, paymentMethodGroup: string, paymentMethodLabel: string, bankReferenceMessage: OfferUpdateRequestBodyBankReferenceMessage, showOnlyTrustedUser: boolean, countryLimitationList: string, countryLimitationType: string, requireMinPastTrades: boolean, options: any = {}): FetchArgs {
         // verify required parameter 'tags' is not null or undefined
         if (tags === null || tags === undefined) {
             throw new RequiredError('tags','Required parameter tags was null or undefined when calling offerUpdate.');
@@ -6991,6 +8397,10 @@ export const OfferApiFetchParamCreator = {
         // verify required parameter 'currency' is not null or undefined
         if (currency === null || currency === undefined) {
             throw new RequiredError('currency','Required parameter currency was null or undefined when calling offerUpdate.');
+        }
+        // verify required parameter 'flowType' is not null or undefined
+        if (flowType === null || flowType === undefined) {
+            throw new RequiredError('flowType','Required parameter flowType was null or undefined when calling offerUpdate.');
         }
         // verify required parameter 'offerCap' is not null or undefined
         if (offerCap === null || offerCap === undefined) {
@@ -7024,6 +8434,10 @@ export const OfferApiFetchParamCreator = {
         if (offerTerms === null || offerTerms === undefined) {
             throw new RequiredError('offerTerms','Required parameter offerTerms was null or undefined when calling offerUpdate.');
         }
+        // verify required parameter 'bankAccounts' is not null or undefined
+        if (bankAccounts === null || bankAccounts === undefined) {
+            throw new RequiredError('bankAccounts','Required parameter bankAccounts was null or undefined when calling offerUpdate.');
+        }
         // verify required parameter 'tradeDetails' is not null or undefined
         if (tradeDetails === null || tradeDetails === undefined) {
             throw new RequiredError('tradeDetails','Required parameter tradeDetails was null or undefined when calling offerUpdate.');
@@ -7051,6 +8465,10 @@ export const OfferApiFetchParamCreator = {
         // verify required parameter 'paymentMethodLabel' is not null or undefined
         if (paymentMethodLabel === null || paymentMethodLabel === undefined) {
             throw new RequiredError('paymentMethodLabel','Required parameter paymentMethodLabel was null or undefined when calling offerUpdate.');
+        }
+        // verify required parameter 'bankReferenceMessage' is not null or undefined
+        if (bankReferenceMessage === null || bankReferenceMessage === undefined) {
+            throw new RequiredError('bankReferenceMessage','Required parameter bankReferenceMessage was null or undefined when calling offerUpdate.');
         }
         // verify required parameter 'showOnlyTrustedUser' is not null or undefined
         if (showOnlyTrustedUser === null || showOnlyTrustedUser === undefined) {
@@ -7084,6 +8502,10 @@ export const OfferApiFetchParamCreator = {
 
         if (currency !== undefined) {
             localVarFormParams.set('currency', currency as any);
+        }
+
+        if (flowType !== undefined) {
+            localVarFormParams.set('flow_type', flowType as any);
         }
 
         if (offerCap !== undefined) {
@@ -7120,6 +8542,10 @@ export const OfferApiFetchParamCreator = {
             localVarFormParams.set('offer_terms', offerTerms as any);
         }
 
+        if (bankAccounts !== undefined) {
+            localVarFormParams.set('bank_accounts', bankAccounts as any);
+        }
+
         if (tradeDetails !== undefined) {
             localVarFormParams.set('trade_details', tradeDetails as any);
         }
@@ -7146,6 +8572,10 @@ export const OfferApiFetchParamCreator = {
 
         if (paymentMethodLabel !== undefined) {
             localVarFormParams.set('payment_method_label', paymentMethodLabel as any);
+        }
+
+        if (bankReferenceMessage !== undefined) {
+            localVarFormParams.set('bank_reference_message', bankReferenceMessage as any);
         }
 
         if (showOnlyTrustedUser !== undefined) {
@@ -7182,9 +8612,9 @@ export const OfferApiFetchParamCreator = {
     /**
      * Updates an offer margin or fixed price value.         Which field to use depends on offer type if it is a fixed price or uses a margin.
      * @summary offer/update-price
-     * @param {number} margin 
-     * @param {string} offerHash 
-     * @param {number} fixedPrice 
+     * @param {number} margin A percent that determines differences between market price and the price of the offer.
+     * @param {string} offerHash A hash (ID) of the offer.
+     * @param {number} fixedPrice Should be used only if the offer is created as a fixed price offer. If this parameter is used then &#x27;margin&#x27; should not be specified.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -7237,79 +8667,297 @@ export const OfferApiFetchParamCreator = {
 };
 
 export type OfferApiOfferActivateParams = {
+    /**
+     * A hash (ID) of the offer.
+     */
     offerHash: string;
+
 }
 
 export type OfferApiOfferAllParams = {
+    /**
+     * Will return offers of given type without applying a domain logic that &#x27;offer_type&#x27; filter has. If you specify &#x27;sell&#x27; then offers with this type will be returned and so on. See also offer_type filter. Either &#x27;offer_type&#x27; or &#x27;type&#x27; filter needs to be provided. If &#x27;offer_type&#x27; filter is provided then this filter will be ignored. Possible values: &#x27;buy&#x27;, &#x27;sell&#x27;.
+     */
     type: string;
+
+    /**
+     * A group of payment methods(slug). For a list of available payment method groups please refer to payment-method-group/list endpoint.
+     */
     group: string;
+
+    /**
+     * How many offers to return.
+     */
     limit: number;
+
+    /**
+     * An offset for a result.
+     */
     offset: number;
+
+    /**
+     * Will return offers where this value either fits into trade limits or equals to a predefined amount.
+     */
     fiatMin: number;
+
+    /**
+     * Deprecated field. Please use location_id.
+     */
     geonameId: number;
+
+    /**
+     * Search offers with margin less than the value. Ignored when offer is of fixed price.
+     */
     marginMax: number;
+
+    /**
+     * Search offers with margin greater than the value. Ignored when offer is of fixed price.
+     */
     marginMin: number;
+
+    /**
+     * If you would like to get offers that you can use &lt;b&gt;to buy crypto&lt;/b&gt;, then in fact you need to see offers &lt;b&gt;where other vendors are selling crypto&lt;/b&gt;, hence you need to specify &#x27;buy&#x27; to get &#x27;sell&#x27; offers and vice versa. If you just would like to get offers filtered by type they have, then you can use &#x27;type&#x27; parameter instead. Either &#x27;offer_type&#x27; or &#x27;type&#x27; filter needs to be provided. If this filter is provided then &#x27;type&#x27; will be ignored.
+     */
     offerType: string;
+
+    /**
+     * Comma separated list of user types whose offers to return - i.e. power_trader, expert_trader. For a list of all available user types please refer to user/types endpoint. You can also provide “all” value, in this case offers of users of either available type will be returned.
+     */
     userTypes: string;
+
+    /**
+     * Location id is needed to search
+for offers with specific payment methods, e.g. Cash in Person, Gold. If payment method is another - parameter will be ignored.
+You can find location ids here: https://www.geonames.org/.
+For better experience use locations ids of countries and cities.
+     */
     locationId: number;
+
+    /**
+     * ISO country code, e.g. &#x27;US&#x27;. Filter offers by available payment methods in the given country. Please use &#x27;WORLDWIDE&#x27; if you want to get offers from all countries.
+For authenticated user by default automatically detected country will be used. For non-authenticated user &#x27;US&#x27; will be used. This filter corresponds to &#x27;Offer location&#x27; filter available on marketplace.
+     */
     userCountry: string;
+
+    /**
+     * 3 letter ISO code for fiat currency. &#x27;USD&#x27; or any other. Case insensitive.
+     */
     currencyCode: string;
+
+    /**
+     * A slug of the payment method. To see a list of payment method slugs please refer to payment-method/list endpoint.
+     */
     paymentMethod: string;
+
+    /**
+     * Search offers with trade limit less than the value.
+     */
     fiatAmountMax: number;
+
+    /**
+     * Search offers with trade limit greater than the value.
+     */
     fiatAmountMin: number;
+
+    /**
+     * A filter by crypto currency code, default is &#x27;btc&#x27;. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
+     */
     cryptoCurrencyCode: string;
+
+    /**
+     * Search offers with fiat price per crypto less than the value.
+     */
     fiatFixedPriceMax: number;
+
+    /**
+     * Search offers with fiat price per crypto greater than the value.
+     */
     fiatFixedPriceMin: number;
+
 }
 
 export type OfferApiOfferCreateParams = {
+    /**
+     * Comma-separated list of tags. For a list of available tags please refer to offer-tag/list and use &#x27;slug&#x27; parameter.
+     */
     tags: string;
+
+    /**
+     * A percent that determines differences between market price and the price of the offer.
+     */
     margin: number;
+
+    /**
+     * 3 letter ISO code for fiat currency. &#x27;USD&#x27; or any other. Case insensitive.
+     */
     currency: string;
+
+    /**
+     * A flow type for offer.
+     */
+    flowType: string;
+
+    /**
+     * A maximum value of the trade limit, i.e the largest amount of fiat that a trade can be started with. (Minimum value for the field 1).
+     */
     rangeMax: number;
+
+    /**
+     * A minimum value of the trade limit, i.e the smallest amount of fiat that a trade can be started with. (Minimum value for the field 1).
+     */
     rangeMin: number;
+
+    /**
+     * Should be used only if the offer is created as a fixed price offer. If this parameter is used then &#x27;margin&#x27; should not be specified.
+     */
     fixedPrice: number;
+
+    /**
+     * Location id is needed to search for offers with specific payment methods,
+e.g. Cash in Person, Gold. If payment method is another - parameter will be ignored.
+You can find location ids here: https://www.geonames.org/.
+For better experience use locations ids of countries and cities.
+     */
     locationId: number;
+
+    /**
+     * Terms of the offer for a trade partner. String up to 2500 characters.
+     */
     offerTerms: string;
+
+    /**
+     * Comma-separated list of bank account UUIDs.
+     */
+    bankAccounts: string;
+
+    /**
+     * Instructions for a trade partner. String up to 2500 characters.
+     */
     tradeDetails: string;
+
+    /**
+     * Fixes the price of your cryptocurrency, rather than using the market price. If this field is used, then you should also specify a value for &#x27;fixed_price&#x27;.
+     */
     isFixedPrice: boolean;
+
+    /**
+     * A slug of the payment method. To see a list of payment method slugs please refer to payment-method/list endpoint.
+     */
     paymentMethod: string;
+
+    /**
+     * How much time the trade partner has to make the payment and click &#x27;Paid&#x27; before the trade is automatically canceled. Integer between 30 to 43200.
+     */
     paymentWindow: number;
+
+    /**
+     * A cryptocurrency that this offer will use, a code should be specified. For example - btc, eth. If not set, then &#x27;btc&#x27; will be used as a default.
+     */
     cryptoCurrency: string;
+
+    /**
+     * 3 letter ISO country code (e.g. USA, EST, fra, etc.). If the payment method is country-specific, specify the most relevant country associated with this payment method.
+     */
     paymentCountry: string;
+
+    /**
+     * An offer type. Possible values: &#x27;buy&#x27;, &#x27;sell&#x27;.
+     */
     offerTypeField: string;
+
+    /**
+     * Comma-separated predefined amounts of fiat currency, i.e. 20,30,50. If not specified, then a user can enter any amount within the offer range.
+     */
     predefinedAmount: string;
+
+    /**
+     * A group of payment methods. For a list of available payment method groups please refer to payment-method-group/list endpoint.
+     */
     paymentMethodGroup: string;
+
+    /**
+     * A bank name will appear after the payment method. Maximum 25 characters and only letters, numbers, and dash. You can write several bank names separated by space. For example: CBS SEB METROPOLITAN ALFA.
+     */
     paymentMethodLabel: string;
+
+    /**
+     * 
+     */
+    bankReferenceMessage: OfferUpdateRequestBodyBankReferenceMessage;
+
+    /**
+     * The offer will be shown only to users from the trusted list.
+     */
     showOnlyTrustedUser: boolean;
+
+    /**
+     * Comma-separated list of &#x27;ISO Alpha-2&#x27; country codes.
+     */
     countryLimitationList: string;
+
+    /**
+     * Type of limitation countries. Valid values are &#x27;allowed&#x27; or &#x27;disallowed&#x27;. If &#x27;allowed&#x27; is used then the offer will be visible ONLY for visitors from countries specified in the &#x27;country_limitation_list&#x27;. If &#x27;disallowed&#x27; is used then this offer will NOT be visible for visitors from countries specified in the &#x27;country_limitation_list&#x27;.
+     */
     countryLimitationType: string;
+
+    /**
+     * The offer will be shown only to users with a given amount of past trades.
+     */
     requireMinPastTrades: number;
+
 }
 
 export type OfferApiOfferDeactivateParams = {
+    /**
+     * A hash (ID) of the offer.
+     */
     offerHash: string;
+
 }
 
 export type OfferApiOfferDeleteParams = {
+    /**
+     * A hash (ID) of the offer.
+     */
     offerHash: string;
+
 }
 
 export type OfferApiOfferGetParams = {
+    /**
+     * A hash (ID) of the offer.
+     */
     offerHash: string;
+
 }
 
 export type OfferApiOfferListParams = {
+    /**
+     * A filter by active/not active offers, by default all offers are displayed.
+     */
     active: boolean;
+
+    /**
+     * An offer type. Possible values: &#x27;buy&#x27;, &#x27;sell&#x27;.
+     */
     offerType: string;
+
 }
 
 export type OfferApiOfferPriceParams = {
+    /**
+     * A hash (ID) of the offer.
+     */
     offerHash: string;
+
 }
 
 export type OfferApiOfferPricesParams = {
+    /**
+     * A slug of the payment method. To see a list of payment method slugs please refer to payment-method/list endpoint.
+     */
     paymentMethod: string;
+
 }
 
 export type OfferApiOfferTurnOffParams = {
@@ -7319,34 +8967,152 @@ export type OfferApiOfferTurnOnParams = {
 }
 
 export type OfferApiOfferUpdateParams = {
+    /**
+     * Comma-separated list of tags. For a list of available tags please refer to offer-tag/list and use &#x27;slug&#x27; parameter.
+     */
     tags: string;
+
+    /**
+     * A percent that determines differences between market price and the price of the offer.
+     */
     margin: number;
+
+    /**
+     * 3 letter ISO code of fiat currency, e.g. USD. Case insensitive.
+     */
     currency: string;
+
+    /**
+     * A flow type for offer.
+     */
+    flowType: string;
+
+    /**
+     * 
+     */
     offerCap: OfferUpdateRequestBodyOfferCap;
+
+    /**
+     * A maximum value of the trade limit, i.e the largest amount of fiat that a trade can be started with. (Minimum value for the field 1).
+     */
     rangeMax: number;
+
+    /**
+     * A minimum value of the trade limit, i.e the smallest amount of fiat that a trade can be started with. (Minimum value for the field 1).
+     */
     rangeMin: number;
+
+    /**
+     * An array of intervals when the offer is active for the week.
+     */
     dutyHours: Array<OfferDutyHours>;
+
+    /**
+     * A hash (ID) of the offer.
+     */
     offerHash: string;
+
+    /**
+     * Should be used only if the offer is created as a fixed price offer. If this parameter is used then &#x27;margin&#x27; should not be specified.
+     */
     fixedPrice: number;
+
+    /**
+     * Location id is needed to search for offers with specific payment methods,
+e.g. Cash in Person, Gold. If payment method is another - parameter will be ignored.
+You can find location ids here: https://www.geonames.org/.
+For better experience use locations ids of countries and cities.
+     */
     locationId: number;
+
+    /**
+     * Terms of the offer for a trade partner. String up to 2500 characters.
+     */
     offerTerms: string;
+
+    /**
+     * Comma-separated list of bank account UUIDs.
+     */
+    bankAccounts: string;
+
+    /**
+     * Instructions for a trade partner. String up to 2500 characters.
+     */
     tradeDetails: string;
+
+    /**
+     * A slug of the payment method. To see a list of payment method slugs please refer to payment-method/list endpoint.
+     */
     paymentMethod: string;
+
+    /**
+     * How much time the trade partner has to make the payment and click &#x27;Paid&#x27; before the trade is automatically canceled. Integer between 30 to 43200.
+     */
     paymentWindow: number;
+
+    /**
+     * 3 letter ISO country code (e.g. USA, EST, fra, etc.). If the payment method is country-specific, specify the most relevant country associated with this payment method.
+     */
     paymentCountry: string;
+
+    /**
+     * Comma-separated predefined amounts of fiat currency, i.e. 20,30,50. If not specified, then a user can enter any amount within the offer range.
+     */
     predefinedAmount: string;
+
+    /**
+     * A group of payment methods. For a list of available payment method groups please refer to payment-method-group/list endpoint.
+     */
     paymentMethodGroup: string;
+
+    /**
+     * A bank name will appear after the payment method. Maximum 25 characters and only letters, numbers, and dash. You can write several bank names separated by space, e.g. CBS SEB METROPOLITAN ALFA.
+     */
     paymentMethodLabel: string;
+
+    /**
+     * 
+     */
+    bankReferenceMessage: OfferUpdateRequestBodyBankReferenceMessage;
+
+    /**
+     * The offer will be shown only to users from the trusted list.
+     */
     showOnlyTrustedUser: boolean;
+
+    /**
+     * Comma-separated list of &#x27;ISO Alpha-2&#x27; country codes.
+     */
     countryLimitationList: string;
+
+    /**
+     * Type of limitation countries. Valid values are &#x27;allowed&#x27; or &#x27;disallowed&#x27;. If &#x27;allowed&#x27; is used then the offer will be visible ONLY for visitors from countries specified in the &#x27;country_limitation_list&#x27;. If &#x27;disallowed&#x27; is used then this offer will NOT be visible for visitors from countries specified in the &#x27;country_limitation_list&#x27;.
+     */
     countryLimitationType: string;
+
+    /**
+     * The offer will be shown only to users with a given amount of past trades.
+     */
     requireMinPastTrades: boolean;
+
 }
 
 export type OfferApiOfferUpdatePriceParams = {
+    /**
+     * A percent that determines differences between market price and the price of the offer.
+     */
     margin: number;
+
+    /**
+     * A hash (ID) of the offer.
+     */
     offerHash: string;
+
+    /**
+     * Should be used only if the offer is created as a fixed price offer. If this parameter is used then &#x27;margin&#x27; should not be specified.
+     */
     fixedPrice: number;
+
 }
 
 
@@ -7381,7 +9147,7 @@ export class OfferApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OfferApi
      */
-    public all(params: OfferApiOfferAllParams, options?: any): Promise<InlineResponse2001> {
+    public all(params: OfferApiOfferAllParams, options?: any): Promise<InlineResponse2002> {
         const localVarFetchArgs = OfferApiFetchParamCreator.offerAll(params?.type, params?.group, params?.limit, params?.offset, params?.fiatMin, params?.geonameId, params?.marginMax, params?.marginMin, params?.offerType, params?.userTypes, params?.locationId, params?.userCountry, params?.currencyCode, params?.paymentMethod, params?.fiatAmountMax, params?.fiatAmountMin, params?.cryptoCurrencyCode, params?.fiatFixedPriceMax, params?.fiatFixedPriceMin, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -7397,8 +9163,8 @@ export class OfferApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OfferApi
      */
-    public create(params: OfferApiOfferCreateParams, options?: any): Promise<InlineResponse20011> {
-        const localVarFetchArgs = OfferApiFetchParamCreator.offerCreate(params?.tags, params?.margin, params?.currency, params?.rangeMax, params?.rangeMin, params?.fixedPrice, params?.locationId, params?.offerTerms, params?.tradeDetails, params?.isFixedPrice, params?.paymentMethod, params?.paymentWindow, params?.cryptoCurrency, params?.paymentCountry, params?.offerTypeField, params?.predefinedAmount, params?.paymentMethodGroup, params?.paymentMethodLabel, params?.showOnlyTrustedUser, params?.countryLimitationList, params?.countryLimitationType, params?.requireMinPastTrades, options);
+    public create(params: OfferApiOfferCreateParams, options?: any): Promise<InlineResponse20012> {
+        const localVarFetchArgs = OfferApiFetchParamCreator.offerCreate(params?.tags, params?.margin, params?.currency, params?.flowType, params?.rangeMax, params?.rangeMin, params?.fixedPrice, params?.locationId, params?.offerTerms, params?.bankAccounts, params?.tradeDetails, params?.isFixedPrice, params?.paymentMethod, params?.paymentWindow, params?.cryptoCurrency, params?.paymentCountry, params?.offerTypeField, params?.predefinedAmount, params?.paymentMethodGroup, params?.paymentMethodLabel, params?.bankReferenceMessage, params?.showOnlyTrustedUser, params?.countryLimitationList, params?.countryLimitationType, params?.requireMinPastTrades, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -7445,7 +9211,7 @@ export class OfferApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OfferApi
      */
-    public get(params: OfferApiOfferGetParams, options?: any): Promise<InlineResponse2002> {
+    public get(params: OfferApiOfferGetParams, options?: any): Promise<InlineResponse2003> {
         const localVarFetchArgs = OfferApiFetchParamCreator.offerGet(params?.offerHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -7461,7 +9227,7 @@ export class OfferApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OfferApi
      */
-    public list(params: OfferApiOfferListParams, options?: any): Promise<InlineResponse2005> {
+    public list(params: OfferApiOfferListParams, options?: any): Promise<InlineResponse2006> {
         const localVarFetchArgs = OfferApiFetchParamCreator.offerList(params?.active, params?.offerType, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -7477,7 +9243,7 @@ export class OfferApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OfferApi
      */
-    public price(params: OfferApiOfferPriceParams, options?: any): Promise<InlineResponse2009> {
+    public price(params: OfferApiOfferPriceParams, options?: any): Promise<InlineResponse20010> {
         const localVarFetchArgs = OfferApiFetchParamCreator.offerPrice(params?.offerHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -7493,7 +9259,7 @@ export class OfferApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OfferApi
      */
-    public prices(params: OfferApiOfferPricesParams, options?: any): Promise<InlineResponse20012> {
+    public prices(params: OfferApiOfferPricesParams, options?: any): Promise<InlineResponse20013> {
         const localVarFetchArgs = OfferApiFetchParamCreator.offerPrices(params?.paymentMethod, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -7509,7 +9275,7 @@ export class OfferApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OfferApi
      */
-    public turnOff(options?: any): Promise<InlineResponse20015> {
+    public turnOff(options?: any): Promise<InlineResponse20016> {
         const localVarFetchArgs = OfferApiFetchParamCreator.offerTurnOff(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -7525,7 +9291,7 @@ export class OfferApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OfferApi
      */
-    public turnOn(options?: any): Promise<InlineResponse20015> {
+    public turnOn(options?: any): Promise<InlineResponse20016> {
         const localVarFetchArgs = OfferApiFetchParamCreator.offerTurnOn(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -7542,7 +9308,7 @@ export class OfferApi extends BaseAPI {
      * @memberof OfferApi
      */
     public update(params: OfferApiOfferUpdateParams, options?: any): Promise<SuccessTrueResponse> {
-        const localVarFetchArgs = OfferApiFetchParamCreator.offerUpdate(params?.tags, params?.margin, params?.currency, params?.offerCap, params?.rangeMax, params?.rangeMin, params?.dutyHours, params?.offerHash, params?.fixedPrice, params?.locationId, params?.offerTerms, params?.tradeDetails, params?.paymentMethod, params?.paymentWindow, params?.paymentCountry, params?.predefinedAmount, params?.paymentMethodGroup, params?.paymentMethodLabel, params?.showOnlyTrustedUser, params?.countryLimitationList, params?.countryLimitationType, params?.requireMinPastTrades, options);
+        const localVarFetchArgs = OfferApiFetchParamCreator.offerUpdate(params?.tags, params?.margin, params?.currency, params?.flowType, params?.offerCap, params?.rangeMax, params?.rangeMin, params?.dutyHours, params?.offerHash, params?.fixedPrice, params?.locationId, params?.offerTerms, params?.bankAccounts, params?.tradeDetails, params?.paymentMethod, params?.paymentWindow, params?.paymentCountry, params?.predefinedAmount, params?.paymentMethodGroup, params?.paymentMethodLabel, params?.bankReferenceMessage, params?.showOnlyTrustedUser, params?.countryLimitationList, params?.countryLimitationType, params?.requireMinPastTrades, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -7616,7 +9382,7 @@ export class OfferTagApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OfferTagApi
      */
-    public list(options?: any): Promise<InlineResponse20016> {
+    public list(options?: any): Promise<InlineResponse20017> {
         const localVarFetchArgs = OfferTagApiFetchParamCreator.offerTagList(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -7633,8 +9399,8 @@ export const PaymentMethodApiFetchParamCreator = {
     /**
      * Fetch average positive margin for payment methods over last 3 and 10 days. Authentication is optional.
      * @summary payment-method/fee
-     * @param {string} slug 
-     * @param {string} currency 
+     * @param {string} slug Payment method slug. For a list of available payment method slugs please refer to payment-method/list endpoint.
+     * @param {string} currency Fiat currency code, by default is USD. For a list of supported fiat currencies please refer to currency/list endpoint.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -7679,7 +9445,7 @@ export const PaymentMethodApiFetchParamCreator = {
     /**
      * Fetch a list of available payment method groups. Authentication is optional.
      * @summary payment-method-group/list
-     * @param {string} [locale] 
+     * @param {string} [locale] Locale code, e.g. ru, pt_BR.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -7736,12 +9502,24 @@ export const PaymentMethodApiFetchParamCreator = {
 };
 
 export type PaymentMethodApiPaymentMethodFeeParams = {
+    /**
+     * Payment method slug. For a list of available payment method slugs please refer to payment-method/list endpoint.
+     */
     slug: string;
+
+    /**
+     * Fiat currency code, by default is USD. For a list of supported fiat currencies please refer to currency/list endpoint.
+     */
     currency: string;
+
 }
 
 export type PaymentMethodApiPaymentMethodGroupListParams = {
+    /**
+     * Locale code, e.g. ru, pt_BR.
+     */
     locale?: string;
+
 }
 
 export type PaymentMethodApiPaymentMethodListParams = {
@@ -7763,7 +9541,7 @@ export class PaymentMethodApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PaymentMethodApi
      */
-    public fee(params: PaymentMethodApiPaymentMethodFeeParams, options?: any): Promise<InlineResponse20029> {
+    public fee(params: PaymentMethodApiPaymentMethodFeeParams, options?: any): Promise<InlineResponse20032> {
         const localVarFetchArgs = PaymentMethodApiFetchParamCreator.paymentMethodFee(params?.slug, params?.currency, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -7810,9 +9588,33 @@ export class PaymentMethodApi extends BaseAPI {
  */
 export const TradeApiFetchParamCreator = {
     /**
+     * Add proof of payments to trade. Method is to be used only for trades with 'Bank Transfer' payment method.
+     * @summary trade/add-proof
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    tradeAddProof(options: any = {}): FetchArgs {
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/trade/add-proof`;
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
      * Cancel a trade.
      * @summary trade/cancel
-     * @param {string} tradeHash 
+     * @param {string} tradeHash A hash (ID) of the trade.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -7849,8 +9651,8 @@ export const TradeApiFetchParamCreator = {
     /**
      * Fetch a list of your completed trades, optionally limited by partner username.
      * @summary trade/completed
-     * @param {number} page 
-     * @param {string} partner 
+     * @param {number} page Requested page, by default is 1.
+     * @param {string} partner Username of a partner.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -7895,9 +9697,9 @@ export const TradeApiFetchParamCreator = {
     /**
      * Open a dispute.
      * @summary trade/dispute
-     * @param {string} reason 
-     * @param {string} tradeHash 
-     * @param {string} reasonType 
+     * @param {string} reason Description of the dispute reason, max length 250 characters.
+     * @param {string} tradeHash A hash (ID) of the trade.
+     * @param {string} reasonType Type of reason, for available reasons refer to trade/dispute-reasons endpoint.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -7950,7 +9752,7 @@ export const TradeApiFetchParamCreator = {
     /**
      * Fetch a list of available dispute reasons.
      * @summary trade/dispute-reasons
-     * @param {string} tradeHash 
+     * @param {string} tradeHash A hash (ID) of the trade.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -7987,7 +9789,7 @@ export const TradeApiFetchParamCreator = {
     /**
      * Fund a deferred escrow trade.
      * @summary trade/fund
-     * @param {string} tradeHash 
+     * @param {string} tradeHash A hash (ID) of the trade.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -8024,7 +9826,7 @@ export const TradeApiFetchParamCreator = {
     /**
      * Fetch information for an active/completed trade.
      * @summary trade/get
-     * @param {string} tradeHash 
+     * @param {string} tradeHash A hash (ID) of the trade.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -8083,9 +9885,9 @@ export const TradeApiFetchParamCreator = {
         };
     },
     /**
-     * Fetch information for seller and buyer locations in a trade.             Restricted: User requesting the information must be a trade partner.
+     * Fetch information for seller and buyer locations in a trade.     Restricted: User requesting the information must be a trade partner.
      * @summary trade/locations
-     * @param {string} tradeHash 
+     * @param {string} tradeHash A hash (ID) of the trade.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -8122,7 +9924,7 @@ export const TradeApiFetchParamCreator = {
     /**
      * Mark trade as PAID.
      * @summary trade/paid
-     * @param {string} tradeHash 
+     * @param {string} tradeHash A hash (ID) of the trade.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -8159,8 +9961,8 @@ export const TradeApiFetchParamCreator = {
     /**
      * Release crypto for a trade.
      * @summary trade/release
-     * @param {string} tradeHash 
-     * @param {string} [xPaxful2fa] If the endpoint is invoked with an access key which has been received using Sign in with      Paxful authorization flow and it happens that a user has 2FA enabled then you need to provide a code that you have      received from a user using this header.      The flow may look like this: you invoke trade/release endpoint, if you receive 1006 response code, that means user      has 2FA enabled, in this case in your application you prompt a user to provide you with a code.      Once you have received it, you issue trade/release once again and provide the code in this header.
+     * @param {string} tradeHash A hash (ID) of the trade.
+     * @param {string} [xPaxful2fa] If the endpoint is invoked with an access key which has been received using Sign in with     Paxful authorization flow and it happens that a user has 2FA enabled then you need to provide a code that you have     received from a user using this header.     The flow may look like this: you invoke trade/release endpoint, if you receive 1006 response code, that means user     has 2FA enabled, in this case in your application you prompt a user to provide you with a code.     Once you have received it, you issue trade/release once again and provide the code in this header.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -8201,7 +10003,7 @@ export const TradeApiFetchParamCreator = {
     /**
      * Reopen trade.
      * @summary trade/reopen
-     * @param {string} tradeHash 
+     * @param {string} tradeHash A hash (ID) of the trade.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -8238,14 +10040,15 @@ export const TradeApiFetchParamCreator = {
     /**
      * Start a trade.
      * @summary trade/start
-     * @param {number} fiat 
-     * @param {number} satoshi 
-     * @param {string} offerHash 
-     * @param {number} cryptoAmount 
+     * @param {number} fiat Trade amount in fiat currency.
+     * @param {number} satoshi Deprecated. Please use crypto_amount instead.
+     * @param {string} offerHash A hash (ID) of an offer.
+     * @param {Array<RequestBodyTradeStartBankAccounts>} bankAccounts Bank accounts that will be used for a given trade.
+     * @param {number} cryptoAmount Trade amount in cryptocurrency. For BTC trade in Satoshi, for ETH trade in GWEI, for USDT trade in micro cents (e.g 1 usdt &#x3D; 1000000 micro cents).
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    tradeStart(fiat: number, satoshi: number, offerHash: string, cryptoAmount: number, options: any = {}): FetchArgs {
+    tradeStart(fiat: number, satoshi: number, offerHash: string, bankAccounts: Array<RequestBodyTradeStartBankAccounts>, cryptoAmount: number, options: any = {}): FetchArgs {
         // verify required parameter 'fiat' is not null or undefined
         if (fiat === null || fiat === undefined) {
             throw new RequiredError('fiat','Required parameter fiat was null or undefined when calling tradeStart.');
@@ -8257,6 +10060,10 @@ export const TradeApiFetchParamCreator = {
         // verify required parameter 'offerHash' is not null or undefined
         if (offerHash === null || offerHash === undefined) {
             throw new RequiredError('offerHash','Required parameter offerHash was null or undefined when calling tradeStart.');
+        }
+        // verify required parameter 'bankAccounts' is not null or undefined
+        if (bankAccounts === null || bankAccounts === undefined) {
+            throw new RequiredError('bankAccounts','Required parameter bankAccounts was null or undefined when calling tradeStart.');
         }
         // verify required parameter 'cryptoAmount' is not null or undefined
         if (cryptoAmount === null || cryptoAmount === undefined) {
@@ -8280,6 +10087,12 @@ export const TradeApiFetchParamCreator = {
             localVarFormParams.set('offer_hash', offerHash as any);
         }
 
+        if (bankAccounts) {
+            bankAccounts.forEach((element) => {
+                localVarFormParams.append('bank_accounts', element as any);
+            })
+        }
+
         if (cryptoAmount !== undefined) {
             localVarFormParams.set('crypto_amount', cryptoAmount as any);
         }
@@ -8299,60 +10112,167 @@ export const TradeApiFetchParamCreator = {
             options: localVarRequestOptions,
         };
     },
+    /**
+     * Use bank account to the trade. Method is to be used only for trades with 'Bank Transfer' payment method.
+     * @summary trade/use-bank-account
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    tradeUseBankAccount(options: any = {}): FetchArgs {
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/trade/use-bank-account`;
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
 };
 
+export type TradeApiTradeAddProofParams = {
+}
+
 export type TradeApiTradeCancelParams = {
+    /**
+     * A hash (ID) of the trade.
+     */
     tradeHash: string;
+
 }
 
 export type TradeApiTradeCompletedParams = {
+    /**
+     * Requested page, by default is 1.
+     */
     page: number;
+
+    /**
+     * Username of a partner.
+     */
     partner: string;
+
 }
 
 export type TradeApiTradeDisputeParams = {
+    /**
+     * Description of the dispute reason, max length 250 characters.
+     */
     reason: string;
+
+    /**
+     * A hash (ID) of the trade.
+     */
     tradeHash: string;
+
+    /**
+     * Type of reason, for available reasons refer to trade/dispute-reasons endpoint.
+     */
     reasonType: string;
+
 }
 
 export type TradeApiTradeDisputeReasonsParams = {
+    /**
+     * A hash (ID) of the trade.
+     */
     tradeHash: string;
+
 }
 
 export type TradeApiTradeFundParams = {
+    /**
+     * A hash (ID) of the trade.
+     */
     tradeHash: string;
+
 }
 
 export type TradeApiTradeGetParams = {
+    /**
+     * A hash (ID) of the trade.
+     */
     tradeHash: string;
+
 }
 
 export type TradeApiTradeListParams = {
 }
 
 export type TradeApiTradeLocationsParams = {
+    /**
+     * A hash (ID) of the trade.
+     */
     tradeHash: string;
+
 }
 
 export type TradeApiTradePaidParams = {
+    /**
+     * A hash (ID) of the trade.
+     */
     tradeHash: string;
+
 }
 
 export type TradeApiTradeReleaseParams = {
+    /**
+     * A hash (ID) of the trade.
+     */
     tradeHash: string;
+
+    /**
+     * If the endpoint is invoked with an access key which has been received using Sign in with     Paxful authorization flow and it happens that a user has 2FA enabled then you need to provide a code that you have     received from a user using this header.     The flow may look like this: you invoke trade/release endpoint, if you receive 1006 response code, that means user     has 2FA enabled, in this case in your application you prompt a user to provide you with a code.     Once you have received it, you issue trade/release once again and provide the code in this header.
+     */
     xPaxful2fa?: string;
+
 }
 
 export type TradeApiTradeReopenParams = {
+    /**
+     * A hash (ID) of the trade.
+     */
     tradeHash: string;
+
 }
 
 export type TradeApiTradeStartParams = {
+    /**
+     * Trade amount in fiat currency.
+     */
     fiat: number;
+
+    /**
+     * Deprecated. Please use crypto_amount instead.
+     */
     satoshi: number;
+
+    /**
+     * A hash (ID) of an offer.
+     */
     offerHash: string;
+
+    /**
+     * Bank accounts that will be used for a given trade.
+     */
+    bankAccounts: Array<RequestBodyTradeStartBankAccounts>;
+
+    /**
+     * Trade amount in cryptocurrency. For BTC trade in Satoshi, for ETH trade in GWEI, for USDT trade in micro cents (e.g 1 usdt &#x3D; 1000000 micro cents).
+     */
     cryptoAmount: number;
+
+}
+
+export type TradeApiTradeUseBankAccountParams = {
 }
 
 
@@ -8363,6 +10283,22 @@ export type TradeApiTradeStartParams = {
  * @extends {BaseAPI}
  */
 export class TradeApi extends BaseAPI {
+    /**
+     * Add proof of payments to trade. Method is to be used only for trades with 'Bank Transfer' payment method.
+     * @summary trade/add-proof
+     * @param { TradeApiTradeAddProofParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TradeApi
+     */
+    public addProof(options?: any): Promise<SuccessTrueResponse> {
+        const localVarFetchArgs = TradeApiFetchParamCreator.tradeAddProof(options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
     /**
      * Cancel a trade.
      * @summary trade/cancel
@@ -8387,7 +10323,7 @@ export class TradeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TradeApi
      */
-    public completed(params: TradeApiTradeCompletedParams, options?: any): Promise<InlineResponse20022> {
+    public completed(params: TradeApiTradeCompletedParams, options?: any): Promise<InlineResponse20023> {
         const localVarFetchArgs = TradeApiFetchParamCreator.tradeCompleted(params?.page, params?.partner, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -8419,7 +10355,7 @@ export class TradeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TradeApi
      */
-    public disputeReasons(params: TradeApiTradeDisputeReasonsParams, options?: any): Promise<InlineResponse20031> {
+    public disputeReasons(params: TradeApiTradeDisputeReasonsParams, options?: any): Promise<InlineResponse20035> {
         const localVarFetchArgs = TradeApiFetchParamCreator.tradeDisputeReasons(params?.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -8451,7 +10387,7 @@ export class TradeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TradeApi
      */
-    public get(params: TradeApiTradeGetParams, options?: any): Promise<InlineResponse2003> {
+    public get(params: TradeApiTradeGetParams, options?: any): Promise<InlineResponse2004> {
         const localVarFetchArgs = TradeApiFetchParamCreator.tradeGet(params?.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -8467,7 +10403,7 @@ export class TradeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TradeApi
      */
-    public list(options?: any): Promise<InlineResponse2006> {
+    public list(options?: any): Promise<InlineResponse2007> {
         const localVarFetchArgs = TradeApiFetchParamCreator.tradeList(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -8476,14 +10412,14 @@ export class TradeApi extends BaseAPI {
     }
 
     /**
-     * Fetch information for seller and buyer locations in a trade.             Restricted: User requesting the information must be a trade partner.
+     * Fetch information for seller and buyer locations in a trade.     Restricted: User requesting the information must be a trade partner.
      * @summary trade/locations
      * @param { TradeApiTradeLocationsParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradeApi
      */
-    public locations(params: TradeApiTradeLocationsParams, options?: any): Promise<InlineResponse20023> {
+    public locations(params: TradeApiTradeLocationsParams, options?: any): Promise<InlineResponse20024> {
         const localVarFetchArgs = TradeApiFetchParamCreator.tradeLocations(params?.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -8547,8 +10483,24 @@ export class TradeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TradeApi
      */
-    public start(params: TradeApiTradeStartParams, options?: any): Promise<InlineResponse20010> {
-        const localVarFetchArgs = TradeApiFetchParamCreator.tradeStart(params?.fiat, params?.satoshi, params?.offerHash, params?.cryptoAmount, options);
+    public start(params: TradeApiTradeStartParams, options?: any): Promise<InlineResponse20011> {
+        const localVarFetchArgs = TradeApiFetchParamCreator.tradeStart(params?.fiat, params?.satoshi, params?.offerHash, params?.bankAccounts, params?.cryptoAmount, options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Use bank account to the trade. Method is to be used only for trades with 'Bank Transfer' payment method.
+     * @summary trade/use-bank-account
+     * @param { TradeApiTradeUseBankAccountParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TradeApi
+     */
+    public useBankAccount(options?: any): Promise<SuccessTrueResponse> {
+        const localVarFetchArgs = TradeApiFetchParamCreator.tradeUseBankAccount(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -8564,7 +10516,7 @@ export const TradeChatApiFetchParamCreator = {
     /**
      * Fetch messages for a trade.
      * @summary trade-chat/get
-     * @param {string} tradeHash 
+     * @param {string} tradeHash A hash (ID) of the trade.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -8601,8 +10553,8 @@ export const TradeChatApiFetchParamCreator = {
     /**
      * Fetch an image attachment from a trade.
      * @summary trade-chat/image
-     * @param {string} size 
-     * @param {string} imageHash 
+     * @param {string} size Size to fetch, either 1 (original), 2 (full sized) or 3 (thumbnail).
+     * @param {string} imageHash Hash ID of an image. To get the hash id please refer to the image_hash parameter in response of the trade-chat/get endpoint.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -8647,8 +10599,10 @@ export const TradeChatApiFetchParamCreator = {
     /**
      * Attach image to a trade chat.
      * @summary trade-chat/image/add
-     * @param {string} file 
-     * @param {string} tradeHash 
+     * @param {string} file URL of a publicly accessible file in the Internet. Supported formats are jpeg, png, jpg. Files up to 10mb are only allowed.
+When the endpoint is invoked, Paxful will download an image from the specified URL and post it to a given trade chat.
+Please consider using image/upload endpoint instead as it will process uploaded image instantly.
+     * @param {string} tradeHash A hash (ID) of the trade.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -8693,8 +10647,8 @@ export const TradeChatApiFetchParamCreator = {
     /**
      * Upload image to a trade chat.      This endpoint can be used only with OAuth 2.0 authentiction method.
      * @summary trade-chat/image/upload
-     * @param {Blob} file 
-     * @param {string} tradeHash 
+     * @param {Blob} file File to upload. Supported formats are jpeg, png, jpg. Files up to 10mb are only allowed.
+     * @param {string} tradeHash A hash (ID) of the trade.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -8739,7 +10693,7 @@ export const TradeChatApiFetchParamCreator = {
     /**
      * Fetch latest messages for all active trades, or for one trade if trade_hash filter is specified.      Latest messages are messages posted in last 10 minutes.
      * @summary trade-chat/latest
-     * @param {string} tradeHash 
+     * @param {string} tradeHash Hash ID of a trade. If specified, method returns latest messages only for this trade. If omitted, the method return latest messages/attachments for all active trades.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -8776,8 +10730,8 @@ export const TradeChatApiFetchParamCreator = {
     /**
      * Post message to a trade chat.
      * @summary trade-chat/post
-     * @param {string} message 
-     * @param {string} tradeHash 
+     * @param {string} message Message content.
+     * @param {string} tradeHash A hash (ID) of the trade.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -8822,31 +10776,73 @@ export const TradeChatApiFetchParamCreator = {
 };
 
 export type TradeChatApiTradeChatGetParams = {
+    /**
+     * A hash (ID) of the trade.
+     */
     tradeHash: string;
+
 }
 
 export type TradeChatApiTradeChatImageParams = {
+    /**
+     * Size to fetch, either 1 (original), 2 (full sized) or 3 (thumbnail).
+     */
     size: string;
+
+    /**
+     * Hash ID of an image. To get the hash id please refer to the image_hash parameter in response of the trade-chat/get endpoint.
+     */
     imageHash: string;
+
 }
 
 export type TradeChatApiTradeChatImageAddParams = {
+    /**
+     * URL of a publicly accessible file in the Internet. Supported formats are jpeg, png, jpg. Files up to 10mb are only allowed.
+When the endpoint is invoked, Paxful will download an image from the specified URL and post it to a given trade chat.
+Please consider using image/upload endpoint instead as it will process uploaded image instantly.
+     */
     file: string;
+
+    /**
+     * A hash (ID) of the trade.
+     */
     tradeHash: string;
+
 }
 
 export type TradeChatApiTradeChatImageUploadParams = {
+    /**
+     * File to upload. Supported formats are jpeg, png, jpg. Files up to 10mb are only allowed.
+     */
     file: Blob;
+
+    /**
+     * A hash (ID) of the trade.
+     */
     tradeHash: string;
+
 }
 
 export type TradeChatApiTradeChatLatestParams = {
+    /**
+     * Hash ID of a trade. If specified, method returns latest messages only for this trade. If omitted, the method return latest messages/attachments for all active trades.
+     */
     tradeHash: string;
+
 }
 
 export type TradeChatApiTradeChatPostParams = {
+    /**
+     * Message content.
+     */
     message: string;
+
+    /**
+     * A hash (ID) of the trade.
+     */
     tradeHash: string;
+
 }
 
 
@@ -8865,7 +10861,7 @@ export class TradeChatApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TradeChatApi
      */
-    public get(params: TradeChatApiTradeChatGetParams, options?: any): Promise<InlineResponse20017> {
+    public get(params: TradeChatApiTradeChatGetParams, options?: any): Promise<InlineResponse20018> {
         const localVarFetchArgs = TradeChatApiFetchParamCreator.tradeChatGet(params?.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -8897,7 +10893,7 @@ export class TradeChatApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TradeChatApi
      */
-    public imageAdd(params: TradeChatApiTradeChatImageAddParams, options?: any): Promise<InlineResponse20021> {
+    public imageAdd(params: TradeChatApiTradeChatImageAddParams, options?: any): Promise<InlineResponse20022> {
         const localVarFetchArgs = TradeChatApiFetchParamCreator.tradeChatImageAdd(params?.file, params?.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -8913,7 +10909,7 @@ export class TradeChatApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TradeChatApi
      */
-    public imageUpload(params: TradeChatApiTradeChatImageUploadParams, options?: any): Promise<InlineResponse20021> {
+    public imageUpload(params: TradeChatApiTradeChatImageUploadParams, options?: any): Promise<InlineResponse20022> {
         const localVarFetchArgs = TradeChatApiFetchParamCreator.tradeChatImageUpload(params?.file, params?.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -8929,7 +10925,7 @@ export class TradeChatApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TradeChatApi
      */
-    public latest(params: TradeChatApiTradeChatLatestParams, options?: any): Promise<InlineResponse20025> {
+    public latest(params: TradeChatApiTradeChatLatestParams, options?: any): Promise<InlineResponse20028> {
         const localVarFetchArgs = TradeChatApiFetchParamCreator.tradeChatLatest(params?.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -8945,7 +10941,7 @@ export class TradeChatApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TradeChatApi
      */
-    public post(params: TradeChatApiTradeChatPostParams, options?: any): Promise<InlineResponse20021> {
+    public post(params: TradeChatApiTradeChatPostParams, options?: any): Promise<InlineResponse20022> {
         const localVarFetchArgs = TradeChatApiFetchParamCreator.tradeChatPost(params?.message, params?.tradeHash, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -8962,10 +10958,10 @@ export const TransactionsApiFetchParamCreator = {
     /**
      * Fetch a list of your transactions, optionally filtered by type.
      * @summary transactions/all
-     * @param {number} page 
-     * @param {string} type 
-     * @param {number} limit 
-     * @param {string} cryptoCurrencyCode 
+     * @param {number} page Requested page, by default is 1.
+     * @param {string} type Type of transaction. Possible values: &#x27;trade&#x27;, &#x27;non-trade&#x27;, &#x27;received&#x27;, &#x27;received-internal&#x27;, &#x27;received-external&#x27;, &#x27;sent&#x27;, &#x27;sent-internal&#x27;, &#x27;sent-external&#x27;, &#x27;hedging&#x27;, &#x27;all&#x27;. By default is &#x27;all&#x27;.
+     * @param {number} limit A number of transactions to return. By default is 100.
+     * @param {string} cryptoCurrencyCode Filter by cryptocurrency code. Use &#x27;all&#x27; value to get a list of transactions with all supported cryptocurrencies. Default is btc. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -9026,10 +11022,26 @@ export const TransactionsApiFetchParamCreator = {
 };
 
 export type TransactionsApiTransactionsAllParams = {
+    /**
+     * Requested page, by default is 1.
+     */
     page: number;
+
+    /**
+     * Type of transaction. Possible values: &#x27;trade&#x27;, &#x27;non-trade&#x27;, &#x27;received&#x27;, &#x27;received-internal&#x27;, &#x27;received-external&#x27;, &#x27;sent&#x27;, &#x27;sent-internal&#x27;, &#x27;sent-external&#x27;, &#x27;hedging&#x27;, &#x27;all&#x27;. By default is &#x27;all&#x27;.
+     */
     type: string;
+
+    /**
+     * A number of transactions to return. By default is 100.
+     */
     limit: number;
+
+    /**
+     * Filter by cryptocurrency code. Use &#x27;all&#x27; value to get a list of transactions with all supported cryptocurrencies. Default is btc. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
+     */
     cryptoCurrencyCode: string;
+
 }
 
 
@@ -9048,7 +11060,7 @@ export class TransactionsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TransactionsApi
      */
-    public all(params: TransactionsApiTransactionsAllParams, options?: any): Promise<InlineResponse20024> {
+    public all(params: TransactionsApiTransactionsAllParams, options?: any): Promise<InlineResponse20026> {
         const localVarFetchArgs = TransactionsApiFetchParamCreator.transactionsAll(params?.page, params?.type, params?.limit, params?.cryptoCurrencyCode, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -9113,7 +11125,7 @@ export const UserApiFetchParamCreator = {
     /**
      * Add username to blocked list
      * @summary user/block
-     * @param {string} username 
+     * @param {string} username Username of the user.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -9150,7 +11162,7 @@ export const UserApiFetchParamCreator = {
     /**
      * Fetch a list of your blocked users.
      * @summary user/blocked-list
-     * @param {number} [page] 
+     * @param {number} [page] Requested page, by default is 1.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -9183,7 +11195,7 @@ export const UserApiFetchParamCreator = {
     /**
      * Fetch information for a user.
      * @summary user/info
-     * @param {string} username 
+     * @param {string} username Username of the user.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -9244,7 +11256,7 @@ export const UserApiFetchParamCreator = {
     /**
      * Add username to the trusted user list.
      * @summary user/trust
-     * @param {string} username 
+     * @param {string} username Username of the user.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -9305,7 +11317,7 @@ export const UserApiFetchParamCreator = {
     /**
      * Remove user from blocked list.
      * @summary user/unblock
-     * @param {string} username 
+     * @param {string} username Username of the user.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -9342,7 +11354,7 @@ export const UserApiFetchParamCreator = {
     /**
      * Remove username from the trusted list.
      * @summary user/untrust
-     * @param {string} username 
+     * @param {string} username Username of the user.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -9385,33 +11397,57 @@ export type UserApiUserAffiliateParams = {
 }
 
 export type UserApiUserBlockParams = {
+    /**
+     * Username of the user.
+     */
     username: string;
+
 }
 
 export type UserApiUserBlockedListParams = {
+    /**
+     * Requested page, by default is 1.
+     */
     page?: number;
+
 }
 
 export type UserApiUserInfoParams = {
+    /**
+     * Username of the user.
+     */
     username: string;
+
 }
 
 export type UserApiUserTouchParams = {
 }
 
 export type UserApiUserTrustParams = {
+    /**
+     * Username of the user.
+     */
     username: string;
+
 }
 
 export type UserApiUserTypesParams = {
 }
 
 export type UserApiUserUnblockParams = {
+    /**
+     * Username of the user.
+     */
     username: string;
+
 }
 
 export type UserApiUserUntrustParams = {
+    /**
+     * Username of the user.
+     */
     username: string;
+
 }
 
 
@@ -9446,7 +11482,7 @@ export class UserApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public affiliate(options?: any): Promise<InlineResponse20018> {
+    public affiliate(options?: any): Promise<InlineResponse20019> {
         const localVarFetchArgs = UserApiFetchParamCreator.userAffiliate(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -9478,7 +11514,7 @@ export class UserApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public blockedList(params?: UserApiUserBlockedListParams, options?: any): Promise<InlineResponse20026> {
+    public blockedList(params?: UserApiUserBlockedListParams, options?: any): Promise<InlineResponse20029> {
         const localVarFetchArgs = UserApiFetchParamCreator.userBlockedList(params?.page, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -9494,7 +11530,7 @@ export class UserApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public info(params: UserApiUserInfoParams, options?: any): Promise<InlineResponse2004> {
+    public info(params: UserApiUserInfoParams, options?: any): Promise<InlineResponse2005> {
         const localVarFetchArgs = UserApiFetchParamCreator.userInfo(params?.username, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -9542,7 +11578,7 @@ export class UserApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public types(options?: any): Promise<InlineResponse2007> {
+    public types(options?: any): Promise<InlineResponse2008> {
         const localVarFetchArgs = UserApiFetchParamCreator.userTypes(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -9591,7 +11627,7 @@ export const WalletApiFetchParamCreator = {
     /**
      * Fetch an user balance.
      * @summary wallet/balance
-     * @param {string} cryptoCurrencyCode 
+     * @param {string} cryptoCurrencyCode Cryptocurrency code of balance. By default - BTC. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -9628,8 +11664,8 @@ export const WalletApiFetchParamCreator = {
     /**
      * Get the current conversion quotes for supported crypto currency pairs.
      * @summary wallet/conversion-quotes
-     * @param {string} convertTo 
-     * @param {string} convertFrom 
+     * @param {string} convertTo Cryptocurrency to convert to. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
+     * @param {string} convertFrom Cryptocurrency to convert from. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -9674,11 +11710,13 @@ export const WalletApiFetchParamCreator = {
     /**
      * Convert from one crypto currency to another.
      * @summary wallet/convert
-     * @param {number} amount 
-     * @param {string} orderId 
-     * @param {string} quoteId 
-     * @param {string} convertTo 
-     * @param {string} convertFrom 
+     * @param {number} amount Amount to convert in cryptocurrency. For BTC in Satoshi, for ETH in GWEI, for USDT in micro cents, e.g. 1 USDT &#x3D; 1000000 micro cents.
+     * @param {string} orderId Unique ID (UUID) of the conversion, that your application needs to generate.
+Having this parameter ensures idempotency of the operation - you can invoke the endpoint as many times with the same parameter, but conversion will be executed only once.
+This helps to avoid accidental double conversions.
+     * @param {string} quoteId Value for this field can be fetched using wallet/conversion-quotes endpoint.
+     * @param {string} convertTo Cryptocurrency to convert to. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
+     * @param {string} convertFrom Cryptocurrency to convert from. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -9747,7 +11785,7 @@ export const WalletApiFetchParamCreator = {
     /**
      * Fetch list of your addresses.
      * @summary wallet/list-addresses
-     * @param {string} [cryptoCurrencyCode] 
+     * @param {string} [cryptoCurrencyCode] Cryptocurrency code of the wallet addresses. By default - BTC. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -9804,24 +11842,62 @@ export const WalletApiFetchParamCreator = {
 };
 
 export type WalletApiWalletBalanceParams = {
+    /**
+     * Cryptocurrency code of balance. By default - BTC. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
+     */
     cryptoCurrencyCode: string;
+
 }
 
 export type WalletApiWalletConversionQuotesParams = {
+    /**
+     * Cryptocurrency to convert to. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
+     */
     convertTo: string;
+
+    /**
+     * Cryptocurrency to convert from. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
+     */
     convertFrom: string;
+
 }
 
 export type WalletApiWalletConvertParams = {
+    /**
+     * Amount to convert in cryptocurrency. For BTC in Satoshi, for ETH in GWEI, for USDT in micro cents, e.g. 1 USDT &#x3D; 1000000 micro cents.
+     */
     amount: number;
+
+    /**
+     * Unique ID (UUID) of the conversion, that your application needs to generate.
+Having this parameter ensures idempotency of the operation - you can invoke the endpoint as many times with the same parameter, but conversion will be executed only once.
+This helps to avoid accidental double conversions.
+     */
     orderId: string;
+
+    /**
+     * Value for this field can be fetched using wallet/conversion-quotes endpoint.
+     */
     quoteId: string;
+
+    /**
+     * Cryptocurrency to convert to. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
+     */
     convertTo: string;
+
+    /**
+     * Cryptocurrency to convert from. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
+     */
     convertFrom: string;
+
 }
 
 export type WalletApiWalletListAddressesParams = {
+    /**
+     * Cryptocurrency code of the wallet addresses. By default - BTC. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
+     */
     cryptoCurrencyCode?: string;
+
 }
 
 export type WalletApiWalletNewAddressParams = {
@@ -9843,7 +11919,7 @@ export class WalletApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletApi
      */
-    public balance(params: WalletApiWalletBalanceParams, options?: any): Promise<InlineResponse20019> {
+    public balance(params: WalletApiWalletBalanceParams, options?: any): Promise<InlineResponse20020> {
         const localVarFetchArgs = WalletApiFetchParamCreator.walletBalance(params?.cryptoCurrencyCode, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -9859,7 +11935,7 @@ export class WalletApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletApi
      */
-    public conversionQuotes(params: WalletApiWalletConversionQuotesParams, options?: any): Promise<InlineResponse20033> {
+    public conversionQuotes(params: WalletApiWalletConversionQuotesParams, options?: any): Promise<InlineResponse20037> {
         const localVarFetchArgs = WalletApiFetchParamCreator.walletConversionQuotes(params?.convertTo, params?.convertFrom, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -9875,7 +11951,7 @@ export class WalletApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletApi
      */
-    public convert(params: WalletApiWalletConvertParams, options?: any): Promise<InlineResponse20020> {
+    public convert(params: WalletApiWalletConvertParams, options?: any): Promise<InlineResponse20021> {
         const localVarFetchArgs = WalletApiFetchParamCreator.walletConvert(params?.amount, params?.orderId, params?.quoteId, params?.convertTo, params?.convertFrom, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -9891,7 +11967,7 @@ export class WalletApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletApi
      */
-    public listAddresses(params?: WalletApiWalletListAddressesParams, options?: any): Promise<InlineResponse20032> {
+    public listAddresses(params?: WalletApiWalletListAddressesParams, options?: any): Promise<InlineResponse20036> {
         const localVarFetchArgs = WalletApiFetchParamCreator.walletListAddresses(params?.cryptoCurrencyCode, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -9907,7 +11983,7 @@ export class WalletApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletApi
      */
-    public newAddress(options?: any): Promise<InlineResponse20030> {
+    public newAddress(options?: any): Promise<InlineResponse20033> {
         const localVarFetchArgs = WalletApiFetchParamCreator.walletNewAddress(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
@@ -9918,6 +11994,8 @@ export class WalletApi extends BaseAPI {
 }
 
 export interface Apis {
+    bank: BankApi;
+    bankAccount: BankAccountApi;
     currency: CurrencyApi;
     feedback: FeedbackApi;
     kiosk: KioskApi;
@@ -9933,6 +12011,8 @@ export interface Apis {
 }
 
 export default (configuration: ApiConfiguration, credentialStorage: CredentialStorage): Apis => ({
+    bank: new BankApi(configuration, credentialStorage),
+    bankAccount: new BankAccountApi(configuration, credentialStorage),
     currency: new CurrencyApi(configuration, credentialStorage),
     feedback: new FeedbackApi(configuration, credentialStorage),
     kiosk: new KioskApi(configuration, credentialStorage),
