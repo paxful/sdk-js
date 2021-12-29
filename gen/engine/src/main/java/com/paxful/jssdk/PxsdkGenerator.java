@@ -13,7 +13,7 @@ import java.util.Set;
 
 /**
  * Custom swagger generator for the Paxful js-sdk's fluent api
- * <p>
+ *
  * Main reason why typescript generator was extended is to fix bug
  * with empty description, make some naming fixes and generate only required files.
  */
