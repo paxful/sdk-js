@@ -3,6 +3,7 @@ import { URLSearchParams } from "url";
 
 import { AccountServiceTokenResponse, Credentials } from "../oauth";
 import { ApiConfiguration } from "../ApiConfiguration";
+import { handleErrors } from "./ErrorHandling";
 
 const createOAuthRequestTokenUrl = (config: ApiConfiguration, code?: string): Request => {
     const form = new URLSearchParams();
@@ -37,7 +38,7 @@ const createOAuthRequestTokenUrl = (config: ApiConfiguration, code?: string): Re
  */
 export default function retrieveImpersonatedCredentials(config: ApiConfiguration, code?: string): Promise<Credentials> {
     return fetch(createOAuthRequestTokenUrl(config, code))
-        .then(response => response.json() as Promise<AccountServiceTokenResponse>)
+        .then(handleErrors("retrieve impersonated credentials"))
         .then((tokenResponse: AccountServiceTokenResponse) => {
             return ({
                 accessToken: tokenResponse.access_token,

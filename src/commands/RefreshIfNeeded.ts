@@ -5,6 +5,7 @@ import retrieveImpersonatedCredentials from "./ImpersonateCredentials";
 
 import { AccountServiceTokenResponse, Credentials, CredentialStorage } from "../oauth";
 import { ApiConfiguration } from "../ApiConfiguration";
+import { handleErrors } from "./ErrorHandling";
 
 const refreshAccessToken = async (credentials: Credentials, config: ApiConfiguration): Promise<Credentials> => {
     const form = new URLSearchParams();
@@ -25,16 +26,20 @@ const refreshAccessToken = async (credentials: Credentials, config: ApiConfigura
             agent: config.proxyAgent,
             body: form
         })
-    ).then(response => response.json() as Promise<AccountServiceTokenResponse>)
-        .then((tokenResponse: AccountServiceTokenResponse) => ({
-            accessToken: tokenResponse.access_token,
-            refreshToken: tokenResponse.refresh_token,
-            expiresAt: new Date(Date.now() + (tokenResponse.expires_in * 1000))
-        }));
+    )
+        .then(handleErrors("refresh token"))
+        .then((tokenResponse: AccountServiceTokenResponse) => {
+            return ({
+                accessToken: tokenResponse.access_token,
+                refreshToken: tokenResponse.refresh_token,
+                expiresAt: new Date(Date.now() + (tokenResponse.expires_in * 1000))
+            })
+        });
 }
 
-const createRefreshRequest = async (request: Request, config: ApiConfiguration, credentialStorage: CredentialStorage): Promise<Request> => {
-    let credentials: Credentials|undefined;
+export async function fetchRefreshedCredentials(credentialStorage: CredentialStorage, config: ApiConfiguration): Promise<Credentials> {
+    let credentials: Credentials | undefined;
+
     credentials = credentialStorage.getCredentials()
     if (!credentials) {
         throw Error("Misconfiguration: no credentials provided")
@@ -46,6 +51,12 @@ const createRefreshRequest = async (request: Request, config: ApiConfiguration, 
         credentials = await retrieveImpersonatedCredentials(config);
     }
 
+    return credentials;
+}
+
+const createRefreshRequest = async (request: Request, config: ApiConfiguration, credentialStorage: CredentialStorage): Promise<Request> => {
+    const credentials = await fetchRefreshedCredentials(credentialStorage, config);
+
     credentialStorage.saveCredentials(credentials);
 
     request.headers["Authorization"] = `Bearer ${credentials.accessToken}`;
@@ -54,7 +65,7 @@ const createRefreshRequest = async (request: Request, config: ApiConfiguration, 
 }
 
 const validateIfTokenIsExpired = async (request: Request, response: Response, config: ApiConfiguration, credentialStorage: CredentialStorage): Promise<Response> => {
-    if (response.status === 401) return await fetch(await createRefreshRequest(request, config, credentialStorage));
+    if (response.status === 401) return await fetch(await createRequest(request, config, credentialStorage));
     return Promise.resolve(response);
 }
 

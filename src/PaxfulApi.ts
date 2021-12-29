@@ -5,6 +5,7 @@ import { ApiConfiguration } from "./ApiConfiguration";
 import { authorize, retrieveImpersonatedCredentials, retrievePersonalCredentials, getProfile, executeRequestAuthorized } from "./commands";
 import { AnyJson, containsBinary, InvokeBody, RequestBuilder, AnyPromise } from "./commands/Invoke";
 import { InMemoryCredentialStorage } from "./oauth/CredentialStorage";
+import { fetchRefreshedCredentials } from "./commands/RefreshIfNeeded";
 
 import { Apis as PaxfulApis, default as preparePaxfulApis } from "../gen/paxful/api";
 import { Apis as WebhookApis, default as prepareWebhookApis } from "../gen/webhook/api";
@@ -49,6 +50,16 @@ export class PaxfulApi {
     }
 
     /**
+     * Force credentials refresh
+     * @return a promise for {@link Credentials}
+     */
+    public async refreshCredentials(): Promise<Credentials> {
+        return this.saveToken(
+            fetchRefreshedCredentials(this.credentialStorage, this.apiConfiguration)
+        );
+    }
+
+    /**
      * Retrieve the tokens for using your own account.
      */
     public async myCredentials(): Promise<Credentials> {
@@ -65,7 +76,7 @@ export class PaxfulApi {
     }
 
     /**
-     * Invokes an API operation on behalf of currently authenticated user.
+     * Invokes an API operation on behalf of currently authenticated user. Designed for working with Paxful API.
      *
      * @param url - Url that should be called at api.paxful.com
      * @param payload - (Optional) Payload of the request
@@ -85,12 +96,6 @@ export class PaxfulApi {
             requestBuilder.withFormData(payload)
         }
 
-        // TODO: can be removed when DP-734 is delivered
-        if (url.endsWith('currency/btc')) {
-            requestBuilder.withMethod("GET");
-        }
-
-        // TODO: can be removed when DP-734 is delivered
         if (url.endsWith('trade-chat/image')) {
             requestBuilder.acceptBinary();
         } else {
