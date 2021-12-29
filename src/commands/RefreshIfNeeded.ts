@@ -65,7 +65,7 @@ const createRefreshRequest = async (request: Request, config: ApiConfiguration, 
 }
 
 const validateIfTokenIsExpired = async (request: Request, response: Response, config: ApiConfiguration, credentialStorage: CredentialStorage): Promise<Response> => {
-    if (response.status === 401) return await fetch(await createRequest(request, config, credentialStorage));
+    if (response.status === 401) return await fetch(await createRefreshRequest(request, config, credentialStorage));
     return Promise.resolve(response);
 }
 
