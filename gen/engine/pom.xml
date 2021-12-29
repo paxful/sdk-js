@@ -45,7 +45,6 @@
                 </configuration>
             </plugin>
 
-            <!-- attach test jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -54,7 +53,6 @@
                     <execution>
                         <goals>
                             <goal>jar</goal>
-<!--                            <goal>test-jar</goal>-->
                         </goals>
                     </execution>
                 </executions>
@@ -79,18 +77,6 @@
                             </sources>
                         </configuration>
                     </execution>
-<!--                    <execution>-->
-<!--                        <id>add_test_sources</id>-->
-<!--                        <phase>generate-test-sources</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>add-test-source</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <sources>-->
-<!--                                <source>src/test/java</source>-->
-<!--                            </sources>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
                 </executions>
             </plugin>
             <plugin>
