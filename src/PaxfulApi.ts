@@ -6,8 +6,8 @@ import { authorize, retrieveImpersonatedCredentials, retrievePersonalCredentials
 import { AnyJson, containsBinary, InvokeBody, RequestBuilder, AnyPromise } from "./commands/Invoke";
 import { InMemoryCredentialStorage } from "./oauth/CredentialStorage";
 
-import { Apis as PaxfulApis, default as preparePaxfulApis } from "./gen/paxful/api";
-// import { Apis as WebhookApis, default as prepareWebhookApis } from "./gen/webhook/api";
+import { Apis as PaxfulApis, default as preparePaxfulApis } from "../gen/paxful/api";
+import { Apis as WebhookApis, default as prepareWebhookApis } from "../gen/webhook/api";
 
 /**
  * Interface responsable for exposing Paxful API integration.
@@ -18,7 +18,7 @@ export class PaxfulApi {
     private readonly apiConfiguration: ApiConfiguration
     private readonly credentialStorage: CredentialStorage
     public readonly paxfulApi: PaxfulApis
-    // public readonly webhookApi: WebhookApis
+    public readonly webhookApi: WebhookApis
 
     constructor(configuration: ApiConfiguration, credentialStorage?: CredentialStorage) {
         this.apiConfiguration = configuration;
@@ -26,7 +26,7 @@ export class PaxfulApi {
         this.validateAndSetDefaultParameters(configuration);
 
         this.paxfulApi = preparePaxfulApis(this.apiConfiguration, this.credentialStorage);
-        // this.webhookApi = prepareWebhookApis(this.apiConfiguration, this.credentialStorage);
+        this.webhookApi = prepareWebhookApis(this.apiConfiguration, this.credentialStorage);
     }
 
     /**

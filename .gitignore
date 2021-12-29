@@ -3,6 +3,8 @@ build
 node_modules
 public
 .idea
+*.iml
+gen/engine/target/*
 dist
 coverage
 tmp

@@ -6,7 +6,6 @@ import { RequestBuilder } from "../../commands/Invoke";
 import { Blob, Response } from "node-fetch";
 
 /**
- *
  * @export
  */
 export const COLLECTION_FORMATS = {
@@ -17,7 +16,6 @@ export const COLLECTION_FORMATS = {
 };
 
 /**
- *
  * @export
  * @interface FetchArgs
  */
@@ -27,7 +25,6 @@ export interface FetchArgs {
 }
 
 /**
- *
  * @export
  * @class BaseAPI
  */
@@ -42,7 +39,6 @@ export class BaseAPI {
 }
 
 /**
- *
  * @export
  * @class RequiredError
  * @extends {Error}
@@ -206,6 +202,7 @@ export type {{classname}}{{operationIdCamelCase}}Params = {
 /**
  * {{classname}}{{#description}}
  * {{{description}}}{{/description}}
+ *
  * @export
  * @class {{classname}}
  * @extends {BaseAPI}
@@ -214,6 +211,7 @@ export class {{classname}} extends BaseAPI {
     {{#operation}}
     /**
      * {{&notes}}
+     *
      {{#summary}}
      * @summary {{&summary}}
      {{/summary}}
