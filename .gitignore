@@ -8,3 +8,5 @@ gen/engine/target/*
 dist
 coverage
 tmp
+/.env
+/yarn-error.log

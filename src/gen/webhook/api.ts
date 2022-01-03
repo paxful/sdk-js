@@ -3,7 +3,6 @@ import { CredentialStorage } from "../../oauth";
 import { ApiConfiguration } from "../../ApiConfiguration";
 import { executeRequestAuthorized } from "../../commands";
 import { RequestBuilder } from "../../commands/Invoke";
-import { Blob, Response } from "node-fetch";
 
 type ModelObject = any;
 
