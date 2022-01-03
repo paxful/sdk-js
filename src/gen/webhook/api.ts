@@ -3,6 +3,7 @@ import { CredentialStorage } from "../../oauth";
 import { ApiConfiguration } from "../../ApiConfiguration";
 import { executeRequestAuthorized } from "../../commands";
 import { RequestBuilder } from "../../commands/Invoke";
+import { Blob, Response } from "node-fetch";
 
 type ModelObject = any;
 
@@ -366,7 +367,7 @@ export const DefaultApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    addUserInternalWebhook(body: WebhookIn, userId: string, options: any = {}): FetchArgs {
+    addUserInternalWebhook(body?: WebhookIn, userId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'body' is not null or undefined
         if (body === null || body === undefined) {
             throw new RequiredError('body','Required parameter body was null or undefined when calling addUserInternalWebhook.');
@@ -406,7 +407,7 @@ export const DefaultApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    addWebhookEndpoint(body: EndpointIn, webhookId: string, userId: string, options: any = {}): FetchArgs {
+    addWebhookEndpoint(body?: EndpointIn, webhookId?: string, userId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'body' is not null or undefined
         if (body === null || body === undefined) {
             throw new RequiredError('body','Required parameter body was null or undefined when calling addWebhookEndpoint.');
@@ -450,7 +451,7 @@ export const DefaultApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    deleteUserInternalWebhooks(userId: string, webhookId: string, options: any = {}): FetchArgs {
+    deleteUserInternalWebhooks(userId?: string, webhookId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'userId' is not null or undefined
         if (userId === null || userId === undefined) {
             throw new RequiredError('userId','Required parameter userId was null or undefined when calling deleteUserInternalWebhooks.');
@@ -487,7 +488,7 @@ export const DefaultApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    deleteWebhookEndpointById(webhookId: string, endpointId: number, userId: string, options: any = {}): FetchArgs {
+    deleteWebhookEndpointById(webhookId?: string, endpointId?: number, userId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'webhookId' is not null or undefined
         if (webhookId === null || webhookId === undefined) {
             throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling deleteWebhookEndpointById.');
@@ -528,7 +529,7 @@ export const DefaultApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getUserInternalWebhookDetails(userId: string, webhookId: string, options: any = {}): FetchArgs {
+    getUserInternalWebhookDetails(userId?: string, webhookId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'userId' is not null or undefined
         if (userId === null || userId === undefined) {
             throw new RequiredError('userId','Required parameter userId was null or undefined when calling getUserInternalWebhookDetails.');
@@ -565,7 +566,7 @@ export const DefaultApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getWebhookEndpointById(webhookId: string, endpointId: number, userId: string, options: any = {}): FetchArgs {
+    getWebhookEndpointById(webhookId?: string, endpointId?: number, userId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'webhookId' is not null or undefined
         if (webhookId === null || webhookId === undefined) {
             throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling getWebhookEndpointById.');
@@ -606,7 +607,7 @@ export const DefaultApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getWebhookEndpoints(webhookId: string, userId: string, options: any = {}): FetchArgs {
+    getWebhookEndpoints(webhookId?: string, userId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'webhookId' is not null or undefined
         if (webhookId === null || webhookId === undefined) {
             throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling getWebhookEndpoints.');
@@ -644,7 +645,7 @@ export const DefaultApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    updateWebhookEndpointById(body: EndpointIn, webhookId: string, endpointId: number, userId: string, options: any = {}): FetchArgs {
+    updateWebhookEndpointById(body?: EndpointIn, webhookId?: string, endpointId?: number, userId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'body' is not null or undefined
         if (body === null || body === undefined) {
             throw new RequiredError('body','Required parameter body was null or undefined when calling updateWebhookEndpointById.');
@@ -974,7 +975,7 @@ export const DeveloperApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getLogs(applicationId: string, options: any = {}): FetchArgs {
+    getLogs(applicationId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'applicationId' is not null or undefined
         if (applicationId === null || applicationId === undefined) {
             throw new RequiredError('applicationId','Required parameter applicationId was null or undefined when calling getLogs.');
@@ -1029,7 +1030,7 @@ export const DeveloperApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    webhookCreate(body: WebhookIn, applicationId: string, options: any = {}): FetchArgs {
+    webhookCreate(body?: WebhookIn, applicationId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'body' is not null or undefined
         if (body === null || body === undefined) {
             throw new RequiredError('body','Required parameter body was null or undefined when calling webhookCreate.');
@@ -1067,7 +1068,7 @@ export const DeveloperApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    webhookDelete(applicationId: string, options: any = {}): FetchArgs {
+    webhookDelete(applicationId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'applicationId' is not null or undefined
         if (applicationId === null || applicationId === undefined) {
             throw new RequiredError('applicationId','Required parameter applicationId was null or undefined when calling webhookDelete.');
@@ -1097,7 +1098,7 @@ export const DeveloperApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    webhookGet(applicationId: string, options: any = {}): FetchArgs {
+    webhookGet(applicationId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'applicationId' is not null or undefined
         if (applicationId === null || applicationId === undefined) {
             throw new RequiredError('applicationId','Required parameter applicationId was null or undefined when calling webhookGet.');
@@ -1128,7 +1129,7 @@ export const DeveloperApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    webhookUpdate(body: WebhookIn, applicationId: string, options: any = {}): FetchArgs {
+    webhookUpdate(body?: WebhookIn, applicationId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'body' is not null or undefined
         if (body === null || body === undefined) {
             throw new RequiredError('body','Required parameter body was null or undefined when calling webhookUpdate.');
@@ -1339,7 +1340,7 @@ export const UserApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    addUserSpecificWebhooks(body: WebhookIn, applicationId: string, options: any = {}): FetchArgs {
+    addUserSpecificWebhooks(body?: WebhookIn, applicationId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'body' is not null or undefined
         if (body === null || body === undefined) {
             throw new RequiredError('body','Required parameter body was null or undefined when calling addUserSpecificWebhooks.');
@@ -1377,7 +1378,7 @@ export const UserApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    addUserWebhook(body: WebhookIn, options: any = {}): FetchArgs {
+    addUserWebhook(body?: WebhookIn, options: any = {}): FetchArgs {
         // verify required parameter 'body' is not null or undefined
         if (body === null || body === undefined) {
             throw new RequiredError('body','Required parameter body was null or undefined when calling addUserWebhook.');
@@ -1411,7 +1412,7 @@ export const UserApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    addWebhookEndpoint(body: EndpointIn, webhookId: string, options: any = {}): FetchArgs {
+    addWebhookEndpoint(body?: EndpointIn, webhookId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'body' is not null or undefined
         if (body === null || body === undefined) {
             throw new RequiredError('body','Required parameter body was null or undefined when calling addWebhookEndpoint.');
@@ -1473,7 +1474,7 @@ export const UserApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    deleteAllUserWebhooksByTag(tag: string, options: any = {}): FetchArgs {
+    deleteAllUserWebhooksByTag(tag?: string, options: any = {}): FetchArgs {
         // verify required parameter 'tag' is not null or undefined
         if (tag === null || tag === undefined) {
             throw new RequiredError('tag','Required parameter tag was null or undefined when calling deleteAllUserWebhooksByTag.');
@@ -1503,7 +1504,7 @@ export const UserApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    deleteUserWebhooks(webhookId: string, options: any = {}): FetchArgs {
+    deleteUserWebhooks(webhookId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'webhookId' is not null or undefined
         if (webhookId === null || webhookId === undefined) {
             throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling deleteUserWebhooks.');
@@ -1534,7 +1535,7 @@ export const UserApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    deleteWebhookEndpointById(webhookId: string, endpointId: number, options: any = {}): FetchArgs {
+    deleteWebhookEndpointById(webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
         // verify required parameter 'webhookId' is not null or undefined
         if (webhookId === null || webhookId === undefined) {
             throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling deleteWebhookEndpointById.');
@@ -1569,7 +1570,7 @@ export const UserApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getUserWebhookDetails(webhookId: string, options: any = {}): FetchArgs {
+    getUserWebhookDetails(webhookId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'webhookId' is not null or undefined
         if (webhookId === null || webhookId === undefined) {
             throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling getUserWebhookDetails.');
@@ -1623,7 +1624,7 @@ export const UserApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getUserWebhooksPublicByTag(tag: string, options: any = {}): FetchArgs {
+    getUserWebhooksPublicByTag(tag?: string, options: any = {}): FetchArgs {
         // verify required parameter 'tag' is not null or undefined
         if (tag === null || tag === undefined) {
             throw new RequiredError('tag','Required parameter tag was null or undefined when calling getUserWebhooksPublicByTag.');
@@ -1654,7 +1655,7 @@ export const UserApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getWebhookEndpointById(webhookId: string, endpointId: number, options: any = {}): FetchArgs {
+    getWebhookEndpointById(webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
         // verify required parameter 'webhookId' is not null or undefined
         if (webhookId === null || webhookId === undefined) {
             throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling getWebhookEndpointById.');
@@ -1689,7 +1690,7 @@ export const UserApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getWebhookEndpoints(webhookId: string, options: any = {}): FetchArgs {
+    getWebhookEndpoints(webhookId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'webhookId' is not null or undefined
         if (webhookId === null || webhookId === undefined) {
             throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling getWebhookEndpoints.');
@@ -1721,7 +1722,7 @@ export const UserApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    updateWebhookEndpointById(body: EndpointIn, webhookId: string, endpointId: number, options: any = {}): FetchArgs {
+    updateWebhookEndpointById(body?: EndpointIn, webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
         // verify required parameter 'body' is not null or undefined
         if (body === null || body === undefined) {
             throw new RequiredError('body','Required parameter body was null or undefined when calling updateWebhookEndpointById.');
@@ -1764,7 +1765,7 @@ export const UserApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    subscribe(applicationId: string, options: any = {}): FetchArgs {
+    subscribe(applicationId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'applicationId' is not null or undefined
         if (applicationId === null || applicationId === undefined) {
             throw new RequiredError('applicationId','Required parameter applicationId was null or undefined when calling subscribe.');
@@ -1794,7 +1795,7 @@ export const UserApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    unsubscribe(applicationId: string, options: any = {}): FetchArgs {
+    unsubscribe(applicationId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'applicationId' is not null or undefined
         if (applicationId === null || applicationId === undefined) {
             throw new RequiredError('applicationId','Required parameter applicationId was null or undefined when calling unsubscribe.');

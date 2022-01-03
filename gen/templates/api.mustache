@@ -3,6 +3,7 @@ import { CredentialStorage } from "../../oauth";
 import { ApiConfiguration } from "../../ApiConfiguration";
 import { executeRequestAuthorized } from "../../commands";
 import { RequestBuilder } from "../../commands/Invoke";
+import { Blob, Response } from "node-fetch";
 
 type ModelObject = any;
 
@@ -73,7 +74,7 @@ export const {{classname}}FetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options: any = {}): FetchArgs {
+    {{nickname}}({{#allParams}}{{paramName}}?: {{{dataType}}}, {{/allParams}}options: any = {}): FetchArgs {
 {{#allParams}}
 {{#required}}
         // verify required parameter '{{paramName}}' is not null or undefined

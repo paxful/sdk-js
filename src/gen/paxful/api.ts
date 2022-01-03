@@ -3,6 +3,7 @@ import { CredentialStorage } from "../../oauth";
 import { ApiConfiguration } from "../../ApiConfiguration";
 import { executeRequestAuthorized } from "../../commands";
 import { RequestBuilder } from "../../commands/Invoke";
+import { Blob, Response } from "node-fetch";
 
 type ModelObject = any;
 
@@ -7073,7 +7074,7 @@ export const FeedbackApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    give(rating: number, message: string, tradeHash: string, options: any = {}): FetchArgs {
+    give(rating?: number, message?: string, tradeHash?: string, options: any = {}): FetchArgs {
         // verify required parameter 'rating' is not null or undefined
         if (rating === null || rating === undefined) {
             throw new RequiredError('rating','Required parameter rating was null or undefined when calling give.');
@@ -7182,7 +7183,7 @@ Either this filter or &#x27;username&#x27; has to be used, if both are provided 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    reply(message: string, tradeHash: string, options: any = {}): FetchArgs {
+    reply(message?: string, tradeHash?: string, options: any = {}): FetchArgs {
         // verify required parameter 'message' is not null or undefined
         if (message === null || message === undefined) {
             throw new RequiredError('message','Required parameter message was null or undefined when calling reply.');
@@ -7604,7 +7605,7 @@ export const OfferApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    activate(offerHash: string, options: any = {}): FetchArgs {
+    activate(offerHash?: string, options: any = {}): FetchArgs {
         // verify required parameter 'offerHash' is not null or undefined
         if (offerHash === null || offerHash === undefined) {
             throw new RequiredError('offerHash','Required parameter offerHash was null or undefined when calling activate.');
@@ -7663,7 +7664,7 @@ For authenticated user by default automatically detected country will be used. F
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    all(type: string, group: string, limit: number, offset: number, fiatMin: number, geonameId: number, marginMax: number, marginMin: number, offerType: string, userTypes: string, locationId: number, userCountry: string, currencyCode: string, paymentMethod: string, fiatAmountMax: number, fiatAmountMin: number, cryptoCurrencyCode: string, fiatFixedPriceMax: number, fiatFixedPriceMin: number, options: any = {}): FetchArgs {
+    all(type?: string, group?: string, limit?: number, offset?: number, fiatMin?: number, geonameId?: number, marginMax?: number, marginMin?: number, offerType?: string, userTypes?: string, locationId?: number, userCountry?: string, currencyCode?: string, paymentMethod?: string, fiatAmountMax?: number, fiatAmountMin?: number, cryptoCurrencyCode?: string, fiatFixedPriceMax?: number, fiatFixedPriceMin?: number, options: any = {}): FetchArgs {
         // verify required parameter 'type' is not null or undefined
         if (type === null || type === undefined) {
             throw new RequiredError('type','Required parameter type was null or undefined when calling all.');
@@ -7871,7 +7872,7 @@ For better experience use locations ids of countries and cities.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    create(tags: string, margin: number, currency: string, flowType: string, rangeMax: number, rangeMin: number, fixedPrice: number, locationId: number, offerTerms: string, bankAccounts: string, tradeDetails: string, isFixedPrice: boolean, paymentMethod: string, paymentWindow: number, cryptoCurrency: string, paymentCountry: string, offerTypeField: string, predefinedAmount: string, paymentMethodGroup: string, paymentMethodLabel: string, bankReferenceMessage: OfferUpdateRequestBodyBankReferenceMessage, showOnlyTrustedUser: boolean, countryLimitationList: string, countryLimitationType: string, requireMinPastTrades: number, options: any = {}): FetchArgs {
+    create(tags?: string, margin?: number, currency?: string, flowType?: string, rangeMax?: number, rangeMin?: number, fixedPrice?: number, locationId?: number, offerTerms?: string, bankAccounts?: string, tradeDetails?: string, isFixedPrice?: boolean, paymentMethod?: string, paymentWindow?: number, cryptoCurrency?: string, paymentCountry?: string, offerTypeField?: string, predefinedAmount?: string, paymentMethodGroup?: string, paymentMethodLabel?: string, bankReferenceMessage?: OfferUpdateRequestBodyBankReferenceMessage, showOnlyTrustedUser?: boolean, countryLimitationList?: string, countryLimitationType?: string, requireMinPastTrades?: number, options: any = {}): FetchArgs {
         // verify required parameter 'tags' is not null or undefined
         if (tags === null || tags === undefined) {
             throw new RequiredError('tags','Required parameter tags was null or undefined when calling create.');
@@ -8100,7 +8101,7 @@ For better experience use locations ids of countries and cities.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    deactivate(offerHash: string, options: any = {}): FetchArgs {
+    deactivate(offerHash?: string, options: any = {}): FetchArgs {
         // verify required parameter 'offerHash' is not null or undefined
         if (offerHash === null || offerHash === undefined) {
             throw new RequiredError('offerHash','Required parameter offerHash was null or undefined when calling deactivate.');
@@ -8137,7 +8138,7 @@ For better experience use locations ids of countries and cities.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    delete(offerHash: string, options: any = {}): FetchArgs {
+    delete(offerHash?: string, options: any = {}): FetchArgs {
         // verify required parameter 'offerHash' is not null or undefined
         if (offerHash === null || offerHash === undefined) {
             throw new RequiredError('offerHash','Required parameter offerHash was null or undefined when calling delete.');
@@ -8174,7 +8175,7 @@ For better experience use locations ids of countries and cities.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    get(offerHash: string, options: any = {}): FetchArgs {
+    get(offerHash?: string, options: any = {}): FetchArgs {
         // verify required parameter 'offerHash' is not null or undefined
         if (offerHash === null || offerHash === undefined) {
             throw new RequiredError('offerHash','Required parameter offerHash was null or undefined when calling get.');
@@ -8212,7 +8213,7 @@ For better experience use locations ids of countries and cities.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    list(active: boolean, offerType: string, options: any = {}): FetchArgs {
+    list(active?: boolean, offerType?: string, options: any = {}): FetchArgs {
         // verify required parameter 'active' is not null or undefined
         if (active === null || active === undefined) {
             throw new RequiredError('active','Required parameter active was null or undefined when calling list.');
@@ -8257,7 +8258,7 @@ For better experience use locations ids of countries and cities.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    price(offerHash: string, options: any = {}): FetchArgs {
+    price(offerHash?: string, options: any = {}): FetchArgs {
         // verify required parameter 'offerHash' is not null or undefined
         if (offerHash === null || offerHash === undefined) {
             throw new RequiredError('offerHash','Required parameter offerHash was null or undefined when calling price.');
@@ -8294,7 +8295,7 @@ For better experience use locations ids of countries and cities.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    prices(paymentMethod: string, options: any = {}): FetchArgs {
+    prices(paymentMethod?: string, options: any = {}): FetchArgs {
         // verify required parameter 'paymentMethod' is not null or undefined
         if (paymentMethod === null || paymentMethod === undefined) {
             throw new RequiredError('paymentMethod','Required parameter paymentMethod was null or undefined when calling prices.');
@@ -8406,7 +8407,7 @@ For better experience use locations ids of countries and cities.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    update(tags: string, margin: number, currency: string, flowType: string, offerCap: OfferUpdateRequestBodyOfferCap, rangeMax: number, rangeMin: number, dutyHours: Array<OfferDutyHours>, offerHash: string, fixedPrice: number, locationId: number, offerTerms: string, bankAccounts: string, tradeDetails: string, paymentMethod: string, paymentWindow: number, paymentCountry: string, predefinedAmount: string, paymentMethodGroup: string, paymentMethodLabel: string, bankReferenceMessage: OfferUpdateRequestBodyBankReferenceMessage, showOnlyTrustedUser: boolean, countryLimitationList: string, countryLimitationType: string, requireMinPastTrades: boolean, options: any = {}): FetchArgs {
+    update(tags?: string, margin?: number, currency?: string, flowType?: string, offerCap?: OfferUpdateRequestBodyOfferCap, rangeMax?: number, rangeMin?: number, dutyHours?: Array<OfferDutyHours>, offerHash?: string, fixedPrice?: number, locationId?: number, offerTerms?: string, bankAccounts?: string, tradeDetails?: string, paymentMethod?: string, paymentWindow?: number, paymentCountry?: string, predefinedAmount?: string, paymentMethodGroup?: string, paymentMethodLabel?: string, bankReferenceMessage?: OfferUpdateRequestBodyBankReferenceMessage, showOnlyTrustedUser?: boolean, countryLimitationList?: string, countryLimitationType?: string, requireMinPastTrades?: boolean, options: any = {}): FetchArgs {
         // verify required parameter 'tags' is not null or undefined
         if (tags === null || tags === undefined) {
             throw new RequiredError('tags','Required parameter tags was null or undefined when calling update.');
@@ -8639,7 +8640,7 @@ For better experience use locations ids of countries and cities.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    updatePrice(margin: number, offerHash: string, fixedPrice: number, options: any = {}): FetchArgs {
+    updatePrice(margin?: number, offerHash?: string, fixedPrice?: number, options: any = {}): FetchArgs {
         // verify required parameter 'margin' is not null or undefined
         if (margin === null || margin === undefined) {
             throw new RequiredError('margin','Required parameter margin was null or undefined when calling updatePrice.');
@@ -9441,7 +9442,7 @@ export const PaymentMethodApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    fee(slug: string, currency: string, options: any = {}): FetchArgs {
+    fee(slug?: string, currency?: string, options: any = {}): FetchArgs {
         // verify required parameter 'slug' is not null or undefined
         if (slug === null || slug === undefined) {
             throw new RequiredError('slug','Required parameter slug was null or undefined when calling fee.');
@@ -9659,7 +9660,7 @@ export const TradeApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cancel(tradeHash: string, options: any = {}): FetchArgs {
+    cancel(tradeHash?: string, options: any = {}): FetchArgs {
         // verify required parameter 'tradeHash' is not null or undefined
         if (tradeHash === null || tradeHash === undefined) {
             throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling cancel.');
@@ -9697,7 +9698,7 @@ export const TradeApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    completed(page: number, partner: string, options: any = {}): FetchArgs {
+    completed(page?: number, partner?: string, options: any = {}): FetchArgs {
         // verify required parameter 'page' is not null or undefined
         if (page === null || page === undefined) {
             throw new RequiredError('page','Required parameter page was null or undefined when calling completed.');
@@ -9744,7 +9745,7 @@ export const TradeApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    dispute(reason: string, tradeHash: string, reasonType: string, options: any = {}): FetchArgs {
+    dispute(reason?: string, tradeHash?: string, reasonType?: string, options: any = {}): FetchArgs {
         // verify required parameter 'reason' is not null or undefined
         if (reason === null || reason === undefined) {
             throw new RequiredError('reason','Required parameter reason was null or undefined when calling dispute.');
@@ -9797,7 +9798,7 @@ export const TradeApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    disputeReasons(tradeHash: string, options: any = {}): FetchArgs {
+    disputeReasons(tradeHash?: string, options: any = {}): FetchArgs {
         // verify required parameter 'tradeHash' is not null or undefined
         if (tradeHash === null || tradeHash === undefined) {
             throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling disputeReasons.');
@@ -9834,7 +9835,7 @@ export const TradeApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    fund(tradeHash: string, options: any = {}): FetchArgs {
+    fund(tradeHash?: string, options: any = {}): FetchArgs {
         // verify required parameter 'tradeHash' is not null or undefined
         if (tradeHash === null || tradeHash === undefined) {
             throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling fund.');
@@ -9871,7 +9872,7 @@ export const TradeApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    get(tradeHash: string, options: any = {}): FetchArgs {
+    get(tradeHash?: string, options: any = {}): FetchArgs {
         // verify required parameter 'tradeHash' is not null or undefined
         if (tradeHash === null || tradeHash === undefined) {
             throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling get.');
@@ -9932,7 +9933,7 @@ export const TradeApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    locations(tradeHash: string, options: any = {}): FetchArgs {
+    locations(tradeHash?: string, options: any = {}): FetchArgs {
         // verify required parameter 'tradeHash' is not null or undefined
         if (tradeHash === null || tradeHash === undefined) {
             throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling locations.');
@@ -9969,7 +9970,7 @@ export const TradeApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    paid(tradeHash: string, options: any = {}): FetchArgs {
+    paid(tradeHash?: string, options: any = {}): FetchArgs {
         // verify required parameter 'tradeHash' is not null or undefined
         if (tradeHash === null || tradeHash === undefined) {
             throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling paid.');
@@ -10007,7 +10008,7 @@ export const TradeApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    release(tradeHash: string, xPaxful2fa?: string, options: any = {}): FetchArgs {
+    release(tradeHash?: string, xPaxful2fa?: string, options: any = {}): FetchArgs {
         // verify required parameter 'tradeHash' is not null or undefined
         if (tradeHash === null || tradeHash === undefined) {
             throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling release.');
@@ -10048,7 +10049,7 @@ export const TradeApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    reopen(tradeHash: string, options: any = {}): FetchArgs {
+    reopen(tradeHash?: string, options: any = {}): FetchArgs {
         // verify required parameter 'tradeHash' is not null or undefined
         if (tradeHash === null || tradeHash === undefined) {
             throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling reopen.');
@@ -10089,7 +10090,7 @@ export const TradeApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    start(fiat: number, satoshi: number, offerHash: string, bankAccounts: Array<RequestBodyTradeStartBankAccounts>, cryptoAmount: number, options: any = {}): FetchArgs {
+    start(fiat?: number, satoshi?: number, offerHash?: string, bankAccounts?: Array<RequestBodyTradeStartBankAccounts>, cryptoAmount?: number, options: any = {}): FetchArgs {
         // verify required parameter 'fiat' is not null or undefined
         if (fiat === null || fiat === undefined) {
             throw new RequiredError('fiat','Required parameter fiat was null or undefined when calling start.');
@@ -10576,7 +10577,7 @@ export const TradeChatApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    get(tradeHash: string, options: any = {}): FetchArgs {
+    get(tradeHash?: string, options: any = {}): FetchArgs {
         // verify required parameter 'tradeHash' is not null or undefined
         if (tradeHash === null || tradeHash === undefined) {
             throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling get.');
@@ -10614,7 +10615,7 @@ export const TradeChatApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    image(size: string, imageHash: string, options: any = {}): FetchArgs {
+    image(size?: string, imageHash?: string, options: any = {}): FetchArgs {
         // verify required parameter 'size' is not null or undefined
         if (size === null || size === undefined) {
             throw new RequiredError('size','Required parameter size was null or undefined when calling image.');
@@ -10662,7 +10663,7 @@ Please consider using image/upload endpoint instead as it will process uploaded 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    imageAdd(file: string, tradeHash: string, options: any = {}): FetchArgs {
+    imageAdd(file?: string, tradeHash?: string, options: any = {}): FetchArgs {
         // verify required parameter 'file' is not null or undefined
         if (file === null || file === undefined) {
             throw new RequiredError('file','Required parameter file was null or undefined when calling imageAdd.');
@@ -10708,7 +10709,7 @@ Please consider using image/upload endpoint instead as it will process uploaded 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    imageUpload(file: Blob, tradeHash: string, options: any = {}): FetchArgs {
+    imageUpload(file?: Blob, tradeHash?: string, options: any = {}): FetchArgs {
         // verify required parameter 'file' is not null or undefined
         if (file === null || file === undefined) {
             throw new RequiredError('file','Required parameter file was null or undefined when calling imageUpload.');
@@ -10753,7 +10754,7 @@ Please consider using image/upload endpoint instead as it will process uploaded 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    latest(tradeHash: string, options: any = {}): FetchArgs {
+    latest(tradeHash?: string, options: any = {}): FetchArgs {
         // verify required parameter 'tradeHash' is not null or undefined
         if (tradeHash === null || tradeHash === undefined) {
             throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling latest.');
@@ -10791,7 +10792,7 @@ Please consider using image/upload endpoint instead as it will process uploaded 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    post(message: string, tradeHash: string, options: any = {}): FetchArgs {
+    post(message?: string, tradeHash?: string, options: any = {}): FetchArgs {
         // verify required parameter 'message' is not null or undefined
         if (message === null || message === undefined) {
             throw new RequiredError('message','Required parameter message was null or undefined when calling post.');
@@ -11028,7 +11029,7 @@ export const TransactionsApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    all(page: number, type: string, limit: number, cryptoCurrencyCode: string, options: any = {}): FetchArgs {
+    all(page?: number, type?: string, limit?: number, cryptoCurrencyCode?: string, options: any = {}): FetchArgs {
         // verify required parameter 'page' is not null or undefined
         if (page === null || page === undefined) {
             throw new RequiredError('page','Required parameter page was null or undefined when calling all.');
@@ -11194,7 +11195,7 @@ export const UserApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    block(username: string, options: any = {}): FetchArgs {
+    block(username?: string, options: any = {}): FetchArgs {
         // verify required parameter 'username' is not null or undefined
         if (username === null || username === undefined) {
             throw new RequiredError('username','Required parameter username was null or undefined when calling block.');
@@ -11264,7 +11265,7 @@ export const UserApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    info(username: string, options: any = {}): FetchArgs {
+    info(username?: string, options: any = {}): FetchArgs {
         // verify required parameter 'username' is not null or undefined
         if (username === null || username === undefined) {
             throw new RequiredError('username','Required parameter username was null or undefined when calling info.');
@@ -11325,7 +11326,7 @@ export const UserApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    trust(username: string, options: any = {}): FetchArgs {
+    trust(username?: string, options: any = {}): FetchArgs {
         // verify required parameter 'username' is not null or undefined
         if (username === null || username === undefined) {
             throw new RequiredError('username','Required parameter username was null or undefined when calling trust.');
@@ -11386,7 +11387,7 @@ export const UserApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    unblock(username: string, options: any = {}): FetchArgs {
+    unblock(username?: string, options: any = {}): FetchArgs {
         // verify required parameter 'username' is not null or undefined
         if (username === null || username === undefined) {
             throw new RequiredError('username','Required parameter username was null or undefined when calling unblock.');
@@ -11423,7 +11424,7 @@ export const UserApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    untrust(username: string, options: any = {}): FetchArgs {
+    untrust(username?: string, options: any = {}): FetchArgs {
         // verify required parameter 'username' is not null or undefined
         if (username === null || username === undefined) {
             throw new RequiredError('username','Required parameter username was null or undefined when calling untrust.');
@@ -11707,7 +11708,7 @@ export const WalletApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    balance(cryptoCurrencyCode: string, options: any = {}): FetchArgs {
+    balance(cryptoCurrencyCode?: string, options: any = {}): FetchArgs {
         // verify required parameter 'cryptoCurrencyCode' is not null or undefined
         if (cryptoCurrencyCode === null || cryptoCurrencyCode === undefined) {
             throw new RequiredError('cryptoCurrencyCode','Required parameter cryptoCurrencyCode was null or undefined when calling balance.');
@@ -11745,7 +11746,7 @@ export const WalletApiFetchParamCreator = {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    conversionQuotes(convertTo: string, convertFrom: string, options: any = {}): FetchArgs {
+    conversionQuotes(convertTo?: string, convertFrom?: string, options: any = {}): FetchArgs {
         // verify required parameter 'convertTo' is not null or undefined
         if (convertTo === null || convertTo === undefined) {
             throw new RequiredError('convertTo','Required parameter convertTo was null or undefined when calling conversionQuotes.');
@@ -11796,7 +11797,7 @@ This helps to avoid accidental double conversions.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    convert(amount: number, orderId: string, quoteId: string, convertTo: string, convertFrom: string, options: any = {}): FetchArgs {
+    convert(amount?: number, orderId?: string, quoteId?: string, convertTo?: string, convertFrom?: string, options: any = {}): FetchArgs {
         // verify required parameter 'amount' is not null or undefined
         if (amount === null || amount === undefined) {
             throw new RequiredError('amount','Required parameter amount was null or undefined when calling convert.');
