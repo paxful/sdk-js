@@ -40,7 +40,6 @@
     "ts-node": "^9.1.1",
     "typedoc": "^0.20.34",
     "fetch-mock-jest": "^1.5.1",
-    "ts-morph": "^12.0.0",
     "typescript": "^4.2.3"
   },
   "dependencies": {
