@@ -692,12 +692,12 @@ export type DefaultApiAddUserInternalWebhookParams = {
     /**
      * 
      */
-    body: WebhookIn;
+    body?: WebhookIn;
 
     /**
      * 
      */
-    userId: string;
+    userId?: string;
 
 }
 
@@ -705,17 +705,17 @@ export type DefaultApiAddWebhookEndpointParams = {
     /**
      * 
      */
-    body: EndpointIn;
+    body?: EndpointIn;
 
     /**
      * 
      */
-    webhookId: string;
+    webhookId?: string;
 
     /**
      * 
      */
-    userId: string;
+    userId?: string;
 
 }
 
@@ -723,12 +723,12 @@ export type DefaultApiDeleteUserInternalWebhooksParams = {
     /**
      * 
      */
-    userId: string;
+    userId?: string;
 
     /**
      * 
      */
-    webhookId: string;
+    webhookId?: string;
 
 }
 
@@ -736,17 +736,17 @@ export type DefaultApiDeleteWebhookEndpointByIdParams = {
     /**
      * 
      */
-    webhookId: string;
+    webhookId?: string;
 
     /**
      * 
      */
-    endpointId: number;
+    endpointId?: number;
 
     /**
      * 
      */
-    userId: string;
+    userId?: string;
 
 }
 
@@ -754,12 +754,12 @@ export type DefaultApiGetUserInternalWebhookDetailsParams = {
     /**
      * 
      */
-    userId: string;
+    userId?: string;
 
     /**
      * 
      */
-    webhookId: string;
+    webhookId?: string;
 
 }
 
@@ -767,17 +767,17 @@ export type DefaultApiGetWebhookEndpointByIdParams = {
     /**
      * 
      */
-    webhookId: string;
+    webhookId?: string;
 
     /**
      * 
      */
-    endpointId: number;
+    endpointId?: number;
 
     /**
      * 
      */
-    userId: string;
+    userId?: string;
 
 }
 
@@ -785,12 +785,12 @@ export type DefaultApiGetWebhookEndpointsParams = {
     /**
      * 
      */
-    webhookId: string;
+    webhookId?: string;
 
     /**
      * 
      */
-    userId: string;
+    userId?: string;
 
 }
 
@@ -798,22 +798,22 @@ export type DefaultApiUpdateWebhookEndpointByIdParams = {
     /**
      * 
      */
-    body: EndpointIn;
+    body?: EndpointIn;
 
     /**
      * 
      */
-    webhookId: string;
+    webhookId?: string;
 
     /**
      * 
      */
-    endpointId: number;
+    endpointId?: number;
 
     /**
      * 
      */
-    userId: string;
+    userId?: string;
 
 }
 
@@ -1166,7 +1166,7 @@ export type DeveloperApiGetLogsParams = {
     /**
      * 
      */
-    applicationId: string;
+    applicationId?: string;
 
 }
 
@@ -1177,12 +1177,12 @@ export type DeveloperApiWebhookCreateParams = {
     /**
      * 
      */
-    body: WebhookIn;
+    body?: WebhookIn;
 
     /**
      * 
      */
-    applicationId: string;
+    applicationId?: string;
 
 }
 
@@ -1190,7 +1190,7 @@ export type DeveloperApiWebhookDeleteParams = {
     /**
      * 
      */
-    applicationId: string;
+    applicationId?: string;
 
 }
 
@@ -1198,7 +1198,7 @@ export type DeveloperApiWebhookGetParams = {
     /**
      * 
      */
-    applicationId: string;
+    applicationId?: string;
 
 }
 
@@ -1206,12 +1206,12 @@ export type DeveloperApiWebhookUpdateParams = {
     /**
      * 
      */
-    body: WebhookIn;
+    body?: WebhookIn;
 
     /**
      * 
      */
-    applicationId: string;
+    applicationId?: string;
 
 }
 
@@ -1824,12 +1824,12 @@ export type UserApiAddUserSpecificWebhooksParams = {
     /**
      * 
      */
-    body: WebhookIn;
+    body?: WebhookIn;
 
     /**
      * 
      */
-    applicationId: string;
+    applicationId?: string;
 
 }
 
@@ -1837,7 +1837,7 @@ export type UserApiAddUserWebhookParams = {
     /**
      * 
      */
-    body: WebhookIn;
+    body?: WebhookIn;
 
 }
 
@@ -1845,12 +1845,12 @@ export type UserApiAddWebhookEndpointParams = {
     /**
      * 
      */
-    body: EndpointIn;
+    body?: EndpointIn;
 
     /**
      * 
      */
-    webhookId: string;
+    webhookId?: string;
 
 }
 
@@ -1861,7 +1861,7 @@ export type UserApiDeleteAllUserWebhooksByTagParams = {
     /**
      * 
      */
-    tag: string;
+    tag?: string;
 
 }
 
@@ -1869,7 +1869,7 @@ export type UserApiDeleteUserWebhooksParams = {
     /**
      * 
      */
-    webhookId: string;
+    webhookId?: string;
 
 }
 
@@ -1877,12 +1877,12 @@ export type UserApiDeleteWebhookEndpointByIdParams = {
     /**
      * 
      */
-    webhookId: string;
+    webhookId?: string;
 
     /**
      * 
      */
-    endpointId: number;
+    endpointId?: number;
 
 }
 
@@ -1890,7 +1890,7 @@ export type UserApiGetUserWebhookDetailsParams = {
     /**
      * 
      */
-    webhookId: string;
+    webhookId?: string;
 
 }
 
@@ -1901,7 +1901,7 @@ export type UserApiGetUserWebhooksPublicByTagParams = {
     /**
      * 
      */
-    tag: string;
+    tag?: string;
 
 }
 
@@ -1909,12 +1909,12 @@ export type UserApiGetWebhookEndpointByIdParams = {
     /**
      * 
      */
-    webhookId: string;
+    webhookId?: string;
 
     /**
      * 
      */
-    endpointId: number;
+    endpointId?: number;
 
 }
 
@@ -1922,7 +1922,7 @@ export type UserApiGetWebhookEndpointsParams = {
     /**
      * 
      */
-    webhookId: string;
+    webhookId?: string;
 
 }
 
@@ -1930,17 +1930,17 @@ export type UserApiUpdateWebhookEndpointByIdParams = {
     /**
      * 
      */
-    body: EndpointIn;
+    body?: EndpointIn;
 
     /**
      * 
      */
-    webhookId: string;
+    webhookId?: string;
 
     /**
      * 
      */
-    endpointId: number;
+    endpointId?: number;
 
 }
 
@@ -1948,7 +1948,7 @@ export type UserApiUserSubscribeParams = {
     /**
      * 
      */
-    applicationId: string;
+    applicationId?: string;
 
 }
 
@@ -1956,7 +1956,7 @@ export type UserApiUserUnsubscribeParams = {
     /**
      * 
      */
-    applicationId: string;
+    applicationId?: string;
 
 }
 

@@ -7227,17 +7227,17 @@ export type FeedbackApiFeedbackGiveParams = {
     /**
      * Rating. Possible values: 1(positive), -1(negative).
      */
-    rating: number;
+    rating?: number;
 
     /**
      * Feedback message.
      */
-    message: string;
+    message?: string;
 
     /**
      * A hash (ID) of the trade.
      */
-    tradeHash: string;
+    tradeHash?: string;
 
 }
 
@@ -7275,12 +7275,12 @@ export type FeedbackApiFeedbackReplyParams = {
     /**
      * Reply message.
      */
-    message: string;
+    message?: string;
 
     /**
      * A hash (ID) of the trade.
      */
-    tradeHash: string;
+    tradeHash?: string;
 
 }
 
@@ -8692,7 +8692,7 @@ export type OfferApiOfferActivateParams = {
     /**
      * A hash (ID) of the offer.
      */
-    offerHash: string;
+    offerHash?: string;
 
 }
 
@@ -8700,52 +8700,52 @@ export type OfferApiOfferAllParams = {
     /**
      * Will return offers of given type without applying a domain logic that &#x27;offer_type&#x27; filter has. If you specify &#x27;sell&#x27; then offers with this type will be returned and so on. See also offer_type filter. Either &#x27;offer_type&#x27; or &#x27;type&#x27; filter needs to be provided. If &#x27;offer_type&#x27; filter is provided then this filter will be ignored. Possible values: &#x27;buy&#x27;, &#x27;sell&#x27;.
      */
-    type: string;
+    type?: string;
 
     /**
      * A group of payment methods(slug). For a list of available payment method groups please refer to payment-method-group/list endpoint.
      */
-    group: string;
+    group?: string;
 
     /**
      * How many offers to return.
      */
-    limit: number;
+    limit?: number;
 
     /**
      * An offset for a result.
      */
-    offset: number;
+    offset?: number;
 
     /**
      * Will return offers where this value either fits into trade limits or equals to a predefined amount.
      */
-    fiatMin: number;
+    fiatMin?: number;
 
     /**
      * Deprecated field. Please use location_id.
      */
-    geonameId: number;
+    geonameId?: number;
 
     /**
      * Search offers with margin less than the value. Ignored when offer is of fixed price.
      */
-    marginMax: number;
+    marginMax?: number;
 
     /**
      * Search offers with margin greater than the value. Ignored when offer is of fixed price.
      */
-    marginMin: number;
+    marginMin?: number;
 
     /**
      * If you would like to get offers that you can use &lt;b&gt;to buy crypto&lt;/b&gt;, then in fact you need to see offers &lt;b&gt;where other vendors are selling crypto&lt;/b&gt;, hence you need to specify &#x27;buy&#x27; to get &#x27;sell&#x27; offers and vice versa. If you just would like to get offers filtered by type they have, then you can use &#x27;type&#x27; parameter instead. Either &#x27;offer_type&#x27; or &#x27;type&#x27; filter needs to be provided. If this filter is provided then &#x27;type&#x27; will be ignored.
      */
-    offerType: string;
+    offerType?: string;
 
     /**
      * Comma separated list of user types whose offers to return - i.e. power_trader, expert_trader. For a list of all available user types please refer to user/types endpoint. You can also provide “all” value, in this case offers of users of either available type will be returned.
      */
-    userTypes: string;
+    userTypes?: string;
 
     /**
      * Location id is needed to search
@@ -8753,48 +8753,48 @@ for offers with specific payment methods, e.g. Cash in Person, Gold. If payment 
 You can find location ids here: https://www.geonames.org/.
 For better experience use locations ids of countries and cities.
      */
-    locationId: number;
+    locationId?: number;
 
     /**
      * ISO country code, e.g. &#x27;US&#x27;. Filter offers by available payment methods in the given country. Please use &#x27;WORLDWIDE&#x27; if you want to get offers from all countries.
 For authenticated user by default automatically detected country will be used. For non-authenticated user &#x27;US&#x27; will be used. This filter corresponds to &#x27;Offer location&#x27; filter available on marketplace.
      */
-    userCountry: string;
+    userCountry?: string;
 
     /**
      * 3 letter ISO code for fiat currency. &#x27;USD&#x27; or any other. Case insensitive.
      */
-    currencyCode: string;
+    currencyCode?: string;
 
     /**
      * A slug of the payment method. To see a list of payment method slugs please refer to payment-method/list endpoint.
      */
-    paymentMethod: string;
+    paymentMethod?: string;
 
     /**
      * Search offers with trade limit less than the value.
      */
-    fiatAmountMax: number;
+    fiatAmountMax?: number;
 
     /**
      * Search offers with trade limit greater than the value.
      */
-    fiatAmountMin: number;
+    fiatAmountMin?: number;
 
     /**
      * A filter by crypto currency code, default is &#x27;btc&#x27;. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
      */
-    cryptoCurrencyCode: string;
+    cryptoCurrencyCode?: string;
 
     /**
      * Search offers with fiat price per crypto less than the value.
      */
-    fiatFixedPriceMax: number;
+    fiatFixedPriceMax?: number;
 
     /**
      * Search offers with fiat price per crypto greater than the value.
      */
-    fiatFixedPriceMin: number;
+    fiatFixedPriceMin?: number;
 
 }
 
@@ -8802,37 +8802,37 @@ export type OfferApiOfferCreateParams = {
     /**
      * Comma-separated list of tags. For a list of available tags please refer to offer-tag/list and use &#x27;slug&#x27; parameter.
      */
-    tags: string;
+    tags?: string;
 
     /**
      * A percent that determines differences between market price and the price of the offer.
      */
-    margin: number;
+    margin?: number;
 
     /**
      * 3 letter ISO code for fiat currency. &#x27;USD&#x27; or any other. Case insensitive.
      */
-    currency: string;
+    currency?: string;
 
     /**
      * A flow type for offer.
      */
-    flowType: string;
+    flowType?: string;
 
     /**
      * A maximum value of the trade limit, i.e the largest amount of fiat that a trade can be started with. (Minimum value for the field 1).
      */
-    rangeMax: number;
+    rangeMax?: number;
 
     /**
      * A minimum value of the trade limit, i.e the smallest amount of fiat that a trade can be started with. (Minimum value for the field 1).
      */
-    rangeMin: number;
+    rangeMin?: number;
 
     /**
      * Should be used only if the offer is created as a fixed price offer. If this parameter is used then &#x27;margin&#x27; should not be specified.
      */
-    fixedPrice: number;
+    fixedPrice?: number;
 
     /**
      * Location id is needed to search for offers with specific payment methods,
@@ -8840,92 +8840,92 @@ e.g. Cash in Person, Gold. If payment method is another - parameter will be igno
 You can find location ids here: https://www.geonames.org/.
 For better experience use locations ids of countries and cities.
      */
-    locationId: number;
+    locationId?: number;
 
     /**
      * Terms of the offer for a trade partner. String up to 2500 characters.
      */
-    offerTerms: string;
+    offerTerms?: string;
 
     /**
      * Comma-separated list of bank account UUIDs.
      */
-    bankAccounts: string;
+    bankAccounts?: string;
 
     /**
      * Instructions for a trade partner. String up to 2500 characters.
      */
-    tradeDetails: string;
+    tradeDetails?: string;
 
     /**
      * Fixes the price of your cryptocurrency, rather than using the market price. If this field is used, then you should also specify a value for &#x27;fixed_price&#x27;.
      */
-    isFixedPrice: boolean;
+    isFixedPrice?: boolean;
 
     /**
      * A slug of the payment method. To see a list of payment method slugs please refer to payment-method/list endpoint.
      */
-    paymentMethod: string;
+    paymentMethod?: string;
 
     /**
      * How much time the trade partner has to make the payment and click &#x27;Paid&#x27; before the trade is automatically canceled. Integer between 30 to 43200.
      */
-    paymentWindow: number;
+    paymentWindow?: number;
 
     /**
      * A cryptocurrency that this offer will use, a code should be specified. For example - btc, eth. If not set, then &#x27;btc&#x27; will be used as a default.
      */
-    cryptoCurrency: string;
+    cryptoCurrency?: string;
 
     /**
      * 3 letter ISO country code (e.g. USA, EST, fra, etc.). If the payment method is country-specific, specify the most relevant country associated with this payment method.
      */
-    paymentCountry: string;
+    paymentCountry?: string;
 
     /**
      * An offer type. Possible values: &#x27;buy&#x27;, &#x27;sell&#x27;.
      */
-    offerTypeField: string;
+    offerTypeField?: string;
 
     /**
      * Comma-separated predefined amounts of fiat currency, i.e. 20,30,50. If not specified, then a user can enter any amount within the offer range.
      */
-    predefinedAmount: string;
+    predefinedAmount?: string;
 
     /**
      * A group of payment methods. For a list of available payment method groups please refer to payment-method-group/list endpoint.
      */
-    paymentMethodGroup: string;
+    paymentMethodGroup?: string;
 
     /**
      * A bank name will appear after the payment method. Maximum 25 characters and only letters, numbers, and dash. You can write several bank names separated by space. For example: CBS SEB METROPOLITAN ALFA.
      */
-    paymentMethodLabel: string;
+    paymentMethodLabel?: string;
 
     /**
      * 
      */
-    bankReferenceMessage: OfferUpdateRequestBodyBankReferenceMessage;
+    bankReferenceMessage?: OfferUpdateRequestBodyBankReferenceMessage;
 
     /**
      * The offer will be shown only to users from the trusted list.
      */
-    showOnlyTrustedUser: boolean;
+    showOnlyTrustedUser?: boolean;
 
     /**
      * Comma-separated list of &#x27;ISO Alpha-2&#x27; country codes.
      */
-    countryLimitationList: string;
+    countryLimitationList?: string;
 
     /**
      * Type of limitation countries. Valid values are &#x27;allowed&#x27; or &#x27;disallowed&#x27;. If &#x27;allowed&#x27; is used then the offer will be visible ONLY for visitors from countries specified in the &#x27;country_limitation_list&#x27;. If &#x27;disallowed&#x27; is used then this offer will NOT be visible for visitors from countries specified in the &#x27;country_limitation_list&#x27;.
      */
-    countryLimitationType: string;
+    countryLimitationType?: string;
 
     /**
      * The offer will be shown only to users with a given amount of past trades.
      */
-    requireMinPastTrades: number;
+    requireMinPastTrades?: number;
 
 }
 
@@ -8933,7 +8933,7 @@ export type OfferApiOfferDeactivateParams = {
     /**
      * A hash (ID) of the offer.
      */
-    offerHash: string;
+    offerHash?: string;
 
 }
 
@@ -8941,7 +8941,7 @@ export type OfferApiOfferDeleteParams = {
     /**
      * A hash (ID) of the offer.
      */
-    offerHash: string;
+    offerHash?: string;
 
 }
 
@@ -8949,7 +8949,7 @@ export type OfferApiOfferGetParams = {
     /**
      * A hash (ID) of the offer.
      */
-    offerHash: string;
+    offerHash?: string;
 
 }
 
@@ -8957,12 +8957,12 @@ export type OfferApiOfferListParams = {
     /**
      * A filter by active/not active offers, by default all offers are displayed.
      */
-    active: boolean;
+    active?: boolean;
 
     /**
      * An offer type. Possible values: &#x27;buy&#x27;, &#x27;sell&#x27;.
      */
-    offerType: string;
+    offerType?: string;
 
 }
 
@@ -8970,7 +8970,7 @@ export type OfferApiOfferPriceParams = {
     /**
      * A hash (ID) of the offer.
      */
-    offerHash: string;
+    offerHash?: string;
 
 }
 
@@ -8978,7 +8978,7 @@ export type OfferApiOfferPricesParams = {
     /**
      * A slug of the payment method. To see a list of payment method slugs please refer to payment-method/list endpoint.
      */
-    paymentMethod: string;
+    paymentMethod?: string;
 
 }
 
@@ -8992,52 +8992,52 @@ export type OfferApiOfferUpdateParams = {
     /**
      * Comma-separated list of tags. For a list of available tags please refer to offer-tag/list and use &#x27;slug&#x27; parameter.
      */
-    tags: string;
+    tags?: string;
 
     /**
      * A percent that determines differences between market price and the price of the offer.
      */
-    margin: number;
+    margin?: number;
 
     /**
      * 3 letter ISO code of fiat currency, e.g. USD. Case insensitive.
      */
-    currency: string;
+    currency?: string;
 
     /**
      * A flow type for offer.
      */
-    flowType: string;
+    flowType?: string;
 
     /**
      * 
      */
-    offerCap: OfferUpdateRequestBodyOfferCap;
+    offerCap?: OfferUpdateRequestBodyOfferCap;
 
     /**
      * A maximum value of the trade limit, i.e the largest amount of fiat that a trade can be started with. (Minimum value for the field 1).
      */
-    rangeMax: number;
+    rangeMax?: number;
 
     /**
      * A minimum value of the trade limit, i.e the smallest amount of fiat that a trade can be started with. (Minimum value for the field 1).
      */
-    rangeMin: number;
+    rangeMin?: number;
 
     /**
      * An array of intervals when the offer is active for the week.
      */
-    dutyHours: Array<OfferDutyHours>;
+    dutyHours?: Array<OfferDutyHours>;
 
     /**
      * A hash (ID) of the offer.
      */
-    offerHash: string;
+    offerHash?: string;
 
     /**
      * Should be used only if the offer is created as a fixed price offer. If this parameter is used then &#x27;margin&#x27; should not be specified.
      */
-    fixedPrice: number;
+    fixedPrice?: number;
 
     /**
      * Location id is needed to search for offers with specific payment methods,
@@ -9045,77 +9045,77 @@ e.g. Cash in Person, Gold. If payment method is another - parameter will be igno
 You can find location ids here: https://www.geonames.org/.
 For better experience use locations ids of countries and cities.
      */
-    locationId: number;
+    locationId?: number;
 
     /**
      * Terms of the offer for a trade partner. String up to 2500 characters.
      */
-    offerTerms: string;
+    offerTerms?: string;
 
     /**
      * Comma-separated list of bank account UUIDs.
      */
-    bankAccounts: string;
+    bankAccounts?: string;
 
     /**
      * Instructions for a trade partner. String up to 2500 characters.
      */
-    tradeDetails: string;
+    tradeDetails?: string;
 
     /**
      * A slug of the payment method. To see a list of payment method slugs please refer to payment-method/list endpoint.
      */
-    paymentMethod: string;
+    paymentMethod?: string;
 
     /**
      * How much time the trade partner has to make the payment and click &#x27;Paid&#x27; before the trade is automatically canceled. Integer between 30 to 43200.
      */
-    paymentWindow: number;
+    paymentWindow?: number;
 
     /**
      * 3 letter ISO country code (e.g. USA, EST, fra, etc.). If the payment method is country-specific, specify the most relevant country associated with this payment method.
      */
-    paymentCountry: string;
+    paymentCountry?: string;
 
     /**
      * Comma-separated predefined amounts of fiat currency, i.e. 20,30,50. If not specified, then a user can enter any amount within the offer range.
      */
-    predefinedAmount: string;
+    predefinedAmount?: string;
 
     /**
      * A group of payment methods. For a list of available payment method groups please refer to payment-method-group/list endpoint.
      */
-    paymentMethodGroup: string;
+    paymentMethodGroup?: string;
 
     /**
      * A bank name will appear after the payment method. Maximum 25 characters and only letters, numbers, and dash. You can write several bank names separated by space, e.g. CBS SEB METROPOLITAN ALFA.
      */
-    paymentMethodLabel: string;
+    paymentMethodLabel?: string;
 
     /**
      * 
      */
-    bankReferenceMessage: OfferUpdateRequestBodyBankReferenceMessage;
+    bankReferenceMessage?: OfferUpdateRequestBodyBankReferenceMessage;
 
     /**
      * The offer will be shown only to users from the trusted list.
      */
-    showOnlyTrustedUser: boolean;
+    showOnlyTrustedUser?: boolean;
 
     /**
      * Comma-separated list of &#x27;ISO Alpha-2&#x27; country codes.
      */
-    countryLimitationList: string;
+    countryLimitationList?: string;
 
     /**
      * Type of limitation countries. Valid values are &#x27;allowed&#x27; or &#x27;disallowed&#x27;. If &#x27;allowed&#x27; is used then the offer will be visible ONLY for visitors from countries specified in the &#x27;country_limitation_list&#x27;. If &#x27;disallowed&#x27; is used then this offer will NOT be visible for visitors from countries specified in the &#x27;country_limitation_list&#x27;.
      */
-    countryLimitationType: string;
+    countryLimitationType?: string;
 
     /**
      * The offer will be shown only to users with a given amount of past trades.
      */
-    requireMinPastTrades: boolean;
+    requireMinPastTrades?: boolean;
 
 }
 
@@ -9123,17 +9123,17 @@ export type OfferApiOfferUpdatePriceParams = {
     /**
      * A percent that determines differences between market price and the price of the offer.
      */
-    margin: number;
+    margin?: number;
 
     /**
      * A hash (ID) of the offer.
      */
-    offerHash: string;
+    offerHash?: string;
 
     /**
      * Should be used only if the offer is created as a fixed price offer. If this parameter is used then &#x27;margin&#x27; should not be specified.
      */
-    fixedPrice: number;
+    fixedPrice?: number;
 
 }
 
@@ -9543,12 +9543,12 @@ export type PaymentMethodApiPaymentMethodFeeParams = {
     /**
      * Payment method slug. For a list of available payment method slugs please refer to payment-method/list endpoint.
      */
-    slug: string;
+    slug?: string;
 
     /**
      * Fiat currency code, by default is USD. For a list of supported fiat currencies please refer to currency/list endpoint.
      */
-    currency: string;
+    currency?: string;
 
 }
 
@@ -10187,7 +10187,7 @@ export type TradeApiTradeCancelParams = {
     /**
      * A hash (ID) of the trade.
      */
-    tradeHash: string;
+    tradeHash?: string;
 
 }
 
@@ -10195,12 +10195,12 @@ export type TradeApiTradeCompletedParams = {
     /**
      * Requested page, by default is 1.
      */
-    page: number;
+    page?: number;
 
     /**
      * Username of a partner.
      */
-    partner: string;
+    partner?: string;
 
 }
 
@@ -10208,17 +10208,17 @@ export type TradeApiTradeDisputeParams = {
     /**
      * Description of the dispute reason, max length 250 characters.
      */
-    reason: string;
+    reason?: string;
 
     /**
      * A hash (ID) of the trade.
      */
-    tradeHash: string;
+    tradeHash?: string;
 
     /**
      * Type of reason, for available reasons refer to trade/dispute-reasons endpoint.
      */
-    reasonType: string;
+    reasonType?: string;
 
 }
 
@@ -10226,7 +10226,7 @@ export type TradeApiTradeDisputeReasonsParams = {
     /**
      * A hash (ID) of the trade.
      */
-    tradeHash: string;
+    tradeHash?: string;
 
 }
 
@@ -10234,7 +10234,7 @@ export type TradeApiTradeFundParams = {
     /**
      * A hash (ID) of the trade.
      */
-    tradeHash: string;
+    tradeHash?: string;
 
 }
 
@@ -10242,7 +10242,7 @@ export type TradeApiTradeGetParams = {
     /**
      * A hash (ID) of the trade.
      */
-    tradeHash: string;
+    tradeHash?: string;
 
 }
 
@@ -10253,7 +10253,7 @@ export type TradeApiTradeLocationsParams = {
     /**
      * A hash (ID) of the trade.
      */
-    tradeHash: string;
+    tradeHash?: string;
 
 }
 
@@ -10261,7 +10261,7 @@ export type TradeApiTradePaidParams = {
     /**
      * A hash (ID) of the trade.
      */
-    tradeHash: string;
+    tradeHash?: string;
 
 }
 
@@ -10269,7 +10269,7 @@ export type TradeApiTradeReleaseParams = {
     /**
      * A hash (ID) of the trade.
      */
-    tradeHash: string;
+    tradeHash?: string;
 
     /**
      * If the endpoint is invoked with an access key which has been received using Sign in with     Paxful authorization flow and it happens that a user has 2FA enabled then you need to provide a code that you have     received from a user using this header.     The flow may look like this: you invoke trade/release endpoint, if you receive 1006 response code, that means user     has 2FA enabled, in this case in your application you prompt a user to provide you with a code.     Once you have received it, you issue trade/release once again and provide the code in this header.
@@ -10282,7 +10282,7 @@ export type TradeApiTradeReopenParams = {
     /**
      * A hash (ID) of the trade.
      */
-    tradeHash: string;
+    tradeHash?: string;
 
 }
 
@@ -10290,27 +10290,27 @@ export type TradeApiTradeStartParams = {
     /**
      * Trade amount in fiat currency.
      */
-    fiat: number;
+    fiat?: number;
 
     /**
      * Deprecated. Please use crypto_amount instead.
      */
-    satoshi: number;
+    satoshi?: number;
 
     /**
      * A hash (ID) of an offer.
      */
-    offerHash: string;
+    offerHash?: string;
 
     /**
      * Bank accounts that will be used for a given trade.
      */
-    bankAccounts: Array<RequestBodyTradeStartBankAccounts>;
+    bankAccounts?: Array<RequestBodyTradeStartBankAccounts>;
 
     /**
      * Trade amount in cryptocurrency. For BTC trade in Satoshi, for ETH trade in GWEI, for USDT trade in micro cents (e.g 1 usdt &#x3D; 1000000 micro cents).
      */
-    cryptoAmount: number;
+    cryptoAmount?: number;
 
 }
 
@@ -10836,7 +10836,7 @@ export type TradeChatApiTradeChatGetParams = {
     /**
      * A hash (ID) of the trade.
      */
-    tradeHash: string;
+    tradeHash?: string;
 
 }
 
@@ -10844,12 +10844,12 @@ export type TradeChatApiTradeChatImageParams = {
     /**
      * Size to fetch, either 1 (original), 2 (full sized) or 3 (thumbnail).
      */
-    size: string;
+    size?: string;
 
     /**
      * Hash ID of an image. To get the hash id please refer to the image_hash parameter in response of the trade-chat/get endpoint.
      */
-    imageHash: string;
+    imageHash?: string;
 
 }
 
@@ -10859,12 +10859,12 @@ export type TradeChatApiTradeChatImageAddParams = {
 When the endpoint is invoked, Paxful will download an image from the specified URL and post it to a given trade chat.
 Please consider using image/upload endpoint instead as it will process uploaded image instantly.
      */
-    file: string;
+    file?: string;
 
     /**
      * A hash (ID) of the trade.
      */
-    tradeHash: string;
+    tradeHash?: string;
 
 }
 
@@ -10872,12 +10872,12 @@ export type TradeChatApiTradeChatImageUploadParams = {
     /**
      * File to upload. Supported formats are jpeg, png, jpg. Files up to 10mb are only allowed.
      */
-    file: Blob;
+    file?: Blob;
 
     /**
      * A hash (ID) of the trade.
      */
-    tradeHash: string;
+    tradeHash?: string;
 
 }
 
@@ -10885,7 +10885,7 @@ export type TradeChatApiTradeChatLatestParams = {
     /**
      * Hash ID of a trade. If specified, method returns latest messages only for this trade. If omitted, the method return latest messages/attachments for all active trades.
      */
-    tradeHash: string;
+    tradeHash?: string;
 
 }
 
@@ -10893,12 +10893,12 @@ export type TradeChatApiTradeChatPostParams = {
     /**
      * Message content.
      */
-    message: string;
+    message?: string;
 
     /**
      * A hash (ID) of the trade.
      */
-    tradeHash: string;
+    tradeHash?: string;
 
 }
 
@@ -11089,22 +11089,22 @@ export type TransactionsApiTransactionsAllParams = {
     /**
      * Requested page, by default is 1.
      */
-    page: number;
+    page?: number;
 
     /**
      * Type of transaction. Possible values: &#x27;trade&#x27;, &#x27;non-trade&#x27;, &#x27;received&#x27;, &#x27;received-internal&#x27;, &#x27;received-external&#x27;, &#x27;sent&#x27;, &#x27;sent-internal&#x27;, &#x27;sent-external&#x27;, &#x27;hedging&#x27;, &#x27;all&#x27;. By default is &#x27;all&#x27;.
      */
-    type: string;
+    type?: string;
 
     /**
      * A number of transactions to return. By default is 100.
      */
-    limit: number;
+    limit?: number;
 
     /**
      * Filter by cryptocurrency code. Use &#x27;all&#x27; value to get a list of transactions with all supported cryptocurrencies. Default is btc. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
      */
-    cryptoCurrencyCode: string;
+    cryptoCurrencyCode?: string;
 
 }
 
@@ -11466,7 +11466,7 @@ export type UserApiUserBlockParams = {
     /**
      * Username of the user.
      */
-    username: string;
+    username?: string;
 
 }
 
@@ -11482,7 +11482,7 @@ export type UserApiUserInfoParams = {
     /**
      * Username of the user.
      */
-    username: string;
+    username?: string;
 
 }
 
@@ -11493,7 +11493,7 @@ export type UserApiUserTrustParams = {
     /**
      * Username of the user.
      */
-    username: string;
+    username?: string;
 
 }
 
@@ -11504,7 +11504,7 @@ export type UserApiUserUnblockParams = {
     /**
      * Username of the user.
      */
-    username: string;
+    username?: string;
 
 }
 
@@ -11512,7 +11512,7 @@ export type UserApiUserUntrustParams = {
     /**
      * Username of the user.
      */
-    username: string;
+    username?: string;
 
 }
 
@@ -11922,7 +11922,7 @@ export type WalletApiWalletBalanceParams = {
     /**
      * Cryptocurrency code of balance. By default - BTC. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
      */
-    cryptoCurrencyCode: string;
+    cryptoCurrencyCode?: string;
 
 }
 
@@ -11930,12 +11930,12 @@ export type WalletApiWalletConversionQuotesParams = {
     /**
      * Cryptocurrency to convert to. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
      */
-    convertTo: string;
+    convertTo?: string;
 
     /**
      * Cryptocurrency to convert from. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
      */
-    convertFrom: string;
+    convertFrom?: string;
 
 }
 
@@ -11943,29 +11943,29 @@ export type WalletApiWalletConvertParams = {
     /**
      * Amount to convert in cryptocurrency. For BTC in Satoshi, for ETH in GWEI, for USDT in micro cents, e.g. 1 USDT &#x3D; 1000000 micro cents.
      */
-    amount: number;
+    amount?: number;
 
     /**
      * Unique ID (UUID) of the conversion, that your application needs to generate.
 Having this parameter ensures idempotency of the operation - you can invoke the endpoint as many times with the same parameter, but conversion will be executed only once.
 This helps to avoid accidental double conversions.
      */
-    orderId: string;
+    orderId?: string;
 
     /**
      * Value for this field can be fetched using wallet/conversion-quotes endpoint.
      */
-    quoteId: string;
+    quoteId?: string;
 
     /**
      * Cryptocurrency to convert to. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
      */
-    convertTo: string;
+    convertTo?: string;
 
     /**
      * Cryptocurrency to convert from. For a list of current supported cryptocurrencies please refer to crypto/list endpoint.
      */
-    convertFrom: string;
+    convertFrom?: string;
 
 }
 
