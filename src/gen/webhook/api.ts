@@ -2226,13 +2226,13 @@ export class UserApi extends BaseAPI {
 
 }
 
-export interface Apis {
+export interface FluentApi {
     default: DefaultApi;
     developer: DeveloperApi;
     user: UserApi;
 }
 
-export default (configuration: ApiConfiguration, credentialStorage: CredentialStorage): Apis => ({
+export default (configuration: ApiConfiguration, credentialStorage: CredentialStorage): FluentApi => ({
     default: new DefaultApi(configuration, credentialStorage),
     developer: new DeveloperApi(configuration, credentialStorage),
     user: new UserApi(configuration, credentialStorage),

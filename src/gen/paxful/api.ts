@@ -12076,7 +12076,7 @@ export class WalletApi extends BaseAPI {
 
 }
 
-export interface Apis {
+export interface FluentApi {
     bank: BankApi;
     bankAccount: BankAccountApi;
     currency: CurrencyApi;
@@ -12093,7 +12093,7 @@ export interface Apis {
     wallet: WalletApi;
 }
 
-export default (configuration: ApiConfiguration, credentialStorage: CredentialStorage): Apis => ({
+export default (configuration: ApiConfiguration, credentialStorage: CredentialStorage): FluentApi => ({
     bank: new BankApi(configuration, credentialStorage),
     bankAccount: new BankAccountApi(configuration, credentialStorage),
     currency: new CurrencyApi(configuration, credentialStorage),

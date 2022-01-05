@@ -234,13 +234,13 @@ export class {{classname}} extends BaseAPI {
 }
 {{/operations}}{{/apis}}{{/apiInfo}}
 
-export interface Apis {
+export interface FluentApi {
     {{#apiInfo}}{{#apis}}
     {{classVarName}}: {{classname}};
     {{/apis}}{{/apiInfo}}
 }
 
-export default (configuration: ApiConfiguration, credentialStorage: CredentialStorage): Apis => ({
+export default (configuration: ApiConfiguration, credentialStorage: CredentialStorage): FluentApi => ({
     {{#apiInfo}}{{#apis}}
     {{classVarName}}: new {{classname}}(configuration, credentialStorage),
     {{/apis}}{{/apiInfo}}
