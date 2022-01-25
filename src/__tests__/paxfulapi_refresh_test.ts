@@ -30,9 +30,14 @@ describe("With the Paxful API SDK", function () {
     const GET_PROFILE_URL = "/oauth2/userinfo/";
 
     it("Client credentials reset flow. Get profile", async () => {
+        const initialAccessToken = UUID();
+
         fetchMock.once({
             url: /oauth2\/userinfo/,
-            method: "GET"
+            method: "GET",
+            headers: {
+                Authorization: 'Bearer ' + initialAccessToken
+            }
         }, {
             status: 401,
             body: ""
@@ -53,18 +58,22 @@ describe("With the Paxful API SDK", function () {
             sendAsJson: false
         });
 
-        fetchMock.once({
+        fetchMock.mock({
             name: 'correct_access_token',
             url: /oauth2\/userinfo/,
-            method: "GET"
+            method: "GET",
+            headers: {
+                Authorization: 'Bearer abc'
+            }
         }, {
             status: 200,
             body: JSON.stringify({ some: "lala" })
         });
 
+
         credentialStorage.getCredentials.mockReturnValue({
             ...{
-                accessToken: UUID(),
+                accessToken: initialAccessToken,
                 refreshToken: UUID(),
             },
             expiresAt: new Date()

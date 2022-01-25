@@ -59,7 +59,7 @@ const createRefreshRequest = async (request: Request, config: ApiConfiguration, 
 
     credentialStorage.saveCredentials(credentials);
 
-    request.headers["Authorization"] = `Bearer ${credentials.accessToken}`;
+    request.headers.set("Authorization", `Bearer ${credentials.accessToken}`)
 
     return Promise.resolve(request);
 }
