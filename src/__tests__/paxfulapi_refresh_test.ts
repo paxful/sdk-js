@@ -58,7 +58,7 @@ describe("With the Paxful API SDK", function () {
             sendAsJson: false
         });
 
-        fetchMock.mock({
+        fetchMock.once({
             name: 'correct_access_token',
             url: /oauth2\/userinfo/,
             method: "GET",
