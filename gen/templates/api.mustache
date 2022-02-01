@@ -75,14 +75,6 @@ export const {{classname}}FetchParamCreator = {
      * @throws {RequiredError}
      */
     {{nickname}}({{#allParams}}{{paramName}}?: {{{dataType}}}, {{/allParams}}options: any = {}): FetchArgs {
-{{#allParams}}
-{{#required}}
-        // verify required parameter '{{paramName}}' is not null or undefined
-        if ({{paramName}} === null || {{paramName}} === undefined) {
-            throw new RequiredError('{{paramName}}','Required parameter {{paramName}} was null or undefined when calling {{nickname}}.');
-        }
-{{/required}}
-{{/allParams}}
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1{{{path}}}`{{#pathParams}}
             .replace(`{${"{{baseName}}"}}`, encodeURIComponent(String({{paramName}}))){{/pathParams}};
         const localVarUrlObj = url.parse(localVarPath, true);
@@ -219,7 +211,6 @@ export class {{classname}} extends BaseAPI {
      {{/summary}}
      * @param { {{classname}}{{operationIdCamelCase}}Params } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof {{classname}}
      */
     public {{nickname}}({{#allParams.0}}params{{^requiredParams.0}}?{{/requiredParams.0}}: {{classname}}{{operationIdCamelCase}}Params, {{/allParams.0}}options?: any): Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Response{{/returnType}}> {

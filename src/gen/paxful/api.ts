@@ -6362,7 +6362,6 @@ export class BankApi extends BaseAPI {
      * @summary bank/list
      * @param { BankApiBankListParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof BankApi
      */
     public list(params?: BankApiBankListParams, options?: any): Promise<InlineResponse2001> {
@@ -6705,7 +6704,6 @@ export class BankAccountApi extends BaseAPI {
      * @summary bank-account/create
      * @param { BankAccountApiBankAccountCreateParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof BankAccountApi
      */
     public create(params?: BankAccountApiBankAccountCreateParams, options?: any): Promise<InlineResponse20034> {
@@ -6722,7 +6720,6 @@ export class BankAccountApi extends BaseAPI {
      * @summary bank-account/delete
      * @param { BankAccountApiBankAccountDeleteParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof BankAccountApi
      */
     public delete(params?: BankAccountApiBankAccountDeleteParams, options?: any): Promise<ModelObject> {
@@ -6739,7 +6736,6 @@ export class BankAccountApi extends BaseAPI {
      * @summary bank-account/get
      * @param { BankAccountApiBankAccountGetParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof BankAccountApi
      */
     public get(params?: BankAccountApiBankAccountGetParams, options?: any): Promise<InlineResponse20025> {
@@ -6756,7 +6752,6 @@ export class BankAccountApi extends BaseAPI {
      * @summary bank-account/list
      * @param { BankAccountApiBankAccountListParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof BankAccountApi
      */
     public list(options?: any): Promise<InlineResponse20027> {
@@ -6773,7 +6768,6 @@ export class BankAccountApi extends BaseAPI {
      * @summary bank-account/update
      * @param { BankAccountApiBankAccountUpdateParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof BankAccountApi
      */
     public update(options?: any): Promise<InlineResponse20034> {
@@ -6980,7 +6974,6 @@ export class CurrencyApi extends BaseAPI {
      * @summary crypto/list
      * @param { CurrencyApiCryptoListParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof CurrencyApi
      */
     public cryptoList(options?: any): Promise<InlineResponse2009> {
@@ -6997,7 +6990,6 @@ export class CurrencyApi extends BaseAPI {
      * @summary currency/btc
      * @param { CurrencyApiCurrencyBtcParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof CurrencyApi
      */
     public btc(params?: CurrencyApiCurrencyBtcParams, options?: any): Promise<CurrencyBtcResponse> {
@@ -7014,7 +7006,6 @@ export class CurrencyApi extends BaseAPI {
      * @summary currency/list
      * @param { CurrencyApiCurrencyListParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof CurrencyApi
      */
     public list(params?: CurrencyApiCurrencyListParams, options?: any): Promise<InlineResponse20014> {
@@ -7031,7 +7022,6 @@ export class CurrencyApi extends BaseAPI {
      * @summary currency/list-auth
      * @param { CurrencyApiCurrencyListAuthParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof CurrencyApi
      */
     public listAuth(params?: CurrencyApiCurrencyListAuthParams, options?: any): Promise<InlineResponse20014> {
@@ -7048,7 +7038,6 @@ export class CurrencyApi extends BaseAPI {
      * @summary currency/rates
      * @param { CurrencyApiCurrencyRatesParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof CurrencyApi
      */
     public rates(options?: any): Promise<CurrencyRatesResponse> {
@@ -7075,18 +7064,6 @@ export const FeedbackApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     give(rating?: number, message?: string, tradeHash?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'rating' is not null or undefined
-        if (rating === null || rating === undefined) {
-            throw new RequiredError('rating','Required parameter rating was null or undefined when calling give.');
-        }
-        // verify required parameter 'message' is not null or undefined
-        if (message === null || message === undefined) {
-            throw new RequiredError('message','Required parameter message was null or undefined when calling give.');
-        }
-        // verify required parameter 'tradeHash' is not null or undefined
-        if (tradeHash === null || tradeHash === undefined) {
-            throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling give.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/feedback/give`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -7184,14 +7161,6 @@ Either this filter or &#x27;username&#x27; has to be used, if both are provided 
      * @throws {RequiredError}
      */
     reply(message?: string, tradeHash?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'message' is not null or undefined
-        if (message === null || message === undefined) {
-            throw new RequiredError('message','Required parameter message was null or undefined when calling reply.');
-        }
-        // verify required parameter 'tradeHash' is not null or undefined
-        if (tradeHash === null || tradeHash === undefined) {
-            throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling reply.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/feedback/reply`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -7299,7 +7268,6 @@ export class FeedbackApi extends BaseAPI {
      * @summary feedback/give
      * @param { FeedbackApiFeedbackGiveParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof FeedbackApi
      */
     public give(params: FeedbackApiFeedbackGiveParams, options?: any): Promise<SuccessTrueResponse> {
@@ -7316,7 +7284,6 @@ export class FeedbackApi extends BaseAPI {
      * @summary feedback/list
      * @param { FeedbackApiFeedbackListParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof FeedbackApi
      */
     public list(params?: FeedbackApiFeedbackListParams, options?: any): Promise<InlineResponse20015> {
@@ -7333,7 +7300,6 @@ export class FeedbackApi extends BaseAPI {
      * @summary feedback/reply
      * @param { FeedbackApiFeedbackReplyParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof FeedbackApi
      */
     public reply(params: FeedbackApiFeedbackReplyParams, options?: any): Promise<SuccessResponse> {
@@ -7408,7 +7374,6 @@ export class KioskApi extends BaseAPI {
      * @summary kiosk/transactions
      * @param { KioskApiKioskTransactionsParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof KioskApi
      */
     public transactions(params?: KioskApiKioskTransactionsParams, options?: any): Promise<InlineResponse20030> {
@@ -7547,7 +7512,6 @@ export class NotificationsApi extends BaseAPI {
      * @summary notifications/list
      * @param { NotificationsApiNotificationsListParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof NotificationsApi
      */
     public list(params?: NotificationsApiNotificationsListParams, options?: any): Promise<InlineResponse20031> {
@@ -7564,7 +7528,6 @@ export class NotificationsApi extends BaseAPI {
      * @summary notifications/mark-read
      * @param { NotificationsApiNotificationsMarkReadParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof NotificationsApi
      */
     public markRead(options?: any): Promise<SuccessResponse> {
@@ -7581,7 +7544,6 @@ export class NotificationsApi extends BaseAPI {
      * @summary notifications/unread-count
      * @param { NotificationsApiNotificationsUnreadCountParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof NotificationsApi
      */
     public unreadCount(options?: any): Promise<InlineResponse20038> {
@@ -7606,10 +7568,6 @@ export const OfferApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     activate(offerHash?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'offerHash' is not null or undefined
-        if (offerHash === null || offerHash === undefined) {
-            throw new RequiredError('offerHash','Required parameter offerHash was null or undefined when calling activate.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/offer/activate`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -7665,82 +7623,6 @@ For authenticated user by default automatically detected country will be used. F
      * @throws {RequiredError}
      */
     all(type?: string, group?: string, limit?: number, offset?: number, fiatMin?: number, geonameId?: number, marginMax?: number, marginMin?: number, offerType?: string, userTypes?: string, locationId?: number, userCountry?: string, currencyCode?: string, paymentMethod?: string, fiatAmountMax?: number, fiatAmountMin?: number, cryptoCurrencyCode?: string, fiatFixedPriceMax?: number, fiatFixedPriceMin?: number, options: any = {}): FetchArgs {
-        // verify required parameter 'type' is not null or undefined
-        if (type === null || type === undefined) {
-            throw new RequiredError('type','Required parameter type was null or undefined when calling all.');
-        }
-        // verify required parameter 'group' is not null or undefined
-        if (group === null || group === undefined) {
-            throw new RequiredError('group','Required parameter group was null or undefined when calling all.');
-        }
-        // verify required parameter 'limit' is not null or undefined
-        if (limit === null || limit === undefined) {
-            throw new RequiredError('limit','Required parameter limit was null or undefined when calling all.');
-        }
-        // verify required parameter 'offset' is not null or undefined
-        if (offset === null || offset === undefined) {
-            throw new RequiredError('offset','Required parameter offset was null or undefined when calling all.');
-        }
-        // verify required parameter 'fiatMin' is not null or undefined
-        if (fiatMin === null || fiatMin === undefined) {
-            throw new RequiredError('fiatMin','Required parameter fiatMin was null or undefined when calling all.');
-        }
-        // verify required parameter 'geonameId' is not null or undefined
-        if (geonameId === null || geonameId === undefined) {
-            throw new RequiredError('geonameId','Required parameter geonameId was null or undefined when calling all.');
-        }
-        // verify required parameter 'marginMax' is not null or undefined
-        if (marginMax === null || marginMax === undefined) {
-            throw new RequiredError('marginMax','Required parameter marginMax was null or undefined when calling all.');
-        }
-        // verify required parameter 'marginMin' is not null or undefined
-        if (marginMin === null || marginMin === undefined) {
-            throw new RequiredError('marginMin','Required parameter marginMin was null or undefined when calling all.');
-        }
-        // verify required parameter 'offerType' is not null or undefined
-        if (offerType === null || offerType === undefined) {
-            throw new RequiredError('offerType','Required parameter offerType was null or undefined when calling all.');
-        }
-        // verify required parameter 'userTypes' is not null or undefined
-        if (userTypes === null || userTypes === undefined) {
-            throw new RequiredError('userTypes','Required parameter userTypes was null or undefined when calling all.');
-        }
-        // verify required parameter 'locationId' is not null or undefined
-        if (locationId === null || locationId === undefined) {
-            throw new RequiredError('locationId','Required parameter locationId was null or undefined when calling all.');
-        }
-        // verify required parameter 'userCountry' is not null or undefined
-        if (userCountry === null || userCountry === undefined) {
-            throw new RequiredError('userCountry','Required parameter userCountry was null or undefined when calling all.');
-        }
-        // verify required parameter 'currencyCode' is not null or undefined
-        if (currencyCode === null || currencyCode === undefined) {
-            throw new RequiredError('currencyCode','Required parameter currencyCode was null or undefined when calling all.');
-        }
-        // verify required parameter 'paymentMethod' is not null or undefined
-        if (paymentMethod === null || paymentMethod === undefined) {
-            throw new RequiredError('paymentMethod','Required parameter paymentMethod was null or undefined when calling all.');
-        }
-        // verify required parameter 'fiatAmountMax' is not null or undefined
-        if (fiatAmountMax === null || fiatAmountMax === undefined) {
-            throw new RequiredError('fiatAmountMax','Required parameter fiatAmountMax was null or undefined when calling all.');
-        }
-        // verify required parameter 'fiatAmountMin' is not null or undefined
-        if (fiatAmountMin === null || fiatAmountMin === undefined) {
-            throw new RequiredError('fiatAmountMin','Required parameter fiatAmountMin was null or undefined when calling all.');
-        }
-        // verify required parameter 'cryptoCurrencyCode' is not null or undefined
-        if (cryptoCurrencyCode === null || cryptoCurrencyCode === undefined) {
-            throw new RequiredError('cryptoCurrencyCode','Required parameter cryptoCurrencyCode was null or undefined when calling all.');
-        }
-        // verify required parameter 'fiatFixedPriceMax' is not null or undefined
-        if (fiatFixedPriceMax === null || fiatFixedPriceMax === undefined) {
-            throw new RequiredError('fiatFixedPriceMax','Required parameter fiatFixedPriceMax was null or undefined when calling all.');
-        }
-        // verify required parameter 'fiatFixedPriceMin' is not null or undefined
-        if (fiatFixedPriceMin === null || fiatFixedPriceMin === undefined) {
-            throw new RequiredError('fiatFixedPriceMin','Required parameter fiatFixedPriceMin was null or undefined when calling all.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/offer/all`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -7873,106 +7755,6 @@ For better experience use locations ids of countries and cities.
      * @throws {RequiredError}
      */
     create(tags?: string, margin?: number, currency?: string, flowType?: string, rangeMax?: number, rangeMin?: number, fixedPrice?: number, locationId?: number, offerTerms?: string, bankAccounts?: string, tradeDetails?: string, isFixedPrice?: boolean, paymentMethod?: string, paymentWindow?: number, cryptoCurrency?: string, paymentCountry?: string, offerTypeField?: string, predefinedAmount?: string, paymentMethodGroup?: string, paymentMethodLabel?: string, bankReferenceMessage?: OfferUpdateRequestBodyBankReferenceMessage, showOnlyTrustedUser?: boolean, countryLimitationList?: string, countryLimitationType?: string, requireMinPastTrades?: number, options: any = {}): FetchArgs {
-        // verify required parameter 'tags' is not null or undefined
-        if (tags === null || tags === undefined) {
-            throw new RequiredError('tags','Required parameter tags was null or undefined when calling create.');
-        }
-        // verify required parameter 'margin' is not null or undefined
-        if (margin === null || margin === undefined) {
-            throw new RequiredError('margin','Required parameter margin was null or undefined when calling create.');
-        }
-        // verify required parameter 'currency' is not null or undefined
-        if (currency === null || currency === undefined) {
-            throw new RequiredError('currency','Required parameter currency was null or undefined when calling create.');
-        }
-        // verify required parameter 'flowType' is not null or undefined
-        if (flowType === null || flowType === undefined) {
-            throw new RequiredError('flowType','Required parameter flowType was null or undefined when calling create.');
-        }
-        // verify required parameter 'rangeMax' is not null or undefined
-        if (rangeMax === null || rangeMax === undefined) {
-            throw new RequiredError('rangeMax','Required parameter rangeMax was null or undefined when calling create.');
-        }
-        // verify required parameter 'rangeMin' is not null or undefined
-        if (rangeMin === null || rangeMin === undefined) {
-            throw new RequiredError('rangeMin','Required parameter rangeMin was null or undefined when calling create.');
-        }
-        // verify required parameter 'fixedPrice' is not null or undefined
-        if (fixedPrice === null || fixedPrice === undefined) {
-            throw new RequiredError('fixedPrice','Required parameter fixedPrice was null or undefined when calling create.');
-        }
-        // verify required parameter 'locationId' is not null or undefined
-        if (locationId === null || locationId === undefined) {
-            throw new RequiredError('locationId','Required parameter locationId was null or undefined when calling create.');
-        }
-        // verify required parameter 'offerTerms' is not null or undefined
-        if (offerTerms === null || offerTerms === undefined) {
-            throw new RequiredError('offerTerms','Required parameter offerTerms was null or undefined when calling create.');
-        }
-        // verify required parameter 'bankAccounts' is not null or undefined
-        if (bankAccounts === null || bankAccounts === undefined) {
-            throw new RequiredError('bankAccounts','Required parameter bankAccounts was null or undefined when calling create.');
-        }
-        // verify required parameter 'tradeDetails' is not null or undefined
-        if (tradeDetails === null || tradeDetails === undefined) {
-            throw new RequiredError('tradeDetails','Required parameter tradeDetails was null or undefined when calling create.');
-        }
-        // verify required parameter 'isFixedPrice' is not null or undefined
-        if (isFixedPrice === null || isFixedPrice === undefined) {
-            throw new RequiredError('isFixedPrice','Required parameter isFixedPrice was null or undefined when calling create.');
-        }
-        // verify required parameter 'paymentMethod' is not null or undefined
-        if (paymentMethod === null || paymentMethod === undefined) {
-            throw new RequiredError('paymentMethod','Required parameter paymentMethod was null or undefined when calling create.');
-        }
-        // verify required parameter 'paymentWindow' is not null or undefined
-        if (paymentWindow === null || paymentWindow === undefined) {
-            throw new RequiredError('paymentWindow','Required parameter paymentWindow was null or undefined when calling create.');
-        }
-        // verify required parameter 'cryptoCurrency' is not null or undefined
-        if (cryptoCurrency === null || cryptoCurrency === undefined) {
-            throw new RequiredError('cryptoCurrency','Required parameter cryptoCurrency was null or undefined when calling create.');
-        }
-        // verify required parameter 'paymentCountry' is not null or undefined
-        if (paymentCountry === null || paymentCountry === undefined) {
-            throw new RequiredError('paymentCountry','Required parameter paymentCountry was null or undefined when calling create.');
-        }
-        // verify required parameter 'offerTypeField' is not null or undefined
-        if (offerTypeField === null || offerTypeField === undefined) {
-            throw new RequiredError('offerTypeField','Required parameter offerTypeField was null or undefined when calling create.');
-        }
-        // verify required parameter 'predefinedAmount' is not null or undefined
-        if (predefinedAmount === null || predefinedAmount === undefined) {
-            throw new RequiredError('predefinedAmount','Required parameter predefinedAmount was null or undefined when calling create.');
-        }
-        // verify required parameter 'paymentMethodGroup' is not null or undefined
-        if (paymentMethodGroup === null || paymentMethodGroup === undefined) {
-            throw new RequiredError('paymentMethodGroup','Required parameter paymentMethodGroup was null or undefined when calling create.');
-        }
-        // verify required parameter 'paymentMethodLabel' is not null or undefined
-        if (paymentMethodLabel === null || paymentMethodLabel === undefined) {
-            throw new RequiredError('paymentMethodLabel','Required parameter paymentMethodLabel was null or undefined when calling create.');
-        }
-        // verify required parameter 'bankReferenceMessage' is not null or undefined
-        if (bankReferenceMessage === null || bankReferenceMessage === undefined) {
-            throw new RequiredError('bankReferenceMessage','Required parameter bankReferenceMessage was null or undefined when calling create.');
-        }
-        // verify required parameter 'showOnlyTrustedUser' is not null or undefined
-        if (showOnlyTrustedUser === null || showOnlyTrustedUser === undefined) {
-            throw new RequiredError('showOnlyTrustedUser','Required parameter showOnlyTrustedUser was null or undefined when calling create.');
-        }
-        // verify required parameter 'countryLimitationList' is not null or undefined
-        if (countryLimitationList === null || countryLimitationList === undefined) {
-            throw new RequiredError('countryLimitationList','Required parameter countryLimitationList was null or undefined when calling create.');
-        }
-        // verify required parameter 'countryLimitationType' is not null or undefined
-        if (countryLimitationType === null || countryLimitationType === undefined) {
-            throw new RequiredError('countryLimitationType','Required parameter countryLimitationType was null or undefined when calling create.');
-        }
-        // verify required parameter 'requireMinPastTrades' is not null or undefined
-        if (requireMinPastTrades === null || requireMinPastTrades === undefined) {
-            throw new RequiredError('requireMinPastTrades','Required parameter requireMinPastTrades was null or undefined when calling create.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/offer/create`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -8102,10 +7884,6 @@ For better experience use locations ids of countries and cities.
      * @throws {RequiredError}
      */
     deactivate(offerHash?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'offerHash' is not null or undefined
-        if (offerHash === null || offerHash === undefined) {
-            throw new RequiredError('offerHash','Required parameter offerHash was null or undefined when calling deactivate.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/offer/deactivate`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -8139,10 +7917,6 @@ For better experience use locations ids of countries and cities.
      * @throws {RequiredError}
      */
     delete(offerHash?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'offerHash' is not null or undefined
-        if (offerHash === null || offerHash === undefined) {
-            throw new RequiredError('offerHash','Required parameter offerHash was null or undefined when calling delete.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/offer/delete`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -8176,10 +7950,6 @@ For better experience use locations ids of countries and cities.
      * @throws {RequiredError}
      */
     get(offerHash?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'offerHash' is not null or undefined
-        if (offerHash === null || offerHash === undefined) {
-            throw new RequiredError('offerHash','Required parameter offerHash was null or undefined when calling get.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/offer/get`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -8214,14 +7984,6 @@ For better experience use locations ids of countries and cities.
      * @throws {RequiredError}
      */
     list(active?: boolean, offerType?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'active' is not null or undefined
-        if (active === null || active === undefined) {
-            throw new RequiredError('active','Required parameter active was null or undefined when calling list.');
-        }
-        // verify required parameter 'offerType' is not null or undefined
-        if (offerType === null || offerType === undefined) {
-            throw new RequiredError('offerType','Required parameter offerType was null or undefined when calling list.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/offer/list`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -8259,10 +8021,6 @@ For better experience use locations ids of countries and cities.
      * @throws {RequiredError}
      */
     price(offerHash?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'offerHash' is not null or undefined
-        if (offerHash === null || offerHash === undefined) {
-            throw new RequiredError('offerHash','Required parameter offerHash was null or undefined when calling price.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/offer/price`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -8296,10 +8054,6 @@ For better experience use locations ids of countries and cities.
      * @throws {RequiredError}
      */
     prices(paymentMethod?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'paymentMethod' is not null or undefined
-        if (paymentMethod === null || paymentMethod === undefined) {
-            throw new RequiredError('paymentMethod','Required parameter paymentMethod was null or undefined when calling prices.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/offer/prices`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -8408,106 +8162,6 @@ For better experience use locations ids of countries and cities.
      * @throws {RequiredError}
      */
     update(tags?: string, margin?: number, currency?: string, flowType?: string, offerCap?: OfferUpdateRequestBodyOfferCap, rangeMax?: number, rangeMin?: number, dutyHours?: Array<OfferDutyHours>, offerHash?: string, fixedPrice?: number, locationId?: number, offerTerms?: string, bankAccounts?: string, tradeDetails?: string, paymentMethod?: string, paymentWindow?: number, paymentCountry?: string, predefinedAmount?: string, paymentMethodGroup?: string, paymentMethodLabel?: string, bankReferenceMessage?: OfferUpdateRequestBodyBankReferenceMessage, showOnlyTrustedUser?: boolean, countryLimitationList?: string, countryLimitationType?: string, requireMinPastTrades?: boolean, options: any = {}): FetchArgs {
-        // verify required parameter 'tags' is not null or undefined
-        if (tags === null || tags === undefined) {
-            throw new RequiredError('tags','Required parameter tags was null or undefined when calling update.');
-        }
-        // verify required parameter 'margin' is not null or undefined
-        if (margin === null || margin === undefined) {
-            throw new RequiredError('margin','Required parameter margin was null or undefined when calling update.');
-        }
-        // verify required parameter 'currency' is not null or undefined
-        if (currency === null || currency === undefined) {
-            throw new RequiredError('currency','Required parameter currency was null or undefined when calling update.');
-        }
-        // verify required parameter 'flowType' is not null or undefined
-        if (flowType === null || flowType === undefined) {
-            throw new RequiredError('flowType','Required parameter flowType was null or undefined when calling update.');
-        }
-        // verify required parameter 'offerCap' is not null or undefined
-        if (offerCap === null || offerCap === undefined) {
-            throw new RequiredError('offerCap','Required parameter offerCap was null or undefined when calling update.');
-        }
-        // verify required parameter 'rangeMax' is not null or undefined
-        if (rangeMax === null || rangeMax === undefined) {
-            throw new RequiredError('rangeMax','Required parameter rangeMax was null or undefined when calling update.');
-        }
-        // verify required parameter 'rangeMin' is not null or undefined
-        if (rangeMin === null || rangeMin === undefined) {
-            throw new RequiredError('rangeMin','Required parameter rangeMin was null or undefined when calling update.');
-        }
-        // verify required parameter 'dutyHours' is not null or undefined
-        if (dutyHours === null || dutyHours === undefined) {
-            throw new RequiredError('dutyHours','Required parameter dutyHours was null or undefined when calling update.');
-        }
-        // verify required parameter 'offerHash' is not null or undefined
-        if (offerHash === null || offerHash === undefined) {
-            throw new RequiredError('offerHash','Required parameter offerHash was null or undefined when calling update.');
-        }
-        // verify required parameter 'fixedPrice' is not null or undefined
-        if (fixedPrice === null || fixedPrice === undefined) {
-            throw new RequiredError('fixedPrice','Required parameter fixedPrice was null or undefined when calling update.');
-        }
-        // verify required parameter 'locationId' is not null or undefined
-        if (locationId === null || locationId === undefined) {
-            throw new RequiredError('locationId','Required parameter locationId was null or undefined when calling update.');
-        }
-        // verify required parameter 'offerTerms' is not null or undefined
-        if (offerTerms === null || offerTerms === undefined) {
-            throw new RequiredError('offerTerms','Required parameter offerTerms was null or undefined when calling update.');
-        }
-        // verify required parameter 'bankAccounts' is not null or undefined
-        if (bankAccounts === null || bankAccounts === undefined) {
-            throw new RequiredError('bankAccounts','Required parameter bankAccounts was null or undefined when calling update.');
-        }
-        // verify required parameter 'tradeDetails' is not null or undefined
-        if (tradeDetails === null || tradeDetails === undefined) {
-            throw new RequiredError('tradeDetails','Required parameter tradeDetails was null or undefined when calling update.');
-        }
-        // verify required parameter 'paymentMethod' is not null or undefined
-        if (paymentMethod === null || paymentMethod === undefined) {
-            throw new RequiredError('paymentMethod','Required parameter paymentMethod was null or undefined when calling update.');
-        }
-        // verify required parameter 'paymentWindow' is not null or undefined
-        if (paymentWindow === null || paymentWindow === undefined) {
-            throw new RequiredError('paymentWindow','Required parameter paymentWindow was null or undefined when calling update.');
-        }
-        // verify required parameter 'paymentCountry' is not null or undefined
-        if (paymentCountry === null || paymentCountry === undefined) {
-            throw new RequiredError('paymentCountry','Required parameter paymentCountry was null or undefined when calling update.');
-        }
-        // verify required parameter 'predefinedAmount' is not null or undefined
-        if (predefinedAmount === null || predefinedAmount === undefined) {
-            throw new RequiredError('predefinedAmount','Required parameter predefinedAmount was null or undefined when calling update.');
-        }
-        // verify required parameter 'paymentMethodGroup' is not null or undefined
-        if (paymentMethodGroup === null || paymentMethodGroup === undefined) {
-            throw new RequiredError('paymentMethodGroup','Required parameter paymentMethodGroup was null or undefined when calling update.');
-        }
-        // verify required parameter 'paymentMethodLabel' is not null or undefined
-        if (paymentMethodLabel === null || paymentMethodLabel === undefined) {
-            throw new RequiredError('paymentMethodLabel','Required parameter paymentMethodLabel was null or undefined when calling update.');
-        }
-        // verify required parameter 'bankReferenceMessage' is not null or undefined
-        if (bankReferenceMessage === null || bankReferenceMessage === undefined) {
-            throw new RequiredError('bankReferenceMessage','Required parameter bankReferenceMessage was null or undefined when calling update.');
-        }
-        // verify required parameter 'showOnlyTrustedUser' is not null or undefined
-        if (showOnlyTrustedUser === null || showOnlyTrustedUser === undefined) {
-            throw new RequiredError('showOnlyTrustedUser','Required parameter showOnlyTrustedUser was null or undefined when calling update.');
-        }
-        // verify required parameter 'countryLimitationList' is not null or undefined
-        if (countryLimitationList === null || countryLimitationList === undefined) {
-            throw new RequiredError('countryLimitationList','Required parameter countryLimitationList was null or undefined when calling update.');
-        }
-        // verify required parameter 'countryLimitationType' is not null or undefined
-        if (countryLimitationType === null || countryLimitationType === undefined) {
-            throw new RequiredError('countryLimitationType','Required parameter countryLimitationType was null or undefined when calling update.');
-        }
-        // verify required parameter 'requireMinPastTrades' is not null or undefined
-        if (requireMinPastTrades === null || requireMinPastTrades === undefined) {
-            throw new RequiredError('requireMinPastTrades','Required parameter requireMinPastTrades was null or undefined when calling update.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/offer/update`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -8641,18 +8295,6 @@ For better experience use locations ids of countries and cities.
      * @throws {RequiredError}
      */
     updatePrice(margin?: number, offerHash?: string, fixedPrice?: number, options: any = {}): FetchArgs {
-        // verify required parameter 'margin' is not null or undefined
-        if (margin === null || margin === undefined) {
-            throw new RequiredError('margin','Required parameter margin was null or undefined when calling updatePrice.');
-        }
-        // verify required parameter 'offerHash' is not null or undefined
-        if (offerHash === null || offerHash === undefined) {
-            throw new RequiredError('offerHash','Required parameter offerHash was null or undefined when calling updatePrice.');
-        }
-        // verify required parameter 'fixedPrice' is not null or undefined
-        if (fixedPrice === null || fixedPrice === undefined) {
-            throw new RequiredError('fixedPrice','Required parameter fixedPrice was null or undefined when calling updatePrice.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/offer/update-price`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -9152,7 +8794,6 @@ export class OfferApi extends BaseAPI {
      * @summary offer/activate
      * @param { OfferApiOfferActivateParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof OfferApi
      */
     public activate(params: OfferApiOfferActivateParams, options?: any): Promise<SuccessTrueResponse> {
@@ -9169,7 +8810,6 @@ export class OfferApi extends BaseAPI {
      * @summary offer/all
      * @param { OfferApiOfferAllParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof OfferApi
      */
     public all(params: OfferApiOfferAllParams, options?: any): Promise<InlineResponse2002> {
@@ -9186,7 +8826,6 @@ export class OfferApi extends BaseAPI {
      * @summary offer/create
      * @param { OfferApiOfferCreateParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof OfferApi
      */
     public create(params: OfferApiOfferCreateParams, options?: any): Promise<InlineResponse20012> {
@@ -9203,7 +8842,6 @@ export class OfferApi extends BaseAPI {
      * @summary offer/deactivate
      * @param { OfferApiOfferDeactivateParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof OfferApi
      */
     public deactivate(params: OfferApiOfferDeactivateParams, options?: any): Promise<SuccessTrueResponse> {
@@ -9220,7 +8858,6 @@ export class OfferApi extends BaseAPI {
      * @summary offer/delete
      * @param { OfferApiOfferDeleteParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof OfferApi
      */
     public delete(params: OfferApiOfferDeleteParams, options?: any): Promise<SuccessTrueResponse> {
@@ -9237,7 +8874,6 @@ export class OfferApi extends BaseAPI {
      * @summary offer/get
      * @param { OfferApiOfferGetParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof OfferApi
      */
     public get(params: OfferApiOfferGetParams, options?: any): Promise<InlineResponse2003> {
@@ -9254,7 +8890,6 @@ export class OfferApi extends BaseAPI {
      * @summary offer/list
      * @param { OfferApiOfferListParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof OfferApi
      */
     public list(params: OfferApiOfferListParams, options?: any): Promise<InlineResponse2006> {
@@ -9271,7 +8906,6 @@ export class OfferApi extends BaseAPI {
      * @summary offer/price
      * @param { OfferApiOfferPriceParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof OfferApi
      */
     public price(params: OfferApiOfferPriceParams, options?: any): Promise<InlineResponse20010> {
@@ -9288,7 +8922,6 @@ export class OfferApi extends BaseAPI {
      * @summary offer/prices
      * @param { OfferApiOfferPricesParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof OfferApi
      */
     public prices(params: OfferApiOfferPricesParams, options?: any): Promise<InlineResponse20013> {
@@ -9305,7 +8938,6 @@ export class OfferApi extends BaseAPI {
      * @summary offer/turn-off
      * @param { OfferApiOfferTurnOffParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof OfferApi
      */
     public turnOff(options?: any): Promise<InlineResponse20016> {
@@ -9322,7 +8954,6 @@ export class OfferApi extends BaseAPI {
      * @summary offer/turn-on
      * @param { OfferApiOfferTurnOnParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof OfferApi
      */
     public turnOn(options?: any): Promise<InlineResponse20016> {
@@ -9339,7 +8970,6 @@ export class OfferApi extends BaseAPI {
      * @summary offer/update
      * @param { OfferApiOfferUpdateParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof OfferApi
      */
     public update(params: OfferApiOfferUpdateParams, options?: any): Promise<SuccessTrueResponse> {
@@ -9356,7 +8986,6 @@ export class OfferApi extends BaseAPI {
      * @summary offer/update-price
      * @param { OfferApiOfferUpdatePriceParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof OfferApi
      */
     public updatePrice(params: OfferApiOfferUpdatePriceParams, options?: any): Promise<SuccessTrueResponse> {
@@ -9417,7 +9046,6 @@ export class OfferTagApi extends BaseAPI {
      * @summary offer-tag/list
      * @param { OfferTagApiOfferTagListParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof OfferTagApi
      */
     public list(options?: any): Promise<InlineResponse20017> {
@@ -9443,14 +9071,6 @@ export const PaymentMethodApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     fee(slug?: string, currency?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'slug' is not null or undefined
-        if (slug === null || slug === undefined) {
-            throw new RequiredError('slug','Required parameter slug was null or undefined when calling fee.');
-        }
-        // verify required parameter 'currency' is not null or undefined
-        if (currency === null || currency === undefined) {
-            throw new RequiredError('currency','Required parameter currency was null or undefined when calling fee.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/payment-method/fee`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -9578,7 +9198,6 @@ export class PaymentMethodApi extends BaseAPI {
      * @summary payment-method/fee
      * @param { PaymentMethodApiPaymentMethodFeeParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof PaymentMethodApi
      */
     public fee(params: PaymentMethodApiPaymentMethodFeeParams, options?: any): Promise<InlineResponse20032> {
@@ -9595,7 +9214,6 @@ export class PaymentMethodApi extends BaseAPI {
      * @summary payment-method-group/list
      * @param { PaymentMethodApiPaymentMethodGroupListParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof PaymentMethodApi
      */
     public groupList(params?: PaymentMethodApiPaymentMethodGroupListParams, options?: any): Promise<PaymentMethodGroupResponse> {
@@ -9612,7 +9230,6 @@ export class PaymentMethodApi extends BaseAPI {
      * @summary payment-method/list
      * @param { PaymentMethodApiPaymentMethodListParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof PaymentMethodApi
      */
     public list(options?: any): Promise<PaymentMethodListResponse> {
@@ -9661,10 +9278,6 @@ export const TradeApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     cancel(tradeHash?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'tradeHash' is not null or undefined
-        if (tradeHash === null || tradeHash === undefined) {
-            throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling cancel.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/trade/cancel`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -9699,14 +9312,6 @@ export const TradeApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     completed(page?: number, partner?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'page' is not null or undefined
-        if (page === null || page === undefined) {
-            throw new RequiredError('page','Required parameter page was null or undefined when calling completed.');
-        }
-        // verify required parameter 'partner' is not null or undefined
-        if (partner === null || partner === undefined) {
-            throw new RequiredError('partner','Required parameter partner was null or undefined when calling completed.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/trade/completed`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -9746,18 +9351,6 @@ export const TradeApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     dispute(reason?: string, tradeHash?: string, reasonType?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'reason' is not null or undefined
-        if (reason === null || reason === undefined) {
-            throw new RequiredError('reason','Required parameter reason was null or undefined when calling dispute.');
-        }
-        // verify required parameter 'tradeHash' is not null or undefined
-        if (tradeHash === null || tradeHash === undefined) {
-            throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling dispute.');
-        }
-        // verify required parameter 'reasonType' is not null or undefined
-        if (reasonType === null || reasonType === undefined) {
-            throw new RequiredError('reasonType','Required parameter reasonType was null or undefined when calling dispute.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/trade/dispute`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -9799,10 +9392,6 @@ export const TradeApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     disputeReasons(tradeHash?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'tradeHash' is not null or undefined
-        if (tradeHash === null || tradeHash === undefined) {
-            throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling disputeReasons.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/trade/dispute-reasons`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -9836,10 +9425,6 @@ export const TradeApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     fund(tradeHash?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'tradeHash' is not null or undefined
-        if (tradeHash === null || tradeHash === undefined) {
-            throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling fund.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/trade/fund`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -9873,10 +9458,6 @@ export const TradeApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     get(tradeHash?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'tradeHash' is not null or undefined
-        if (tradeHash === null || tradeHash === undefined) {
-            throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling get.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/trade/get`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -9934,10 +9515,6 @@ export const TradeApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     locations(tradeHash?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'tradeHash' is not null or undefined
-        if (tradeHash === null || tradeHash === undefined) {
-            throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling locations.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/trade/locations`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -9971,10 +9548,6 @@ export const TradeApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     paid(tradeHash?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'tradeHash' is not null or undefined
-        if (tradeHash === null || tradeHash === undefined) {
-            throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling paid.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/trade/paid`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -10009,10 +9582,6 @@ export const TradeApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     release(tradeHash?: string, xPaxful2fa?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'tradeHash' is not null or undefined
-        if (tradeHash === null || tradeHash === undefined) {
-            throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling release.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/trade/release`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -10050,10 +9619,6 @@ export const TradeApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     reopen(tradeHash?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'tradeHash' is not null or undefined
-        if (tradeHash === null || tradeHash === undefined) {
-            throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling reopen.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/trade/reopen`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -10091,26 +9656,6 @@ export const TradeApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     start(fiat?: number, satoshi?: number, offerHash?: string, bankAccounts?: Array<RequestBodyTradeStartBankAccounts>, cryptoAmount?: number, options: any = {}): FetchArgs {
-        // verify required parameter 'fiat' is not null or undefined
-        if (fiat === null || fiat === undefined) {
-            throw new RequiredError('fiat','Required parameter fiat was null or undefined when calling start.');
-        }
-        // verify required parameter 'satoshi' is not null or undefined
-        if (satoshi === null || satoshi === undefined) {
-            throw new RequiredError('satoshi','Required parameter satoshi was null or undefined when calling start.');
-        }
-        // verify required parameter 'offerHash' is not null or undefined
-        if (offerHash === null || offerHash === undefined) {
-            throw new RequiredError('offerHash','Required parameter offerHash was null or undefined when calling start.');
-        }
-        // verify required parameter 'bankAccounts' is not null or undefined
-        if (bankAccounts === null || bankAccounts === undefined) {
-            throw new RequiredError('bankAccounts','Required parameter bankAccounts was null or undefined when calling start.');
-        }
-        // verify required parameter 'cryptoAmount' is not null or undefined
-        if (cryptoAmount === null || cryptoAmount === undefined) {
-            throw new RequiredError('cryptoAmount','Required parameter cryptoAmount was null or undefined when calling start.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/trade/start`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -10332,7 +9877,6 @@ export class TradeApi extends BaseAPI {
      * @summary trade/add-proof
      * @param { TradeApiTradeAddProofParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof TradeApi
      */
     public addProof(options?: any): Promise<SuccessTrueResponse> {
@@ -10349,7 +9893,6 @@ export class TradeApi extends BaseAPI {
      * @summary trade/cancel
      * @param { TradeApiTradeCancelParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof TradeApi
      */
     public cancel(params: TradeApiTradeCancelParams, options?: any): Promise<SuccessTrueResponse> {
@@ -10366,7 +9909,6 @@ export class TradeApi extends BaseAPI {
      * @summary trade/completed
      * @param { TradeApiTradeCompletedParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof TradeApi
      */
     public completed(params: TradeApiTradeCompletedParams, options?: any): Promise<InlineResponse20023> {
@@ -10383,7 +9925,6 @@ export class TradeApi extends BaseAPI {
      * @summary trade/dispute
      * @param { TradeApiTradeDisputeParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof TradeApi
      */
     public dispute(params: TradeApiTradeDisputeParams, options?: any): Promise<SuccessTrueResponse> {
@@ -10400,7 +9941,6 @@ export class TradeApi extends BaseAPI {
      * @summary trade/dispute-reasons
      * @param { TradeApiTradeDisputeReasonsParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof TradeApi
      */
     public disputeReasons(params: TradeApiTradeDisputeReasonsParams, options?: any): Promise<InlineResponse20035> {
@@ -10417,7 +9957,6 @@ export class TradeApi extends BaseAPI {
      * @summary trade/fund
      * @param { TradeApiTradeFundParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof TradeApi
      */
     public fund(params: TradeApiTradeFundParams, options?: any): Promise<SuccessTrueResponse> {
@@ -10434,7 +9973,6 @@ export class TradeApi extends BaseAPI {
      * @summary trade/get
      * @param { TradeApiTradeGetParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof TradeApi
      */
     public get(params: TradeApiTradeGetParams, options?: any): Promise<InlineResponse2004> {
@@ -10451,7 +9989,6 @@ export class TradeApi extends BaseAPI {
      * @summary trade/list
      * @param { TradeApiTradeListParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof TradeApi
      */
     public list(options?: any): Promise<InlineResponse2007> {
@@ -10468,7 +10005,6 @@ export class TradeApi extends BaseAPI {
      * @summary trade/locations
      * @param { TradeApiTradeLocationsParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof TradeApi
      */
     public locations(params: TradeApiTradeLocationsParams, options?: any): Promise<InlineResponse20024> {
@@ -10485,7 +10021,6 @@ export class TradeApi extends BaseAPI {
      * @summary trade/paid
      * @param { TradeApiTradePaidParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof TradeApi
      */
     public paid(params: TradeApiTradePaidParams, options?: any): Promise<SuccessTrueResponse> {
@@ -10502,7 +10037,6 @@ export class TradeApi extends BaseAPI {
      * @summary trade/release
      * @param { TradeApiTradeReleaseParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof TradeApi
      */
     public release(params: TradeApiTradeReleaseParams, options?: any): Promise<SuccessTrueResponse> {
@@ -10519,7 +10053,6 @@ export class TradeApi extends BaseAPI {
      * @summary trade/reopen
      * @param { TradeApiTradeReopenParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof TradeApi
      */
     public reopen(params: TradeApiTradeReopenParams, options?: any): Promise<SuccessTrueResponse> {
@@ -10536,7 +10069,6 @@ export class TradeApi extends BaseAPI {
      * @summary trade/start
      * @param { TradeApiTradeStartParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof TradeApi
      */
     public start(params: TradeApiTradeStartParams, options?: any): Promise<InlineResponse20011> {
@@ -10553,7 +10085,6 @@ export class TradeApi extends BaseAPI {
      * @summary trade/use-bank-account
      * @param { TradeApiTradeUseBankAccountParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof TradeApi
      */
     public useBankAccount(options?: any): Promise<SuccessTrueResponse> {
@@ -10578,10 +10109,6 @@ export const TradeChatApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     get(tradeHash?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'tradeHash' is not null or undefined
-        if (tradeHash === null || tradeHash === undefined) {
-            throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling get.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/trade-chat/get`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -10616,14 +10143,6 @@ export const TradeChatApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     image(size?: string, imageHash?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'size' is not null or undefined
-        if (size === null || size === undefined) {
-            throw new RequiredError('size','Required parameter size was null or undefined when calling image.');
-        }
-        // verify required parameter 'imageHash' is not null or undefined
-        if (imageHash === null || imageHash === undefined) {
-            throw new RequiredError('imageHash','Required parameter imageHash was null or undefined when calling image.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/trade-chat/image`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -10664,14 +10183,6 @@ Please consider using image/upload endpoint instead as it will process uploaded 
      * @throws {RequiredError}
      */
     imageAdd(file?: string, tradeHash?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'file' is not null or undefined
-        if (file === null || file === undefined) {
-            throw new RequiredError('file','Required parameter file was null or undefined when calling imageAdd.');
-        }
-        // verify required parameter 'tradeHash' is not null or undefined
-        if (tradeHash === null || tradeHash === undefined) {
-            throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling imageAdd.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/trade-chat/image/add`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -10710,14 +10221,6 @@ Please consider using image/upload endpoint instead as it will process uploaded 
      * @throws {RequiredError}
      */
     imageUpload(file?: Blob, tradeHash?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'file' is not null or undefined
-        if (file === null || file === undefined) {
-            throw new RequiredError('file','Required parameter file was null or undefined when calling imageUpload.');
-        }
-        // verify required parameter 'tradeHash' is not null or undefined
-        if (tradeHash === null || tradeHash === undefined) {
-            throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling imageUpload.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/trade-chat/image/upload`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -10755,10 +10258,6 @@ Please consider using image/upload endpoint instead as it will process uploaded 
      * @throws {RequiredError}
      */
     latest(tradeHash?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'tradeHash' is not null or undefined
-        if (tradeHash === null || tradeHash === undefined) {
-            throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling latest.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/trade-chat/latest`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -10793,14 +10292,6 @@ Please consider using image/upload endpoint instead as it will process uploaded 
      * @throws {RequiredError}
      */
     post(message?: string, tradeHash?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'message' is not null or undefined
-        if (message === null || message === undefined) {
-            throw new RequiredError('message','Required parameter message was null or undefined when calling post.');
-        }
-        // verify required parameter 'tradeHash' is not null or undefined
-        if (tradeHash === null || tradeHash === undefined) {
-            throw new RequiredError('tradeHash','Required parameter tradeHash was null or undefined when calling post.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/trade-chat/post`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -10917,7 +10408,6 @@ export class TradeChatApi extends BaseAPI {
      * @summary trade-chat/get
      * @param { TradeChatApiTradeChatGetParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof TradeChatApi
      */
     public get(params: TradeChatApiTradeChatGetParams, options?: any): Promise<InlineResponse20018> {
@@ -10934,7 +10424,6 @@ export class TradeChatApi extends BaseAPI {
      * @summary trade-chat/image
      * @param { TradeChatApiTradeChatImageParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof TradeChatApi
      */
     public image(params: TradeChatApiTradeChatImageParams, options?: any): Promise<Response> {
@@ -10951,7 +10440,6 @@ export class TradeChatApi extends BaseAPI {
      * @summary trade-chat/image/add
      * @param { TradeChatApiTradeChatImageAddParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof TradeChatApi
      */
     public imageAdd(params: TradeChatApiTradeChatImageAddParams, options?: any): Promise<InlineResponse20022> {
@@ -10968,7 +10456,6 @@ export class TradeChatApi extends BaseAPI {
      * @summary trade-chat/image/upload
      * @param { TradeChatApiTradeChatImageUploadParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof TradeChatApi
      */
     public imageUpload(params: TradeChatApiTradeChatImageUploadParams, options?: any): Promise<InlineResponse20022> {
@@ -10985,7 +10472,6 @@ export class TradeChatApi extends BaseAPI {
      * @summary trade-chat/latest
      * @param { TradeChatApiTradeChatLatestParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof TradeChatApi
      */
     public latest(params: TradeChatApiTradeChatLatestParams, options?: any): Promise<InlineResponse20028> {
@@ -11002,7 +10488,6 @@ export class TradeChatApi extends BaseAPI {
      * @summary trade-chat/post
      * @param { TradeChatApiTradeChatPostParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof TradeChatApi
      */
     public post(params: TradeChatApiTradeChatPostParams, options?: any): Promise<InlineResponse20022> {
@@ -11030,22 +10515,6 @@ export const TransactionsApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     all(page?: number, type?: string, limit?: number, cryptoCurrencyCode?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'page' is not null or undefined
-        if (page === null || page === undefined) {
-            throw new RequiredError('page','Required parameter page was null or undefined when calling all.');
-        }
-        // verify required parameter 'type' is not null or undefined
-        if (type === null || type === undefined) {
-            throw new RequiredError('type','Required parameter type was null or undefined when calling all.');
-        }
-        // verify required parameter 'limit' is not null or undefined
-        if (limit === null || limit === undefined) {
-            throw new RequiredError('limit','Required parameter limit was null or undefined when calling all.');
-        }
-        // verify required parameter 'cryptoCurrencyCode' is not null or undefined
-        if (cryptoCurrencyCode === null || cryptoCurrencyCode === undefined) {
-            throw new RequiredError('cryptoCurrencyCode','Required parameter cryptoCurrencyCode was null or undefined when calling all.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/transactions/all`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -11123,7 +10592,6 @@ export class TransactionsApi extends BaseAPI {
      * @summary transactions/all
      * @param { TransactionsApiTransactionsAllParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof TransactionsApi
      */
     public all(params: TransactionsApiTransactionsAllParams, options?: any): Promise<InlineResponse20026> {
@@ -11196,10 +10664,6 @@ export const UserApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     block(username?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'username' is not null or undefined
-        if (username === null || username === undefined) {
-            throw new RequiredError('username','Required parameter username was null or undefined when calling block.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/block`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -11266,10 +10730,6 @@ export const UserApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     info(username?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'username' is not null or undefined
-        if (username === null || username === undefined) {
-            throw new RequiredError('username','Required parameter username was null or undefined when calling info.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/info`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -11327,10 +10787,6 @@ export const UserApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     trust(username?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'username' is not null or undefined
-        if (username === null || username === undefined) {
-            throw new RequiredError('username','Required parameter username was null or undefined when calling trust.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/trust`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -11388,10 +10844,6 @@ export const UserApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     unblock(username?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'username' is not null or undefined
-        if (username === null || username === undefined) {
-            throw new RequiredError('username','Required parameter username was null or undefined when calling unblock.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/unblock`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -11425,10 +10877,6 @@ export const UserApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     untrust(username?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'username' is not null or undefined
-        if (username === null || username === undefined) {
-            throw new RequiredError('username','Required parameter username was null or undefined when calling untrust.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/untrust`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -11531,7 +10979,6 @@ export class UserApi extends BaseAPI {
      * @summary user/me
      * @param { UserApiCurrentUserParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof UserApi
      */
     public currentUser(options?: any): Promise<InlineResponse200> {
@@ -11548,7 +10995,6 @@ export class UserApi extends BaseAPI {
      * @summary user/affiliate
      * @param { UserApiUserAffiliateParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof UserApi
      */
     public affiliate(options?: any): Promise<InlineResponse20019> {
@@ -11565,7 +11011,6 @@ export class UserApi extends BaseAPI {
      * @summary user/block
      * @param { UserApiUserBlockParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof UserApi
      */
     public block(params: UserApiUserBlockParams, options?: any): Promise<SuccessResponse> {
@@ -11582,7 +11027,6 @@ export class UserApi extends BaseAPI {
      * @summary user/blocked-list
      * @param { UserApiUserBlockedListParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof UserApi
      */
     public blockedList(params?: UserApiUserBlockedListParams, options?: any): Promise<InlineResponse20029> {
@@ -11599,7 +11043,6 @@ export class UserApi extends BaseAPI {
      * @summary user/info
      * @param { UserApiUserInfoParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof UserApi
      */
     public info(params: UserApiUserInfoParams, options?: any): Promise<InlineResponse2005> {
@@ -11616,7 +11059,6 @@ export class UserApi extends BaseAPI {
      * @summary user/touch
      * @param { UserApiUserTouchParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof UserApi
      */
     public touch(options?: any): Promise<SuccessResponse> {
@@ -11633,7 +11075,6 @@ export class UserApi extends BaseAPI {
      * @summary user/trust
      * @param { UserApiUserTrustParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof UserApi
      */
     public trust(params: UserApiUserTrustParams, options?: any): Promise<SuccessResponse> {
@@ -11650,7 +11091,6 @@ export class UserApi extends BaseAPI {
      * @summary user/types
      * @param { UserApiUserTypesParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof UserApi
      */
     public types(options?: any): Promise<InlineResponse2008> {
@@ -11667,7 +11107,6 @@ export class UserApi extends BaseAPI {
      * @summary user/unblock
      * @param { UserApiUserUnblockParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof UserApi
      */
     public unblock(params: UserApiUserUnblockParams, options?: any): Promise<SuccessResponse> {
@@ -11684,7 +11123,6 @@ export class UserApi extends BaseAPI {
      * @summary user/untrust
      * @param { UserApiUserUntrustParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof UserApi
      */
     public untrust(params: UserApiUserUntrustParams, options?: any): Promise<SuccessResponse> {
@@ -11709,10 +11147,6 @@ export const WalletApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     balance(cryptoCurrencyCode?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'cryptoCurrencyCode' is not null or undefined
-        if (cryptoCurrencyCode === null || cryptoCurrencyCode === undefined) {
-            throw new RequiredError('cryptoCurrencyCode','Required parameter cryptoCurrencyCode was null or undefined when calling balance.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/wallet/balance`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -11747,14 +11181,6 @@ export const WalletApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     conversionQuotes(convertTo?: string, convertFrom?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'convertTo' is not null or undefined
-        if (convertTo === null || convertTo === undefined) {
-            throw new RequiredError('convertTo','Required parameter convertTo was null or undefined when calling conversionQuotes.');
-        }
-        // verify required parameter 'convertFrom' is not null or undefined
-        if (convertFrom === null || convertFrom === undefined) {
-            throw new RequiredError('convertFrom','Required parameter convertFrom was null or undefined when calling conversionQuotes.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/wallet/conversion-quotes`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -11798,26 +11224,6 @@ This helps to avoid accidental double conversions.
      * @throws {RequiredError}
      */
     convert(amount?: number, orderId?: string, quoteId?: string, convertTo?: string, convertFrom?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'amount' is not null or undefined
-        if (amount === null || amount === undefined) {
-            throw new RequiredError('amount','Required parameter amount was null or undefined when calling convert.');
-        }
-        // verify required parameter 'orderId' is not null or undefined
-        if (orderId === null || orderId === undefined) {
-            throw new RequiredError('orderId','Required parameter orderId was null or undefined when calling convert.');
-        }
-        // verify required parameter 'quoteId' is not null or undefined
-        if (quoteId === null || quoteId === undefined) {
-            throw new RequiredError('quoteId','Required parameter quoteId was null or undefined when calling convert.');
-        }
-        // verify required parameter 'convertTo' is not null or undefined
-        if (convertTo === null || convertTo === undefined) {
-            throw new RequiredError('convertTo','Required parameter convertTo was null or undefined when calling convert.');
-        }
-        // verify required parameter 'convertFrom' is not null or undefined
-        if (convertFrom === null || convertFrom === undefined) {
-            throw new RequiredError('convertFrom','Required parameter convertFrom was null or undefined when calling convert.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/wallet/convert`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -11995,7 +11401,6 @@ export class WalletApi extends BaseAPI {
      * @summary wallet/balance
      * @param { WalletApiWalletBalanceParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof WalletApi
      */
     public balance(params: WalletApiWalletBalanceParams, options?: any): Promise<InlineResponse20020> {
@@ -12012,7 +11417,6 @@ export class WalletApi extends BaseAPI {
      * @summary wallet/conversion-quotes
      * @param { WalletApiWalletConversionQuotesParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof WalletApi
      */
     public conversionQuotes(params: WalletApiWalletConversionQuotesParams, options?: any): Promise<InlineResponse20037> {
@@ -12029,7 +11433,6 @@ export class WalletApi extends BaseAPI {
      * @summary wallet/convert
      * @param { WalletApiWalletConvertParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof WalletApi
      */
     public convert(params: WalletApiWalletConvertParams, options?: any): Promise<InlineResponse20021> {
@@ -12046,7 +11449,6 @@ export class WalletApi extends BaseAPI {
      * @summary wallet/list-addresses
      * @param { WalletApiWalletListAddressesParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof WalletApi
      */
     public listAddresses(params?: WalletApiWalletListAddressesParams, options?: any): Promise<InlineResponse20036> {
@@ -12063,7 +11465,6 @@ export class WalletApi extends BaseAPI {
      * @summary wallet/new-address
      * @param { WalletApiWalletNewAddressParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof WalletApi
      */
     public newAddress(options?: any): Promise<InlineResponse20033> {

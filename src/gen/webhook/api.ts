@@ -315,10 +315,6 @@ export const DelegatedAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     applicationAddUserWebhook(body?: WebhookIn, options: any = {}): FetchArgs {
-        // verify required parameter 'body' is not null or undefined
-        if (body === null || body === undefined) {
-            throw new RequiredError('body','Required parameter body was null or undefined when calling applicationAddUserWebhook.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -349,14 +345,6 @@ export const DelegatedAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     applicationAddWebhookEndpoint(body?: EndpointIn, webhookId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'body' is not null or undefined
-        if (body === null || body === undefined) {
-            throw new RequiredError('body','Required parameter body was null or undefined when calling applicationAddWebhookEndpoint.');
-        }
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling applicationAddWebhookEndpoint.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks/{webhook_id}/endpoints/`
             .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)));
         const localVarUrlObj = url.parse(localVarPath, true);
@@ -411,10 +399,6 @@ export const DelegatedAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     applicationDeleteAllUserWebhooksByTag(tag?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'tag' is not null or undefined
-        if (tag === null || tag === undefined) {
-            throw new RequiredError('tag','Required parameter tag was null or undefined when calling applicationDeleteAllUserWebhooksByTag.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks/tags/{tag}`
             .replace(`{${"tag"}}`, encodeURIComponent(String(tag)));
         const localVarUrlObj = url.parse(localVarPath, true);
@@ -441,10 +425,6 @@ export const DelegatedAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     applicationDeleteUserWebhooks(webhookId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling applicationDeleteUserWebhooks.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks/{webhook_id}`
             .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)));
         const localVarUrlObj = url.parse(localVarPath, true);
@@ -472,14 +452,6 @@ export const DelegatedAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     applicationDeleteWebhookEndpointById(webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling applicationDeleteWebhookEndpointById.');
-        }
-        // verify required parameter 'endpointId' is not null or undefined
-        if (endpointId === null || endpointId === undefined) {
-            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling applicationDeleteWebhookEndpointById.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks/{webhook_id}/endpoints/{endpoint_id}`
             .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)))
             .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)));
@@ -508,14 +480,6 @@ export const DelegatedAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     applicationGetEndpointLogs(webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling applicationGetEndpointLogs.');
-        }
-        // verify required parameter 'endpointId' is not null or undefined
-        if (endpointId === null || endpointId === undefined) {
-            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling applicationGetEndpointLogs.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks/{webhook_id}/endpoints/{endpoint_id}/log`
             .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)))
             .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)));
@@ -567,10 +531,6 @@ export const DelegatedAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     applicationGetUserWebhookDetails(webhookId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling applicationGetUserWebhookDetails.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks/{webhook_id}`
             .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)));
         const localVarUrlObj = url.parse(localVarPath, true);
@@ -621,10 +581,6 @@ export const DelegatedAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     applicationGetUserWebhooksPublicByTag(tag?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'tag' is not null or undefined
-        if (tag === null || tag === undefined) {
-            throw new RequiredError('tag','Required parameter tag was null or undefined when calling applicationGetUserWebhooksPublicByTag.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks/tags/{tag}`
             .replace(`{${"tag"}}`, encodeURIComponent(String(tag)));
         const localVarUrlObj = url.parse(localVarPath, true);
@@ -652,14 +608,6 @@ export const DelegatedAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     applicationGetWebhookEndpointById(webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling applicationGetWebhookEndpointById.');
-        }
-        // verify required parameter 'endpointId' is not null or undefined
-        if (endpointId === null || endpointId === undefined) {
-            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling applicationGetWebhookEndpointById.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks/{webhook_id}/endpoints/{endpoint_id}`
             .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)))
             .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)));
@@ -687,10 +635,6 @@ export const DelegatedAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     applicationGetWebhookEndpoints(webhookId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling applicationGetWebhookEndpoints.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks/{webhook_id}/endpoints/`
             .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)));
         const localVarUrlObj = url.parse(localVarPath, true);
@@ -719,18 +663,6 @@ export const DelegatedAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     applicationUpdateWebhookEndpointById(body?: EndpointIn, webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
-        // verify required parameter 'body' is not null or undefined
-        if (body === null || body === undefined) {
-            throw new RequiredError('body','Required parameter body was null or undefined when calling applicationUpdateWebhookEndpointById.');
-        }
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling applicationUpdateWebhookEndpointById.');
-        }
-        // verify required parameter 'endpointId' is not null or undefined
-        if (endpointId === null || endpointId === undefined) {
-            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling applicationUpdateWebhookEndpointById.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks/{webhook_id}/endpoints/{endpoint_id}`
             .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)))
             .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)));
@@ -898,7 +830,6 @@ export class DelegatedAccessApi extends BaseAPI {
      * @summary /application/webhooks
      * @param { DelegatedAccessApiApplicationAddUserWebhookParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DelegatedAccessApi
      */
     public applicationAddUserWebhook(params?: DelegatedAccessApiApplicationAddUserWebhookParams, options?: any): Promise<WebhookDelegatedOut> {
@@ -915,7 +846,6 @@ export class DelegatedAccessApi extends BaseAPI {
      * @summary /application/webhooks/{webhook_id}/endpoints/
      * @param { DelegatedAccessApiApplicationAddWebhookEndpointParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DelegatedAccessApi
      */
     public applicationAddWebhookEndpoint(params: DelegatedAccessApiApplicationAddWebhookEndpointParams, options?: any): Promise<Array<EndpointOut>> {
@@ -932,7 +862,6 @@ export class DelegatedAccessApi extends BaseAPI {
      * @summary /application/webhooks
      * @param { DelegatedAccessApiApplicationDeleteAllUserWebhooksParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DelegatedAccessApi
      */
     public applicationDeleteAllUserWebhooks(options?: any): Promise<ModelObject> {
@@ -949,7 +878,6 @@ export class DelegatedAccessApi extends BaseAPI {
      * @summary /application/webhooks/tags/{tag}
      * @param { DelegatedAccessApiApplicationDeleteAllUserWebhooksByTagParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DelegatedAccessApi
      */
     public applicationDeleteAllUserWebhooksByTag(params: DelegatedAccessApiApplicationDeleteAllUserWebhooksByTagParams, options?: any): Promise<ModelObject> {
@@ -966,7 +894,6 @@ export class DelegatedAccessApi extends BaseAPI {
      * @summary /application/webhooks/{webhook_id}
      * @param { DelegatedAccessApiApplicationDeleteUserWebhooksParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DelegatedAccessApi
      */
     public applicationDeleteUserWebhooks(params: DelegatedAccessApiApplicationDeleteUserWebhooksParams, options?: any): Promise<ModelObject> {
@@ -983,7 +910,6 @@ export class DelegatedAccessApi extends BaseAPI {
      * @summary /application/webhooks/{webhook_id}/endpoints/{endpoint_id}
      * @param { DelegatedAccessApiApplicationDeleteWebhookEndpointByIdParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DelegatedAccessApi
      */
     public applicationDeleteWebhookEndpointById(params: DelegatedAccessApiApplicationDeleteWebhookEndpointByIdParams, options?: any): Promise<ModelObject> {
@@ -1000,7 +926,6 @@ export class DelegatedAccessApi extends BaseAPI {
      * @summary /application/webhooks/{webhook_id}/endpoints/{endpoint_id}/log
      * @param { DelegatedAccessApiApplicationGetEndpointLogsParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DelegatedAccessApi
      */
     public applicationGetEndpointLogs(params: DelegatedAccessApiApplicationGetEndpointLogsParams, options?: any): Promise<Array<LogRecordOut>> {
@@ -1017,7 +942,6 @@ export class DelegatedAccessApi extends BaseAPI {
      * @summary /application/webhooks/log
      * @param { DelegatedAccessApiApplicationGetLogsParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DelegatedAccessApi
      */
     public applicationGetLogs(options?: any): Promise<Array<LogRecordOut>> {
@@ -1034,7 +958,6 @@ export class DelegatedAccessApi extends BaseAPI {
      * @summary /application/webhooks/{webhook_id}
      * @param { DelegatedAccessApiApplicationGetUserWebhookDetailsParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DelegatedAccessApi
      */
     public applicationGetUserWebhookDetails(params: DelegatedAccessApiApplicationGetUserWebhookDetailsParams, options?: any): Promise<WebhookDelegatedOut> {
@@ -1051,7 +974,6 @@ export class DelegatedAccessApi extends BaseAPI {
      * @summary /application/webhooks
      * @param { DelegatedAccessApiApplicationGetUserWebhooksParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DelegatedAccessApi
      */
     public applicationGetUserWebhooks(options?: any): Promise<Array<WebhookDelegatedOut>> {
@@ -1068,7 +990,6 @@ export class DelegatedAccessApi extends BaseAPI {
      * @summary /application/webhooks/tags/{tag}
      * @param { DelegatedAccessApiApplicationGetUserWebhooksPublicByTagParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DelegatedAccessApi
      */
     public applicationGetUserWebhooksPublicByTag(params: DelegatedAccessApiApplicationGetUserWebhooksPublicByTagParams, options?: any): Promise<Array<WebhookDelegatedOut>> {
@@ -1085,7 +1006,6 @@ export class DelegatedAccessApi extends BaseAPI {
      * @summary /application/webhooks/{webhook_id}/endpoints/{endpoint_id}
      * @param { DelegatedAccessApiApplicationGetWebhookEndpointByIdParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DelegatedAccessApi
      */
     public applicationGetWebhookEndpointById(params: DelegatedAccessApiApplicationGetWebhookEndpointByIdParams, options?: any): Promise<EndpointOut> {
@@ -1102,7 +1022,6 @@ export class DelegatedAccessApi extends BaseAPI {
      * @summary /application/webhooks/{webhook_id}/endpoints/
      * @param { DelegatedAccessApiApplicationGetWebhookEndpointsParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DelegatedAccessApi
      */
     public applicationGetWebhookEndpoints(params: DelegatedAccessApiApplicationGetWebhookEndpointsParams, options?: any): Promise<Array<EndpointOut>> {
@@ -1119,7 +1038,6 @@ export class DelegatedAccessApi extends BaseAPI {
      * @summary /application/webhooks/{webhook_id}/endpoints/{endpoint_id}
      * @param { DelegatedAccessApiApplicationUpdateWebhookEndpointByIdParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DelegatedAccessApi
      */
     public applicationUpdateWebhookEndpointById(params: DelegatedAccessApiApplicationUpdateWebhookEndpointByIdParams, options?: any): Promise<EndpointOut> {
@@ -1144,10 +1062,6 @@ export const DirectAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     userAddUserWebhook(body?: WebhookIn, options: any = {}): FetchArgs {
-        // verify required parameter 'body' is not null or undefined
-        if (body === null || body === undefined) {
-            throw new RequiredError('body','Required parameter body was null or undefined when calling userAddUserWebhook.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -1178,14 +1092,6 @@ export const DirectAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     userAddWebhookEndpoint(body?: EndpointIn, webhookId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'body' is not null or undefined
-        if (body === null || body === undefined) {
-            throw new RequiredError('body','Required parameter body was null or undefined when calling userAddWebhookEndpoint.');
-        }
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling userAddWebhookEndpoint.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks/{webhook_id}/endpoints/`
             .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)));
         const localVarUrlObj = url.parse(localVarPath, true);
@@ -1240,10 +1146,6 @@ export const DirectAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     userDeleteAllUserWebhooksByTag(tag?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'tag' is not null or undefined
-        if (tag === null || tag === undefined) {
-            throw new RequiredError('tag','Required parameter tag was null or undefined when calling userDeleteAllUserWebhooksByTag.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks/tags/{tag}`
             .replace(`{${"tag"}}`, encodeURIComponent(String(tag)));
         const localVarUrlObj = url.parse(localVarPath, true);
@@ -1270,10 +1172,6 @@ export const DirectAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     userDeleteUserWebhooks(webhookId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling userDeleteUserWebhooks.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks/{webhook_id}`
             .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)));
         const localVarUrlObj = url.parse(localVarPath, true);
@@ -1301,14 +1199,6 @@ export const DirectAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     userDeleteWebhookEndpointById(webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling userDeleteWebhookEndpointById.');
-        }
-        // verify required parameter 'endpointId' is not null or undefined
-        if (endpointId === null || endpointId === undefined) {
-            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling userDeleteWebhookEndpointById.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks/{webhook_id}/endpoints/{endpoint_id}`
             .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)))
             .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)));
@@ -1337,14 +1227,6 @@ export const DirectAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     userGetEndpointLogs(webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling userGetEndpointLogs.');
-        }
-        // verify required parameter 'endpointId' is not null or undefined
-        if (endpointId === null || endpointId === undefined) {
-            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling userGetEndpointLogs.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks/{webhook_id}/endpoints/{endpoint_id}/log`
             .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)))
             .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)));
@@ -1396,10 +1278,6 @@ export const DirectAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     userGetUserWebhookDetails(webhookId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling userGetUserWebhookDetails.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks/{webhook_id}`
             .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)));
         const localVarUrlObj = url.parse(localVarPath, true);
@@ -1450,10 +1328,6 @@ export const DirectAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     userGetUserWebhooksPublicByTag(tag?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'tag' is not null or undefined
-        if (tag === null || tag === undefined) {
-            throw new RequiredError('tag','Required parameter tag was null or undefined when calling userGetUserWebhooksPublicByTag.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks/tags/{tag}`
             .replace(`{${"tag"}}`, encodeURIComponent(String(tag)));
         const localVarUrlObj = url.parse(localVarPath, true);
@@ -1481,14 +1355,6 @@ export const DirectAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     userGetWebhookEndpointById(webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling userGetWebhookEndpointById.');
-        }
-        // verify required parameter 'endpointId' is not null or undefined
-        if (endpointId === null || endpointId === undefined) {
-            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling userGetWebhookEndpointById.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks/{webhook_id}/endpoints/{endpoint_id}`
             .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)))
             .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)));
@@ -1516,10 +1382,6 @@ export const DirectAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     userGetWebhookEndpoints(webhookId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling userGetWebhookEndpoints.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks/{webhook_id}/endpoints/`
             .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)));
         const localVarUrlObj = url.parse(localVarPath, true);
@@ -1548,18 +1410,6 @@ export const DirectAccessApiFetchParamCreator = {
      * @throws {RequiredError}
      */
     userUpdateWebhookEndpointById(body?: EndpointIn, webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
-        // verify required parameter 'body' is not null or undefined
-        if (body === null || body === undefined) {
-            throw new RequiredError('body','Required parameter body was null or undefined when calling userUpdateWebhookEndpointById.');
-        }
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling userUpdateWebhookEndpointById.');
-        }
-        // verify required parameter 'endpointId' is not null or undefined
-        if (endpointId === null || endpointId === undefined) {
-            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling userUpdateWebhookEndpointById.');
-        }
         const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks/{webhook_id}/endpoints/{endpoint_id}`
             .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)))
             .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)));
@@ -1727,7 +1577,6 @@ export class DirectAccessApi extends BaseAPI {
      * @summary /user/webhooks
      * @param { DirectAccessApiUserAddUserWebhookParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DirectAccessApi
      */
     public userAddUserWebhook(params?: DirectAccessApiUserAddUserWebhookParams, options?: any): Promise<WebhookDelegatedOut> {
@@ -1744,7 +1593,6 @@ export class DirectAccessApi extends BaseAPI {
      * @summary /user/webhooks/{webhook_id}/endpoints/
      * @param { DirectAccessApiUserAddWebhookEndpointParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DirectAccessApi
      */
     public userAddWebhookEndpoint(params: DirectAccessApiUserAddWebhookEndpointParams, options?: any): Promise<Array<EndpointOut>> {
@@ -1761,7 +1609,6 @@ export class DirectAccessApi extends BaseAPI {
      * @summary /user/webhooks
      * @param { DirectAccessApiUserDeleteAllUserWebhooksParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DirectAccessApi
      */
     public userDeleteAllUserWebhooks(options?: any): Promise<ModelObject> {
@@ -1778,7 +1625,6 @@ export class DirectAccessApi extends BaseAPI {
      * @summary /user/webhooks/tags/{tag}
      * @param { DirectAccessApiUserDeleteAllUserWebhooksByTagParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DirectAccessApi
      */
     public userDeleteAllUserWebhooksByTag(params: DirectAccessApiUserDeleteAllUserWebhooksByTagParams, options?: any): Promise<ModelObject> {
@@ -1795,7 +1641,6 @@ export class DirectAccessApi extends BaseAPI {
      * @summary /user/webhooks/{webhook_id}
      * @param { DirectAccessApiUserDeleteUserWebhooksParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DirectAccessApi
      */
     public userDeleteUserWebhooks(params: DirectAccessApiUserDeleteUserWebhooksParams, options?: any): Promise<ModelObject> {
@@ -1812,7 +1657,6 @@ export class DirectAccessApi extends BaseAPI {
      * @summary /user/webhooks/{webhook_id}/endpoints/{endpoint_id}
      * @param { DirectAccessApiUserDeleteWebhookEndpointByIdParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DirectAccessApi
      */
     public userDeleteWebhookEndpointById(params: DirectAccessApiUserDeleteWebhookEndpointByIdParams, options?: any): Promise<ModelObject> {
@@ -1829,7 +1673,6 @@ export class DirectAccessApi extends BaseAPI {
      * @summary /user/webhooks/{webhook_id}/endpoints/{endpoint_id}/log
      * @param { DirectAccessApiUserGetEndpointLogsParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DirectAccessApi
      */
     public userGetEndpointLogs(params: DirectAccessApiUserGetEndpointLogsParams, options?: any): Promise<Array<LogRecordOut>> {
@@ -1846,7 +1689,6 @@ export class DirectAccessApi extends BaseAPI {
      * @summary /user/webhooks/log
      * @param { DirectAccessApiUserGetLogsParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DirectAccessApi
      */
     public userGetLogs(options?: any): Promise<Array<LogRecordOut>> {
@@ -1863,7 +1705,6 @@ export class DirectAccessApi extends BaseAPI {
      * @summary /user/webhooks/{webhook_id}
      * @param { DirectAccessApiUserGetUserWebhookDetailsParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DirectAccessApi
      */
     public userGetUserWebhookDetails(params: DirectAccessApiUserGetUserWebhookDetailsParams, options?: any): Promise<WebhookDelegatedOut> {
@@ -1880,7 +1721,6 @@ export class DirectAccessApi extends BaseAPI {
      * @summary /user/webhooks
      * @param { DirectAccessApiUserGetUserWebhooksParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DirectAccessApi
      */
     public userGetUserWebhooks(options?: any): Promise<Array<WebhookDelegatedOut>> {
@@ -1897,7 +1737,6 @@ export class DirectAccessApi extends BaseAPI {
      * @summary /user/webhooks/tags/{tag}
      * @param { DirectAccessApiUserGetUserWebhooksPublicByTagParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DirectAccessApi
      */
     public userGetUserWebhooksPublicByTag(params: DirectAccessApiUserGetUserWebhooksPublicByTagParams, options?: any): Promise<Array<WebhookDelegatedOut>> {
@@ -1914,7 +1753,6 @@ export class DirectAccessApi extends BaseAPI {
      * @summary /user/webhooks/{webhook_id}/endpoints/{endpoint_id}
      * @param { DirectAccessApiUserGetWebhookEndpointByIdParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DirectAccessApi
      */
     public userGetWebhookEndpointById(params: DirectAccessApiUserGetWebhookEndpointByIdParams, options?: any): Promise<EndpointOut> {
@@ -1931,7 +1769,6 @@ export class DirectAccessApi extends BaseAPI {
      * @summary /user/webhooks/{webhook_id}/endpoints/
      * @param { DirectAccessApiUserGetWebhookEndpointsParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DirectAccessApi
      */
     public userGetWebhookEndpoints(params: DirectAccessApiUserGetWebhookEndpointsParams, options?: any): Promise<Array<EndpointOut>> {
@@ -1948,7 +1785,6 @@ export class DirectAccessApi extends BaseAPI {
      * @summary /user/webhooks/{webhook_id}/endpoints/{endpoint_id}
      * @param { DirectAccessApiUserUpdateWebhookEndpointByIdParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof DirectAccessApi
      */
     public userUpdateWebhookEndpointById(params: DirectAccessApiUserUpdateWebhookEndpointByIdParams, options?: any): Promise<EndpointOut> {
@@ -2009,7 +1845,6 @@ export class MiscApi extends BaseAPI {
      * @summary /.well-known/public.key
      * @param { MiscApiGetSignaturePublicKeyParams } params
      * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
      * @memberof MiscApi
      */
     public getSignaturePublicKey(options?: any): Promise<ModelObject> {
