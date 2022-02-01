@@ -2,7 +2,7 @@
 /**
  * Webhook
  *
- * OpenAPI spec version: 1.0.40
+ * OpenAPI spec version: v1
  *
  * NOTE: This file is auto generated do not edit the file manually.
  */

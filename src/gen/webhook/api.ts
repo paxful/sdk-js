@@ -53,29 +53,38 @@ export class RequiredError extends Error {
 }
 
 /**
+ * An enumeration.
+ * @export
+ * @enum {string}
+ */
+export enum ApiType {
+    User = <any> 'user',
+    Application = <any> 'application'
+}
+/**
  * 
  * @export
  * @interface EndpointIn
  */
 export interface EndpointIn {
     /**
-     * 
-     * @type {string}
-     * @memberof EndpointIn
-     */
-    eventType: string;
-    /**
-     * 
+     * A target URL where a webhook will be dispatched to when an event of type 'event_type' occurs.
      * @type {string}
      * @memberof EndpointIn
      */
     url: string;
     /**
-     * 
+     * If a given webhook is enabled or not.
      * @type {boolean}
      * @memberof EndpointIn
      */
     enabled?: boolean;
+    /**
+     * Technical name of event that you would like to subscribe to. For a list of available supported types of webhooks please refer to an API product documentation that you would to integrate with.
+     * @type {string}
+     * @memberof EndpointIn
+     */
+    eventType: string;
 }
 /**
  * 
@@ -85,40 +94,40 @@ export interface EndpointIn {
 export interface EndpointOut {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof EndpointOut
      */
-    eventType: string;
+    id: number;
     /**
-     * 
+     * A target URL where a webhook will be dispatched to when an event of type 'event_type' occurs.
      * @type {string}
      * @memberof EndpointOut
      */
     url: string;
     /**
-     * 
+     * If a given webhook is enabled or not.
      * @type {boolean}
      * @memberof EndpointOut
      */
     enabled?: boolean;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof EndpointOut
      */
-    id: number;
+    errorCode?: string;
+    /**
+     * Technical name of event that you would like to subscribe to. For a list of available supported types of webhooks please refer to an API product documentation that you would to integrate with.
+     * @type {string}
+     * @memberof EndpointOut
+     */
+    eventType: string;
     /**
      * 
      * @type {Date}
      * @memberof EndpointOut
      */
     lastActivity?: Date;
-    /**
-     * 
-     * @type {string}
-     * @memberof EndpointOut
-     */
-    errorCode?: string;
 }
 /**
  * 
@@ -146,126 +155,65 @@ export interface LogRecordOut {
      */
     id: number;
     /**
-     * 
-     * @type {Date}
-     * @memberof LogRecordOut
-     */
-    sentAt: Date;
-    /**
-     * 
+     * Target URL where this webhook invocation was targeting.
      * @type {string}
      * @memberof LogRecordOut
      */
     url: string;
     /**
      * 
-     * @type {string}
+     * @type {Date}
      * @memberof LogRecordOut
      */
-    method: string;
+    sentAt: Date;
     /**
-     * 
-     * @type {string}
-     * @memberof LogRecordOut
-     */
-    requestBody?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LogRecordOut
-     */
-    requestHeaders?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof LogRecordOut
-     */
-    requestTryNo: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof LogRecordOut
-     */
-    responseStatus: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof LogRecordOut
-     */
-    responseHeaders?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LogRecordOut
-     */
-    responseBody?: string;
-    /**
-     * 
+     * If a given webhook invocation was successful.
      * @type {boolean}
      * @memberof LogRecordOut
      */
     success: boolean;
     /**
-     * 
+     * Either HTTP code returned from a server OR a short descriptivename of an error, e.g. timeout.
      * @type {string}
      * @memberof LogRecordOut
      */
     errorCode?: string;
     /**
-     * 
+     * Payload that a given webhook invocation's payload had.
+     * @type {string}
+     * @memberof LogRecordOut
+     */
+    requestBody?: string;
+    /**
+     * Response from the server. This property will be defined only if correct value for 'X-Paxful-Request-Challenge' request header was provided in server response headers.
+     * @type {string}
+     * @memberof LogRecordOut
+     */
+    responseBody?: string;
+    /**
+     * Headers that a given webhook invocation had.
+     * @type {string}
+     * @memberof LogRecordOut
+     */
+    requestHeaders?: string;
+    /**
+     * HTTP code that 'url' returned when this webhook was dispatched.
+     * @type {number}
+     * @memberof LogRecordOut
+     */
+    responseStatus: number;
+    /**
+     * Headers that a 'url' server responded with when this webhook was dispatched.
+     * @type {string}
+     * @memberof LogRecordOut
+     */
+    responseHeaders?: string;
+    /**
+     * A detailed description of an error from 'error_code'.
      * @type {string}
      * @memberof LogRecordOut
      */
     errorDescription?: string;
-}
-/**
- * 
- * @export
- * @interface UserWebhookOut
- */
-export interface UserWebhookOut {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserWebhookOut
-     */
-    applicationId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserWebhookOut
-     */
-    developerId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserWebhookOut
-     */
-    userId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserWebhookOut
-     */
-    webhookId: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserWebhookOut
-     */
-    tag?: string;
-    /**
-     * 
-     * @type {Array<EndpointOut>}
-     * @memberof UserWebhookOut
-     */
-    endpoints: Array<EndpointOut>;
-    /**
-     * 
-     * @type {LogRecordOut}
-     * @memberof UserWebhookOut
-     */
-    lastRequest?: LogRecordOut;
 }
 /**
  * 
@@ -295,11 +243,54 @@ export interface ValidationError {
 /**
  * 
  * @export
+ * @interface WebhookDelegatedOut
+ */
+export interface WebhookDelegatedOut {
+    /**
+     * Optional tag. Tags can be used to simplify management of webhooks. For more details see /application/webhooks/tag/_* family of endpoints.
+     * @type {string}
+     * @memberof WebhookDelegatedOut
+     */
+    tag?: string;
+    /**
+     * UID of a user a given webhook belongs to.
+     * @type {string}
+     * @memberof WebhookDelegatedOut
+     */
+    userId?: string;
+    /**
+     * 
+     * @type {Array<EndpointOut>}
+     * @memberof WebhookDelegatedOut
+     */
+    endpoints: Array<EndpointOut>;
+    /**
+     * ID of a webhook. You can use this ID to update or fetch logs of a webhook.
+     * @type {string}
+     * @memberof WebhookDelegatedOut
+     */
+    webhookId: string;
+    /**
+     * 
+     * @type {LogRecordOut}
+     * @memberof WebhookDelegatedOut
+     */
+    lastRequest?: LogRecordOut;
+    /**
+     * ID of of an application this webhook belongs to.
+     * @type {string}
+     * @memberof WebhookDelegatedOut
+     */
+    applicationId?: string;
+}
+/**
+ * 
+ * @export
  * @interface WebhookIn
  */
 export interface WebhookIn {
     /**
-     * 
+     * An optional tag. See also /user/webhooks/tag/_* or /application/webhooks/tag/_* endpoints.
      * @type {string}
      * @memberof WebhookIn
      */
@@ -312,72 +303,23 @@ export interface WebhookIn {
     endpoints: Array<EndpointIn>;
 }
 /**
- * 
- * @export
- * @interface WebhookOut
- */
-export interface WebhookOut {
-    /**
-     * 
-     * @type {string}
-     * @memberof WebhookOut
-     */
-    applicationId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WebhookOut
-     */
-    developerId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WebhookOut
-     */
-    userId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WebhookOut
-     */
-    webhookId: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WebhookOut
-     */
-    tag?: string;
-    /**
-     * 
-     * @type {Array<EndpointOut>}
-     * @memberof WebhookOut
-     */
-    endpoints: Array<EndpointOut>;
-}
-/**
- * DefaultApi - fetch parameter creator
+ * DelegatedAccessApi - fetch parameter creator
  * @export
  */
-export const DefaultApiFetchParamCreator = {
+export const DelegatedAccessApiFetchParamCreator = {
     /**
-     * 
-     * @summary Add user personal webhook
+     * Add a new webhook. If a user uninstalls an application at some point then all their webhooks will removed automatically as well.
+     * @summary /application/webhooks
      * @param {WebhookIn} body 
-     * @param {string} userId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    addUserInternalWebhook(body?: WebhookIn, userId?: string, options: any = {}): FetchArgs {
+    applicationAddUserWebhook(body?: WebhookIn, options: any = {}): FetchArgs {
         // verify required parameter 'body' is not null or undefined
         if (body === null || body === undefined) {
-            throw new RequiredError('body','Required parameter body was null or undefined when calling addUserInternalWebhook.');
+            throw new RequiredError('body','Required parameter body was null or undefined when calling applicationAddUserWebhook.');
         }
-        // verify required parameter 'userId' is not null or undefined
-        if (userId === null || userId === undefined) {
-            throw new RequiredError('userId','Required parameter userId was null or undefined when calling addUserInternalWebhook.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/internal-api/v1/user/{user_id}/webhooks`
-            .replace(`{${"user_id"}}`, encodeURIComponent(String(userId)));
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks`;
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
         const localVarHeaderParameter = {};
@@ -399,30 +341,24 @@ export const DefaultApiFetchParamCreator = {
         };
     },
     /**
-     * 
-     * @summary Get webhook endpoint details
+     * Get webhook endpoint details.
+     * @summary /application/webhooks/{webhook_id}/endpoints/
      * @param {EndpointIn} body 
      * @param {string} webhookId 
-     * @param {string} userId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    addWebhookEndpoint(body?: EndpointIn, webhookId?: string, userId?: string, options: any = {}): FetchArgs {
+    applicationAddWebhookEndpoint(body?: EndpointIn, webhookId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'body' is not null or undefined
         if (body === null || body === undefined) {
-            throw new RequiredError('body','Required parameter body was null or undefined when calling addWebhookEndpoint.');
+            throw new RequiredError('body','Required parameter body was null or undefined when calling applicationAddWebhookEndpoint.');
         }
         // verify required parameter 'webhookId' is not null or undefined
         if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling addWebhookEndpoint.');
+            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling applicationAddWebhookEndpoint.');
         }
-        // verify required parameter 'userId' is not null or undefined
-        if (userId === null || userId === undefined) {
-            throw new RequiredError('userId','Required parameter userId was null or undefined when calling addWebhookEndpoint.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/internal-api/v1/user/{user_id}/webhooks/{webhook_id}/endpoints/`
-            .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)))
-            .replace(`{${"user_id"}}`, encodeURIComponent(String(userId)));
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks/{webhook_id}/endpoints/`
+            .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)));
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
         const localVarHeaderParameter = {};
@@ -444,24 +380,72 @@ export const DefaultApiFetchParamCreator = {
         };
     },
     /**
-     * 
-     * @summary Remove user personal webhook by id
-     * @param {string} userId 
+     * Remove all webhooks that current user had configured by a given application.
+     * @summary /application/webhooks
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    applicationDeleteAllUserWebhooks(options: any = {}): FetchArgs {
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks`;
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Remove webhooks with given tag.
+     * @summary /application/webhooks/tags/{tag}
+     * @param {string} tag 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    applicationDeleteAllUserWebhooksByTag(tag?: string, options: any = {}): FetchArgs {
+        // verify required parameter 'tag' is not null or undefined
+        if (tag === null || tag === undefined) {
+            throw new RequiredError('tag','Required parameter tag was null or undefined when calling applicationDeleteAllUserWebhooksByTag.');
+        }
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks/tags/{tag}`
+            .replace(`{${"tag"}}`, encodeURIComponent(String(tag)));
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Remove webhook by ID.
+     * @summary /application/webhooks/{webhook_id}
      * @param {string} webhookId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    deleteUserInternalWebhooks(userId?: string, webhookId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'userId' is not null or undefined
-        if (userId === null || userId === undefined) {
-            throw new RequiredError('userId','Required parameter userId was null or undefined when calling deleteUserInternalWebhooks.');
-        }
+    applicationDeleteUserWebhooks(webhookId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'webhookId' is not null or undefined
         if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling deleteUserInternalWebhooks.');
+            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling applicationDeleteUserWebhooks.');
         }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/internal-api/v1/user/{user_id}/webhooks/{webhook_id}`
-            .replace(`{${"user_id"}}`, encodeURIComponent(String(userId)))
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks/{webhook_id}`
             .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)));
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
@@ -480,31 +464,25 @@ export const DefaultApiFetchParamCreator = {
         };
     },
     /**
-     * 
-     * @summary Get webhook endpoint details
+     * Get webhook endpoint details.
+     * @summary /application/webhooks/{webhook_id}/endpoints/{endpoint_id}
      * @param {string} webhookId 
      * @param {number} endpointId 
-     * @param {string} userId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    deleteWebhookEndpointById(webhookId?: string, endpointId?: number, userId?: string, options: any = {}): FetchArgs {
+    applicationDeleteWebhookEndpointById(webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
         // verify required parameter 'webhookId' is not null or undefined
         if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling deleteWebhookEndpointById.');
+            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling applicationDeleteWebhookEndpointById.');
         }
         // verify required parameter 'endpointId' is not null or undefined
         if (endpointId === null || endpointId === undefined) {
-            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling deleteWebhookEndpointById.');
+            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling applicationDeleteWebhookEndpointById.');
         }
-        // verify required parameter 'userId' is not null or undefined
-        if (userId === null || userId === undefined) {
-            throw new RequiredError('userId','Required parameter userId was null or undefined when calling deleteWebhookEndpointById.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/internal-api/v1/user/{user_id}/webhooks/{webhook_id}/endpoints/{endpoint_id}`
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks/{webhook_id}/endpoints/{endpoint_id}`
             .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)))
-            .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)))
-            .replace(`{${"user_id"}}`, encodeURIComponent(String(userId)));
+            .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)));
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
         const localVarHeaderParameter = {};
@@ -522,24 +500,78 @@ export const DefaultApiFetchParamCreator = {
         };
     },
     /**
-     * 
-     * @summary Get webhook details
-     * @param {string} userId 
+     * Get webhook http request log for the endpoint.
+     * @summary /application/webhooks/{webhook_id}/endpoints/{endpoint_id}/log
+     * @param {string} webhookId 
+     * @param {number} endpointId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    applicationGetEndpointLogs(webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
+        // verify required parameter 'webhookId' is not null or undefined
+        if (webhookId === null || webhookId === undefined) {
+            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling applicationGetEndpointLogs.');
+        }
+        // verify required parameter 'endpointId' is not null or undefined
+        if (endpointId === null || endpointId === undefined) {
+            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling applicationGetEndpointLogs.');
+        }
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks/{webhook_id}/endpoints/{endpoint_id}/log`
+            .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)))
+            .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)));
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Get webhook's requests log. You can use this endpoint for troubleshooting purposes.
+     * @summary /application/webhooks/log
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    applicationGetLogs(options: any = {}): FetchArgs {
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks/log`;
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Get webhook details.
+     * @summary /application/webhooks/{webhook_id}
      * @param {string} webhookId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getUserInternalWebhookDetails(userId?: string, webhookId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'userId' is not null or undefined
-        if (userId === null || userId === undefined) {
-            throw new RequiredError('userId','Required parameter userId was null or undefined when calling getUserInternalWebhookDetails.');
-        }
+    applicationGetUserWebhookDetails(webhookId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'webhookId' is not null or undefined
         if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling getUserInternalWebhookDetails.');
+            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling applicationGetUserWebhookDetails.');
         }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/internal-api/v1/user/{user_id}/webhooks/{webhook_id}`
-            .replace(`{${"user_id"}}`, encodeURIComponent(String(userId)))
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks/{webhook_id}`
             .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)));
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -558,31 +590,79 @@ export const DefaultApiFetchParamCreator = {
         };
     },
     /**
-     * 
-     * @summary Get webhook endpoint details
-     * @param {string} webhookId 
-     * @param {number} endpointId 
-     * @param {string} userId 
+     * Get all webhooks that current application has configured for current user.
+     * @summary /application/webhooks
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getWebhookEndpointById(webhookId?: string, endpointId?: number, userId?: string, options: any = {}): FetchArgs {
+    applicationGetUserWebhooks(options: any = {}): FetchArgs {
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks`;
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Get all user webhooks by tag that current application configured for current user.
+     * @summary /application/webhooks/tags/{tag}
+     * @param {string} tag 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    applicationGetUserWebhooksPublicByTag(tag?: string, options: any = {}): FetchArgs {
+        // verify required parameter 'tag' is not null or undefined
+        if (tag === null || tag === undefined) {
+            throw new RequiredError('tag','Required parameter tag was null or undefined when calling applicationGetUserWebhooksPublicByTag.');
+        }
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks/tags/{tag}`
+            .replace(`{${"tag"}}`, encodeURIComponent(String(tag)));
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Get webhook endpoint details.
+     * @summary /application/webhooks/{webhook_id}/endpoints/{endpoint_id}
+     * @param {string} webhookId 
+     * @param {number} endpointId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    applicationGetWebhookEndpointById(webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
         // verify required parameter 'webhookId' is not null or undefined
         if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling getWebhookEndpointById.');
+            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling applicationGetWebhookEndpointById.');
         }
         // verify required parameter 'endpointId' is not null or undefined
         if (endpointId === null || endpointId === undefined) {
-            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling getWebhookEndpointById.');
+            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling applicationGetWebhookEndpointById.');
         }
-        // verify required parameter 'userId' is not null or undefined
-        if (userId === null || userId === undefined) {
-            throw new RequiredError('userId','Required parameter userId was null or undefined when calling getWebhookEndpointById.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/internal-api/v1/user/{user_id}/webhooks/{webhook_id}/endpoints/{endpoint_id}`
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks/{webhook_id}/endpoints/{endpoint_id}`
             .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)))
-            .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)))
-            .replace(`{${"user_id"}}`, encodeURIComponent(String(userId)));
+            .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)));
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
         const localVarHeaderParameter = {};
@@ -600,25 +680,19 @@ export const DefaultApiFetchParamCreator = {
         };
     },
     /**
-     * 
-     * @summary Get webhook endpoint list
+     * Get webhook endpoint list.
+     * @summary /application/webhooks/{webhook_id}/endpoints/
      * @param {string} webhookId 
-     * @param {string} userId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getWebhookEndpoints(webhookId?: string, userId?: string, options: any = {}): FetchArgs {
+    applicationGetWebhookEndpoints(webhookId?: string, options: any = {}): FetchArgs {
         // verify required parameter 'webhookId' is not null or undefined
         if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling getWebhookEndpoints.');
+            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling applicationGetWebhookEndpoints.');
         }
-        // verify required parameter 'userId' is not null or undefined
-        if (userId === null || userId === undefined) {
-            throw new RequiredError('userId','Required parameter userId was null or undefined when calling getWebhookEndpoints.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/internal-api/v1/user/{user_id}/webhooks/{webhook_id}/endpoints/`
-            .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)))
-            .replace(`{${"user_id"}}`, encodeURIComponent(String(userId)));
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks/{webhook_id}/endpoints/`
+            .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)));
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
         const localVarHeaderParameter = {};
@@ -636,36 +710,30 @@ export const DefaultApiFetchParamCreator = {
         };
     },
     /**
-     * 
-     * @summary Update webhook endpoint details
+     * Update webhook endpoint details.
+     * @summary /application/webhooks/{webhook_id}/endpoints/{endpoint_id}
      * @param {EndpointIn} body 
      * @param {string} webhookId 
      * @param {number} endpointId 
-     * @param {string} userId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    updateWebhookEndpointById(body?: EndpointIn, webhookId?: string, endpointId?: number, userId?: string, options: any = {}): FetchArgs {
+    applicationUpdateWebhookEndpointById(body?: EndpointIn, webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
         // verify required parameter 'body' is not null or undefined
         if (body === null || body === undefined) {
-            throw new RequiredError('body','Required parameter body was null or undefined when calling updateWebhookEndpointById.');
+            throw new RequiredError('body','Required parameter body was null or undefined when calling applicationUpdateWebhookEndpointById.');
         }
         // verify required parameter 'webhookId' is not null or undefined
         if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling updateWebhookEndpointById.');
+            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling applicationUpdateWebhookEndpointById.');
         }
         // verify required parameter 'endpointId' is not null or undefined
         if (endpointId === null || endpointId === undefined) {
-            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling updateWebhookEndpointById.');
+            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling applicationUpdateWebhookEndpointById.');
         }
-        // verify required parameter 'userId' is not null or undefined
-        if (userId === null || userId === undefined) {
-            throw new RequiredError('userId','Required parameter userId was null or undefined when calling updateWebhookEndpointById.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/internal-api/v1/user/{user_id}/webhooks/{webhook_id}/endpoints/{endpoint_id}`
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/application/webhooks/{webhook_id}/endpoints/{endpoint_id}`
             .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)))
-            .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)))
-            .replace(`{${"user_id"}}`, encodeURIComponent(String(userId)));
+            .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)));
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
         const localVarHeaderParameter = {};
@@ -688,20 +756,116 @@ export const DefaultApiFetchParamCreator = {
     },
 };
 
-export type DefaultApiAddUserInternalWebhookParams = {
+export type DelegatedAccessApiApplicationAddUserWebhookParams = {
     /**
      * 
      */
     body?: WebhookIn;
 
+}
+
+export type DelegatedAccessApiApplicationAddWebhookEndpointParams = {
     /**
      * 
      */
-    userId?: string;
+    body?: EndpointIn;
+
+    /**
+     * 
+     */
+    webhookId?: string;
 
 }
 
-export type DefaultApiAddWebhookEndpointParams = {
+export type DelegatedAccessApiApplicationDeleteAllUserWebhooksParams = {
+}
+
+export type DelegatedAccessApiApplicationDeleteAllUserWebhooksByTagParams = {
+    /**
+     * 
+     */
+    tag?: string;
+
+}
+
+export type DelegatedAccessApiApplicationDeleteUserWebhooksParams = {
+    /**
+     * 
+     */
+    webhookId?: string;
+
+}
+
+export type DelegatedAccessApiApplicationDeleteWebhookEndpointByIdParams = {
+    /**
+     * 
+     */
+    webhookId?: string;
+
+    /**
+     * 
+     */
+    endpointId?: number;
+
+}
+
+export type DelegatedAccessApiApplicationGetEndpointLogsParams = {
+    /**
+     * 
+     */
+    webhookId?: string;
+
+    /**
+     * 
+     */
+    endpointId?: number;
+
+}
+
+export type DelegatedAccessApiApplicationGetLogsParams = {
+}
+
+export type DelegatedAccessApiApplicationGetUserWebhookDetailsParams = {
+    /**
+     * 
+     */
+    webhookId?: string;
+
+}
+
+export type DelegatedAccessApiApplicationGetUserWebhooksParams = {
+}
+
+export type DelegatedAccessApiApplicationGetUserWebhooksPublicByTagParams = {
+    /**
+     * 
+     */
+    tag?: string;
+
+}
+
+export type DelegatedAccessApiApplicationGetWebhookEndpointByIdParams = {
+    /**
+     * 
+     */
+    webhookId?: string;
+
+    /**
+     * 
+     */
+    endpointId?: number;
+
+}
+
+export type DelegatedAccessApiApplicationGetWebhookEndpointsParams = {
+    /**
+     * 
+     */
+    webhookId?: string;
+
+}
+
+export type DelegatedAccessApiApplicationUpdateWebhookEndpointByIdParams = {
     /**
      * 
      */
@@ -715,128 +879,30 @@ export type DefaultApiAddWebhookEndpointParams = {
     /**
      * 
      */
-    userId?: string;
-
-}
-
-export type DefaultApiDeleteUserInternalWebhooksParams = {
-    /**
-     * 
-     */
-    userId?: string;
-
-    /**
-     * 
-     */
-    webhookId?: string;
-
-}
-
-export type DefaultApiDeleteWebhookEndpointByIdParams = {
-    /**
-     * 
-     */
-    webhookId?: string;
-
-    /**
-     * 
-     */
     endpointId?: number;
-
-    /**
-     * 
-     */
-    userId?: string;
-
-}
-
-export type DefaultApiGetUserInternalWebhookDetailsParams = {
-    /**
-     * 
-     */
-    userId?: string;
-
-    /**
-     * 
-     */
-    webhookId?: string;
-
-}
-
-export type DefaultApiGetWebhookEndpointByIdParams = {
-    /**
-     * 
-     */
-    webhookId?: string;
-
-    /**
-     * 
-     */
-    endpointId?: number;
-
-    /**
-     * 
-     */
-    userId?: string;
-
-}
-
-export type DefaultApiGetWebhookEndpointsParams = {
-    /**
-     * 
-     */
-    webhookId?: string;
-
-    /**
-     * 
-     */
-    userId?: string;
-
-}
-
-export type DefaultApiUpdateWebhookEndpointByIdParams = {
-    /**
-     * 
-     */
-    body?: EndpointIn;
-
-    /**
-     * 
-     */
-    webhookId?: string;
-
-    /**
-     * 
-     */
-    endpointId?: number;
-
-    /**
-     * 
-     */
-    userId?: string;
 
 }
 
 
 /**
- * DefaultApi
+ * DelegatedAccessApi
  *
  * @export
- * @class DefaultApi
+ * @class DelegatedAccessApi
  * @extends {BaseAPI}
  */
-export class DefaultApi extends BaseAPI {
+export class DelegatedAccessApi extends BaseAPI {
     /**
-     * 
+     * Add a new webhook. If a user uninstalls an application at some point then all their webhooks will removed automatically as well.
      *
-     * @summary Add user personal webhook
-     * @param { DefaultApiAddUserInternalWebhookParams } params
+     * @summary /application/webhooks
+     * @param { DelegatedAccessApiApplicationAddUserWebhookParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof DelegatedAccessApi
      */
-    public addUserInternalWebhook(params: DefaultApiAddUserInternalWebhookParams, options?: any): Promise<UserWebhookOut> {
-        const localVarFetchArgs = DefaultApiFetchParamCreator.addUserInternalWebhook(params?.body, params?.userId, options);
+    public applicationAddUserWebhook(params?: DelegatedAccessApiApplicationAddUserWebhookParams, options?: any): Promise<WebhookDelegatedOut> {
+        const localVarFetchArgs = DelegatedAccessApiFetchParamCreator.applicationAddUserWebhook(params?.body, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -844,16 +910,16 @@ export class DefaultApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Get webhook endpoint details.
      *
-     * @summary Get webhook endpoint details
-     * @param { DefaultApiAddWebhookEndpointParams } params
+     * @summary /application/webhooks/{webhook_id}/endpoints/
+     * @param { DelegatedAccessApiApplicationAddWebhookEndpointParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof DelegatedAccessApi
      */
-    public addWebhookEndpoint(params: DefaultApiAddWebhookEndpointParams, options?: any): Promise<Array<EndpointOut>> {
-        const localVarFetchArgs = DefaultApiFetchParamCreator.addWebhookEndpoint(params?.body, params?.webhookId, params?.userId, options);
+    public applicationAddWebhookEndpoint(params: DelegatedAccessApiApplicationAddWebhookEndpointParams, options?: any): Promise<Array<EndpointOut>> {
+        const localVarFetchArgs = DelegatedAccessApiFetchParamCreator.applicationAddWebhookEndpoint(params?.body, params?.webhookId, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -861,16 +927,16 @@ export class DefaultApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Remove all webhooks that current user had configured by a given application.
      *
-     * @summary Remove user personal webhook by id
-     * @param { DefaultApiDeleteUserInternalWebhooksParams } params
+     * @summary /application/webhooks
+     * @param { DelegatedAccessApiApplicationDeleteAllUserWebhooksParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof DelegatedAccessApi
      */
-    public deleteUserInternalWebhooks(params: DefaultApiDeleteUserInternalWebhooksParams, options?: any): Promise<ModelObject> {
-        const localVarFetchArgs = DefaultApiFetchParamCreator.deleteUserInternalWebhooks(params?.userId, params?.webhookId, options);
+    public applicationDeleteAllUserWebhooks(options?: any): Promise<ModelObject> {
+        const localVarFetchArgs = DelegatedAccessApiFetchParamCreator.applicationDeleteAllUserWebhooks(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -878,16 +944,16 @@ export class DefaultApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Remove webhooks with given tag.
      *
-     * @summary Get webhook endpoint details
-     * @param { DefaultApiDeleteWebhookEndpointByIdParams } params
+     * @summary /application/webhooks/tags/{tag}
+     * @param { DelegatedAccessApiApplicationDeleteAllUserWebhooksByTagParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof DelegatedAccessApi
      */
-    public deleteWebhookEndpointById(params: DefaultApiDeleteWebhookEndpointByIdParams, options?: any): Promise<ModelObject> {
-        const localVarFetchArgs = DefaultApiFetchParamCreator.deleteWebhookEndpointById(params?.webhookId, params?.endpointId, params?.userId, options);
+    public applicationDeleteAllUserWebhooksByTag(params: DelegatedAccessApiApplicationDeleteAllUserWebhooksByTagParams, options?: any): Promise<ModelObject> {
+        const localVarFetchArgs = DelegatedAccessApiFetchParamCreator.applicationDeleteAllUserWebhooksByTag(params?.tag, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -895,16 +961,16 @@ export class DefaultApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Remove webhook by ID.
      *
-     * @summary Get webhook details
-     * @param { DefaultApiGetUserInternalWebhookDetailsParams } params
+     * @summary /application/webhooks/{webhook_id}
+     * @param { DelegatedAccessApiApplicationDeleteUserWebhooksParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof DelegatedAccessApi
      */
-    public getUserInternalWebhookDetails(params: DefaultApiGetUserInternalWebhookDetailsParams, options?: any): Promise<UserWebhookOut> {
-        const localVarFetchArgs = DefaultApiFetchParamCreator.getUserInternalWebhookDetails(params?.userId, params?.webhookId, options);
+    public applicationDeleteUserWebhooks(params: DelegatedAccessApiApplicationDeleteUserWebhooksParams, options?: any): Promise<ModelObject> {
+        const localVarFetchArgs = DelegatedAccessApiFetchParamCreator.applicationDeleteUserWebhooks(params?.webhookId, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -912,16 +978,16 @@ export class DefaultApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Get webhook endpoint details.
      *
-     * @summary Get webhook endpoint details
-     * @param { DefaultApiGetWebhookEndpointByIdParams } params
+     * @summary /application/webhooks/{webhook_id}/endpoints/{endpoint_id}
+     * @param { DelegatedAccessApiApplicationDeleteWebhookEndpointByIdParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof DelegatedAccessApi
      */
-    public getWebhookEndpointById(params: DefaultApiGetWebhookEndpointByIdParams, options?: any): Promise<EndpointOut> {
-        const localVarFetchArgs = DefaultApiFetchParamCreator.getWebhookEndpointById(params?.webhookId, params?.endpointId, params?.userId, options);
+    public applicationDeleteWebhookEndpointById(params: DelegatedAccessApiApplicationDeleteWebhookEndpointByIdParams, options?: any): Promise<ModelObject> {
+        const localVarFetchArgs = DelegatedAccessApiFetchParamCreator.applicationDeleteWebhookEndpointById(params?.webhookId, params?.endpointId, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -929,16 +995,16 @@ export class DefaultApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Get webhook http request log for the endpoint.
      *
-     * @summary Get webhook endpoint list
-     * @param { DefaultApiGetWebhookEndpointsParams } params
+     * @summary /application/webhooks/{webhook_id}/endpoints/{endpoint_id}/log
+     * @param { DelegatedAccessApiApplicationGetEndpointLogsParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof DelegatedAccessApi
      */
-    public getWebhookEndpoints(params: DefaultApiGetWebhookEndpointsParams, options?: any): Promise<Array<EndpointOut>> {
-        const localVarFetchArgs = DefaultApiFetchParamCreator.getWebhookEndpoints(params?.webhookId, params?.userId, options);
+    public applicationGetEndpointLogs(params: DelegatedAccessApiApplicationGetEndpointLogsParams, options?: any): Promise<Array<LogRecordOut>> {
+        const localVarFetchArgs = DelegatedAccessApiFetchParamCreator.applicationGetEndpointLogs(params?.webhookId, params?.endpointId, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -946,16 +1012,118 @@ export class DefaultApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Get webhook's requests log. You can use this endpoint for troubleshooting purposes.
      *
-     * @summary Update webhook endpoint details
-     * @param { DefaultApiUpdateWebhookEndpointByIdParams } params
+     * @summary /application/webhooks/log
+     * @param { DelegatedAccessApiApplicationGetLogsParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof DelegatedAccessApi
      */
-    public updateWebhookEndpointById(params: DefaultApiUpdateWebhookEndpointByIdParams, options?: any): Promise<EndpointOut> {
-        const localVarFetchArgs = DefaultApiFetchParamCreator.updateWebhookEndpointById(params?.body, params?.webhookId, params?.endpointId, params?.userId, options);
+    public applicationGetLogs(options?: any): Promise<Array<LogRecordOut>> {
+        const localVarFetchArgs = DelegatedAccessApiFetchParamCreator.applicationGetLogs(options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Get webhook details.
+     *
+     * @summary /application/webhooks/{webhook_id}
+     * @param { DelegatedAccessApiApplicationGetUserWebhookDetailsParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DelegatedAccessApi
+     */
+    public applicationGetUserWebhookDetails(params: DelegatedAccessApiApplicationGetUserWebhookDetailsParams, options?: any): Promise<WebhookDelegatedOut> {
+        const localVarFetchArgs = DelegatedAccessApiFetchParamCreator.applicationGetUserWebhookDetails(params?.webhookId, options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Get all webhooks that current application has configured for current user.
+     *
+     * @summary /application/webhooks
+     * @param { DelegatedAccessApiApplicationGetUserWebhooksParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DelegatedAccessApi
+     */
+    public applicationGetUserWebhooks(options?: any): Promise<Array<WebhookDelegatedOut>> {
+        const localVarFetchArgs = DelegatedAccessApiFetchParamCreator.applicationGetUserWebhooks(options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Get all user webhooks by tag that current application configured for current user.
+     *
+     * @summary /application/webhooks/tags/{tag}
+     * @param { DelegatedAccessApiApplicationGetUserWebhooksPublicByTagParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DelegatedAccessApi
+     */
+    public applicationGetUserWebhooksPublicByTag(params: DelegatedAccessApiApplicationGetUserWebhooksPublicByTagParams, options?: any): Promise<Array<WebhookDelegatedOut>> {
+        const localVarFetchArgs = DelegatedAccessApiFetchParamCreator.applicationGetUserWebhooksPublicByTag(params?.tag, options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Get webhook endpoint details.
+     *
+     * @summary /application/webhooks/{webhook_id}/endpoints/{endpoint_id}
+     * @param { DelegatedAccessApiApplicationGetWebhookEndpointByIdParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DelegatedAccessApi
+     */
+    public applicationGetWebhookEndpointById(params: DelegatedAccessApiApplicationGetWebhookEndpointByIdParams, options?: any): Promise<EndpointOut> {
+        const localVarFetchArgs = DelegatedAccessApiFetchParamCreator.applicationGetWebhookEndpointById(params?.webhookId, params?.endpointId, options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Get webhook endpoint list.
+     *
+     * @summary /application/webhooks/{webhook_id}/endpoints/
+     * @param { DelegatedAccessApiApplicationGetWebhookEndpointsParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DelegatedAccessApi
+     */
+    public applicationGetWebhookEndpoints(params: DelegatedAccessApiApplicationGetWebhookEndpointsParams, options?: any): Promise<Array<EndpointOut>> {
+        const localVarFetchArgs = DelegatedAccessApiFetchParamCreator.applicationGetWebhookEndpoints(params?.webhookId, options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Update webhook endpoint details.
+     *
+     * @summary /application/webhooks/{webhook_id}/endpoints/{endpoint_id}
+     * @param { DelegatedAccessApiApplicationUpdateWebhookEndpointByIdParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DelegatedAccessApi
+     */
+    public applicationUpdateWebhookEndpointById(params: DelegatedAccessApiApplicationUpdateWebhookEndpointByIdParams, options?: any): Promise<EndpointOut> {
+        const localVarFetchArgs = DelegatedAccessApiFetchParamCreator.applicationUpdateWebhookEndpointById(params?.body, params?.webhookId, params?.endpointId, options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -964,24 +1132,222 @@ export class DefaultApi extends BaseAPI {
 
 }
 /**
- * DeveloperApi - fetch parameter creator
+ * DirectAccessApi - fetch parameter creator
  * @export
  */
-export const DeveloperApiFetchParamCreator = {
+export const DirectAccessApiFetchParamCreator = {
     /**
-     * 
-     * @summary Get webhook http request log
-     * @param {string} applicationId 
+     * Add user personal webhook.
+     * @summary /user/webhooks
+     * @param {WebhookIn} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getLogs(applicationId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'applicationId' is not null or undefined
-        if (applicationId === null || applicationId === undefined) {
-            throw new RequiredError('applicationId','Required parameter applicationId was null or undefined when calling getLogs.');
+    userAddUserWebhook(body?: WebhookIn, options: any = {}): FetchArgs {
+        // verify required parameter 'body' is not null or undefined
+        if (body === null || body === undefined) {
+            throw new RequiredError('body','Required parameter body was null or undefined when calling userAddUserWebhook.');
         }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/api/v1/applications/{application_id}/log`
-            .replace(`{${"application_id"}}`, encodeURIComponent(String(applicationId)));
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks`;
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarHeaderParameter['Content-Type'] = 'application/json';
+
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+        const needsSerialization = (<any>"WebhookIn" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+        localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Get webhook endpoint details.
+     * @summary /user/webhooks/{webhook_id}/endpoints/
+     * @param {EndpointIn} body 
+     * @param {string} webhookId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    userAddWebhookEndpoint(body?: EndpointIn, webhookId?: string, options: any = {}): FetchArgs {
+        // verify required parameter 'body' is not null or undefined
+        if (body === null || body === undefined) {
+            throw new RequiredError('body','Required parameter body was null or undefined when calling userAddWebhookEndpoint.');
+        }
+        // verify required parameter 'webhookId' is not null or undefined
+        if (webhookId === null || webhookId === undefined) {
+            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling userAddWebhookEndpoint.');
+        }
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks/{webhook_id}/endpoints/`
+            .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)));
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarHeaderParameter['Content-Type'] = 'application/json';
+
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+        const needsSerialization = (<any>"EndpointIn" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+        localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * See also /user/webhooks/tags/_* endpoints.
+     * @summary /user/webhooks
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    userDeleteAllUserWebhooks(options: any = {}): FetchArgs {
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks`;
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Remove user personal webhook by ID.
+     * @summary /user/webhooks/tags/{tag}
+     * @param {string} tag 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    userDeleteAllUserWebhooksByTag(tag?: string, options: any = {}): FetchArgs {
+        // verify required parameter 'tag' is not null or undefined
+        if (tag === null || tag === undefined) {
+            throw new RequiredError('tag','Required parameter tag was null or undefined when calling userDeleteAllUserWebhooksByTag.');
+        }
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks/tags/{tag}`
+            .replace(`{${"tag"}}`, encodeURIComponent(String(tag)));
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Remove user personal webhook by ID.
+     * @summary /user/webhooks/{webhook_id}
+     * @param {string} webhookId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    userDeleteUserWebhooks(webhookId?: string, options: any = {}): FetchArgs {
+        // verify required parameter 'webhookId' is not null or undefined
+        if (webhookId === null || webhookId === undefined) {
+            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling userDeleteUserWebhooks.');
+        }
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks/{webhook_id}`
+            .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)));
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Get webhook endpoint details.
+     * @summary /user/webhooks/{webhook_id}/endpoints/{endpoint_id}
+     * @param {string} webhookId 
+     * @param {number} endpointId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    userDeleteWebhookEndpointById(webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
+        // verify required parameter 'webhookId' is not null or undefined
+        if (webhookId === null || webhookId === undefined) {
+            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling userDeleteWebhookEndpointById.');
+        }
+        // verify required parameter 'endpointId' is not null or undefined
+        if (endpointId === null || endpointId === undefined) {
+            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling userDeleteWebhookEndpointById.');
+        }
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks/{webhook_id}/endpoints/{endpoint_id}`
+            .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)))
+            .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)));
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Get webhook http request log for the endpoint.
+     * @summary /user/webhooks/{webhook_id}/endpoints/{endpoint_id}/log
+     * @param {string} webhookId 
+     * @param {number} endpointId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    userGetEndpointLogs(webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
+        // verify required parameter 'webhookId' is not null or undefined
+        if (webhookId === null || webhookId === undefined) {
+            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling userGetEndpointLogs.');
+        }
+        // verify required parameter 'endpointId' is not null or undefined
+        if (endpointId === null || endpointId === undefined) {
+            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling userGetEndpointLogs.');
+        }
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks/{webhook_id}/endpoints/{endpoint_id}/log`
+            .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)))
+            .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)));
         const localVarUrlObj = url.parse(localVarPath, true);
         const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
         const localVarHeaderParameter = {};
@@ -999,8 +1365,609 @@ export const DeveloperApiFetchParamCreator = {
         };
     },
     /**
-     * Key may be used to validate webhook signature
-     * @summary Get public key
+     * You can use this endpoint for troubleshooting purpose.
+     * @summary /user/webhooks/log
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    userGetLogs(options: any = {}): FetchArgs {
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks/log`;
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Get webhook details.
+     * @summary /user/webhooks/{webhook_id}
+     * @param {string} webhookId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    userGetUserWebhookDetails(webhookId?: string, options: any = {}): FetchArgs {
+        // verify required parameter 'webhookId' is not null or undefined
+        if (webhookId === null || webhookId === undefined) {
+            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling userGetUserWebhookDetails.');
+        }
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks/{webhook_id}`
+            .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)));
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Get list of user personal webhooks.
+     * @summary /user/webhooks
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    userGetUserWebhooks(options: any = {}): FetchArgs {
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks`;
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Get user webhooks by tag.
+     * @summary /user/webhooks/tags/{tag}
+     * @param {string} tag 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    userGetUserWebhooksPublicByTag(tag?: string, options: any = {}): FetchArgs {
+        // verify required parameter 'tag' is not null or undefined
+        if (tag === null || tag === undefined) {
+            throw new RequiredError('tag','Required parameter tag was null or undefined when calling userGetUserWebhooksPublicByTag.');
+        }
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks/tags/{tag}`
+            .replace(`{${"tag"}}`, encodeURIComponent(String(tag)));
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Get webhook endpoint details.
+     * @summary /user/webhooks/{webhook_id}/endpoints/{endpoint_id}
+     * @param {string} webhookId 
+     * @param {number} endpointId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    userGetWebhookEndpointById(webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
+        // verify required parameter 'webhookId' is not null or undefined
+        if (webhookId === null || webhookId === undefined) {
+            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling userGetWebhookEndpointById.');
+        }
+        // verify required parameter 'endpointId' is not null or undefined
+        if (endpointId === null || endpointId === undefined) {
+            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling userGetWebhookEndpointById.');
+        }
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks/{webhook_id}/endpoints/{endpoint_id}`
+            .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)))
+            .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)));
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Get webhook endpoint list.
+     * @summary /user/webhooks/{webhook_id}/endpoints/
+     * @param {string} webhookId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    userGetWebhookEndpoints(webhookId?: string, options: any = {}): FetchArgs {
+        // verify required parameter 'webhookId' is not null or undefined
+        if (webhookId === null || webhookId === undefined) {
+            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling userGetWebhookEndpoints.');
+        }
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks/{webhook_id}/endpoints/`
+            .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)));
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+    /**
+     * Update webhook endpoint details.
+     * @summary /user/webhooks/{webhook_id}/endpoints/{endpoint_id}
+     * @param {EndpointIn} body 
+     * @param {string} webhookId 
+     * @param {number} endpointId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    userUpdateWebhookEndpointById(body?: EndpointIn, webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
+        // verify required parameter 'body' is not null or undefined
+        if (body === null || body === undefined) {
+            throw new RequiredError('body','Required parameter body was null or undefined when calling userUpdateWebhookEndpointById.');
+        }
+        // verify required parameter 'webhookId' is not null or undefined
+        if (webhookId === null || webhookId === undefined) {
+            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling userUpdateWebhookEndpointById.');
+        }
+        // verify required parameter 'endpointId' is not null or undefined
+        if (endpointId === null || endpointId === undefined) {
+            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling userUpdateWebhookEndpointById.');
+        }
+        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/user/webhooks/{webhook_id}/endpoints/{endpoint_id}`
+            .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)))
+            .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)));
+        const localVarUrlObj = url.parse(localVarPath, true);
+        const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+        const localVarHeaderParameter = {};
+        const localVarQueryParameter = {};
+        localVarHeaderParameter['Content-Type'] = 'application/json';
+
+        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        delete localVarUrlObj?.search;
+        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+        const needsSerialization = (<any>"EndpointIn" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+        localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+        return {
+            url: url.format(localVarUrlObj),
+            options: localVarRequestOptions,
+        };
+    },
+};
+
+export type DirectAccessApiUserAddUserWebhookParams = {
+    /**
+     * 
+     */
+    body?: WebhookIn;
+
+}
+
+export type DirectAccessApiUserAddWebhookEndpointParams = {
+    /**
+     * 
+     */
+    body?: EndpointIn;
+
+    /**
+     * 
+     */
+    webhookId?: string;
+
+}
+
+export type DirectAccessApiUserDeleteAllUserWebhooksParams = {
+}
+
+export type DirectAccessApiUserDeleteAllUserWebhooksByTagParams = {
+    /**
+     * 
+     */
+    tag?: string;
+
+}
+
+export type DirectAccessApiUserDeleteUserWebhooksParams = {
+    /**
+     * 
+     */
+    webhookId?: string;
+
+}
+
+export type DirectAccessApiUserDeleteWebhookEndpointByIdParams = {
+    /**
+     * 
+     */
+    webhookId?: string;
+
+    /**
+     * 
+     */
+    endpointId?: number;
+
+}
+
+export type DirectAccessApiUserGetEndpointLogsParams = {
+    /**
+     * 
+     */
+    webhookId?: string;
+
+    /**
+     * 
+     */
+    endpointId?: number;
+
+}
+
+export type DirectAccessApiUserGetLogsParams = {
+}
+
+export type DirectAccessApiUserGetUserWebhookDetailsParams = {
+    /**
+     * 
+     */
+    webhookId?: string;
+
+}
+
+export type DirectAccessApiUserGetUserWebhooksParams = {
+}
+
+export type DirectAccessApiUserGetUserWebhooksPublicByTagParams = {
+    /**
+     * 
+     */
+    tag?: string;
+
+}
+
+export type DirectAccessApiUserGetWebhookEndpointByIdParams = {
+    /**
+     * 
+     */
+    webhookId?: string;
+
+    /**
+     * 
+     */
+    endpointId?: number;
+
+}
+
+export type DirectAccessApiUserGetWebhookEndpointsParams = {
+    /**
+     * 
+     */
+    webhookId?: string;
+
+}
+
+export type DirectAccessApiUserUpdateWebhookEndpointByIdParams = {
+    /**
+     * 
+     */
+    body?: EndpointIn;
+
+    /**
+     * 
+     */
+    webhookId?: string;
+
+    /**
+     * 
+     */
+    endpointId?: number;
+
+}
+
+
+/**
+ * DirectAccessApi
+ *
+ * @export
+ * @class DirectAccessApi
+ * @extends {BaseAPI}
+ */
+export class DirectAccessApi extends BaseAPI {
+    /**
+     * Add user personal webhook.
+     *
+     * @summary /user/webhooks
+     * @param { DirectAccessApiUserAddUserWebhookParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DirectAccessApi
+     */
+    public userAddUserWebhook(params?: DirectAccessApiUserAddUserWebhookParams, options?: any): Promise<WebhookDelegatedOut> {
+        const localVarFetchArgs = DirectAccessApiFetchParamCreator.userAddUserWebhook(params?.body, options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Get webhook endpoint details.
+     *
+     * @summary /user/webhooks/{webhook_id}/endpoints/
+     * @param { DirectAccessApiUserAddWebhookEndpointParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DirectAccessApi
+     */
+    public userAddWebhookEndpoint(params: DirectAccessApiUserAddWebhookEndpointParams, options?: any): Promise<Array<EndpointOut>> {
+        const localVarFetchArgs = DirectAccessApiFetchParamCreator.userAddWebhookEndpoint(params?.body, params?.webhookId, options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * See also /user/webhooks/tags/_* endpoints.
+     *
+     * @summary /user/webhooks
+     * @param { DirectAccessApiUserDeleteAllUserWebhooksParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DirectAccessApi
+     */
+    public userDeleteAllUserWebhooks(options?: any): Promise<ModelObject> {
+        const localVarFetchArgs = DirectAccessApiFetchParamCreator.userDeleteAllUserWebhooks(options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Remove user personal webhook by ID.
+     *
+     * @summary /user/webhooks/tags/{tag}
+     * @param { DirectAccessApiUserDeleteAllUserWebhooksByTagParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DirectAccessApi
+     */
+    public userDeleteAllUserWebhooksByTag(params: DirectAccessApiUserDeleteAllUserWebhooksByTagParams, options?: any): Promise<ModelObject> {
+        const localVarFetchArgs = DirectAccessApiFetchParamCreator.userDeleteAllUserWebhooksByTag(params?.tag, options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Remove user personal webhook by ID.
+     *
+     * @summary /user/webhooks/{webhook_id}
+     * @param { DirectAccessApiUserDeleteUserWebhooksParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DirectAccessApi
+     */
+    public userDeleteUserWebhooks(params: DirectAccessApiUserDeleteUserWebhooksParams, options?: any): Promise<ModelObject> {
+        const localVarFetchArgs = DirectAccessApiFetchParamCreator.userDeleteUserWebhooks(params?.webhookId, options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Get webhook endpoint details.
+     *
+     * @summary /user/webhooks/{webhook_id}/endpoints/{endpoint_id}
+     * @param { DirectAccessApiUserDeleteWebhookEndpointByIdParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DirectAccessApi
+     */
+    public userDeleteWebhookEndpointById(params: DirectAccessApiUserDeleteWebhookEndpointByIdParams, options?: any): Promise<ModelObject> {
+        const localVarFetchArgs = DirectAccessApiFetchParamCreator.userDeleteWebhookEndpointById(params?.webhookId, params?.endpointId, options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Get webhook http request log for the endpoint.
+     *
+     * @summary /user/webhooks/{webhook_id}/endpoints/{endpoint_id}/log
+     * @param { DirectAccessApiUserGetEndpointLogsParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DirectAccessApi
+     */
+    public userGetEndpointLogs(params: DirectAccessApiUserGetEndpointLogsParams, options?: any): Promise<Array<LogRecordOut>> {
+        const localVarFetchArgs = DirectAccessApiFetchParamCreator.userGetEndpointLogs(params?.webhookId, params?.endpointId, options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * You can use this endpoint for troubleshooting purpose.
+     *
+     * @summary /user/webhooks/log
+     * @param { DirectAccessApiUserGetLogsParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DirectAccessApi
+     */
+    public userGetLogs(options?: any): Promise<Array<LogRecordOut>> {
+        const localVarFetchArgs = DirectAccessApiFetchParamCreator.userGetLogs(options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Get webhook details.
+     *
+     * @summary /user/webhooks/{webhook_id}
+     * @param { DirectAccessApiUserGetUserWebhookDetailsParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DirectAccessApi
+     */
+    public userGetUserWebhookDetails(params: DirectAccessApiUserGetUserWebhookDetailsParams, options?: any): Promise<WebhookDelegatedOut> {
+        const localVarFetchArgs = DirectAccessApiFetchParamCreator.userGetUserWebhookDetails(params?.webhookId, options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Get list of user personal webhooks.
+     *
+     * @summary /user/webhooks
+     * @param { DirectAccessApiUserGetUserWebhooksParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DirectAccessApi
+     */
+    public userGetUserWebhooks(options?: any): Promise<Array<WebhookDelegatedOut>> {
+        const localVarFetchArgs = DirectAccessApiFetchParamCreator.userGetUserWebhooks(options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Get user webhooks by tag.
+     *
+     * @summary /user/webhooks/tags/{tag}
+     * @param { DirectAccessApiUserGetUserWebhooksPublicByTagParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DirectAccessApi
+     */
+    public userGetUserWebhooksPublicByTag(params: DirectAccessApiUserGetUserWebhooksPublicByTagParams, options?: any): Promise<Array<WebhookDelegatedOut>> {
+        const localVarFetchArgs = DirectAccessApiFetchParamCreator.userGetUserWebhooksPublicByTag(params?.tag, options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Get webhook endpoint details.
+     *
+     * @summary /user/webhooks/{webhook_id}/endpoints/{endpoint_id}
+     * @param { DirectAccessApiUserGetWebhookEndpointByIdParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DirectAccessApi
+     */
+    public userGetWebhookEndpointById(params: DirectAccessApiUserGetWebhookEndpointByIdParams, options?: any): Promise<EndpointOut> {
+        const localVarFetchArgs = DirectAccessApiFetchParamCreator.userGetWebhookEndpointById(params?.webhookId, params?.endpointId, options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Get webhook endpoint list.
+     *
+     * @summary /user/webhooks/{webhook_id}/endpoints/
+     * @param { DirectAccessApiUserGetWebhookEndpointsParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DirectAccessApi
+     */
+    public userGetWebhookEndpoints(params: DirectAccessApiUserGetWebhookEndpointsParams, options?: any): Promise<Array<EndpointOut>> {
+        const localVarFetchArgs = DirectAccessApiFetchParamCreator.userGetWebhookEndpoints(params?.webhookId, options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+    /**
+     * Update webhook endpoint details.
+     *
+     * @summary /user/webhooks/{webhook_id}/endpoints/{endpoint_id}
+     * @param { DirectAccessApiUserUpdateWebhookEndpointByIdParams } params
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DirectAccessApi
+     */
+    public userUpdateWebhookEndpointById(params: DirectAccessApiUserUpdateWebhookEndpointByIdParams, options?: any): Promise<EndpointOut> {
+        const localVarFetchArgs = DirectAccessApiFetchParamCreator.userUpdateWebhookEndpointById(params?.body, params?.webhookId, params?.endpointId, options);
+        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
+        requestBuilder.acceptJson();
+
+        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
+    }
+
+}
+/**
+ * MiscApi - fetch parameter creator
+ * @export
+ */
+export const MiscApiFetchParamCreator = {
+    /**
+     * Get a public key. You can use this key to validate incoming webhook authenticity (i.e. that a webhook indeed was sent by a Paxful). For more details refer to <a href='!!!' target='_blank'>Validating Paxful signature</a> guide.
+     * @summary /.well-known/public.key
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -1022,1202 +1989,31 @@ export const DeveloperApiFetchParamCreator = {
             options: localVarRequestOptions,
         };
     },
-    /**
-     * Endpoint can be safely called many times. If configuration does not exist it will be created. If does exist, updated.
-     * @summary Create webhook configuration for application
-     * @param {WebhookIn} body 
-     * @param {string} applicationId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    webhookCreate(body?: WebhookIn, applicationId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'body' is not null or undefined
-        if (body === null || body === undefined) {
-            throw new RequiredError('body','Required parameter body was null or undefined when calling webhookCreate.');
-        }
-        // verify required parameter 'applicationId' is not null or undefined
-        if (applicationId === null || applicationId === undefined) {
-            throw new RequiredError('applicationId','Required parameter applicationId was null or undefined when calling webhookCreate.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/api/v1/applications/{application_id}/webhooks`
-            .replace(`{${"application_id"}}`, encodeURIComponent(String(applicationId)));
-        const localVarUrlObj = url.parse(localVarPath, true);
-        const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-        const localVarHeaderParameter = {};
-        const localVarQueryParameter = {};
-        localVarHeaderParameter['Content-Type'] = 'application/json';
-
-        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        delete localVarUrlObj?.search;
-        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-        const needsSerialization = (<any>"WebhookIn" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-        localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-        return {
-            url: url.format(localVarUrlObj),
-            options: localVarRequestOptions,
-        };
-    },
-    /**
-     * Also removes user-specific webhooks associated with the application_id
-     * @summary Remove webhook configuration for application
-     * @param {string} applicationId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    webhookDelete(applicationId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'applicationId' is not null or undefined
-        if (applicationId === null || applicationId === undefined) {
-            throw new RequiredError('applicationId','Required parameter applicationId was null or undefined when calling webhookDelete.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/api/v1/applications/{application_id}`
-            .replace(`{${"application_id"}}`, encodeURIComponent(String(applicationId)));
-        const localVarUrlObj = url.parse(localVarPath, true);
-        const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
-        const localVarHeaderParameter = {};
-        const localVarQueryParameter = {};
-        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        delete localVarUrlObj?.search;
-        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-        return {
-            url: url.format(localVarUrlObj),
-            options: localVarRequestOptions,
-        };
-    },
-    /**
-     * 
-     * @summary Get application webhook configuration
-     * @param {string} applicationId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    webhookGet(applicationId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'applicationId' is not null or undefined
-        if (applicationId === null || applicationId === undefined) {
-            throw new RequiredError('applicationId','Required parameter applicationId was null or undefined when calling webhookGet.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/api/v1/applications/{application_id}/webhooks`
-            .replace(`{${"application_id"}}`, encodeURIComponent(String(applicationId)));
-        const localVarUrlObj = url.parse(localVarPath, true);
-        const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-        const localVarHeaderParameter = {};
-        const localVarQueryParameter = {};
-        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        delete localVarUrlObj?.search;
-        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-        return {
-            url: url.format(localVarUrlObj),
-            options: localVarRequestOptions,
-        };
-    },
-    /**
-     * 
-     * @summary Update webhook configuration for application
-     * @param {WebhookIn} body 
-     * @param {string} applicationId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    webhookUpdate(body?: WebhookIn, applicationId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'body' is not null or undefined
-        if (body === null || body === undefined) {
-            throw new RequiredError('body','Required parameter body was null or undefined when calling webhookUpdate.');
-        }
-        // verify required parameter 'applicationId' is not null or undefined
-        if (applicationId === null || applicationId === undefined) {
-            throw new RequiredError('applicationId','Required parameter applicationId was null or undefined when calling webhookUpdate.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/api/v1/applications/{application_id}/webhooks`
-            .replace(`{${"application_id"}}`, encodeURIComponent(String(applicationId)));
-        const localVarUrlObj = url.parse(localVarPath, true);
-        const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
-        const localVarHeaderParameter = {};
-        const localVarQueryParameter = {};
-        localVarHeaderParameter['Content-Type'] = 'application/json';
-
-        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        delete localVarUrlObj?.search;
-        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-        const needsSerialization = (<any>"WebhookIn" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-        localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-        return {
-            url: url.format(localVarUrlObj),
-            options: localVarRequestOptions,
-        };
-    },
 };
 
-export type DeveloperApiGetLogsParams = {
-    /**
-     * 
-     */
-    applicationId?: string;
-
-}
-
-export type DeveloperApiGetSignaturePublicKeyParams = {
-}
-
-export type DeveloperApiWebhookCreateParams = {
-    /**
-     * 
-     */
-    body?: WebhookIn;
-
-    /**
-     * 
-     */
-    applicationId?: string;
-
-}
-
-export type DeveloperApiWebhookDeleteParams = {
-    /**
-     * 
-     */
-    applicationId?: string;
-
-}
-
-export type DeveloperApiWebhookGetParams = {
-    /**
-     * 
-     */
-    applicationId?: string;
-
-}
-
-export type DeveloperApiWebhookUpdateParams = {
-    /**
-     * 
-     */
-    body?: WebhookIn;
-
-    /**
-     * 
-     */
-    applicationId?: string;
-
+export type MiscApiGetSignaturePublicKeyParams = {
 }
 
 
 /**
- * DeveloperApi
+ * MiscApi
  *
  * @export
- * @class DeveloperApi
+ * @class MiscApi
  * @extends {BaseAPI}
  */
-export class DeveloperApi extends BaseAPI {
+export class MiscApi extends BaseAPI {
     /**
-     * 
+     * Get a public key. You can use this key to validate incoming webhook authenticity (i.e. that a webhook indeed was sent by a Paxful). For more details refer to <a href='!!!' target='_blank'>Validating Paxful signature</a> guide.
      *
-     * @summary Get webhook http request log
-     * @param { DeveloperApiGetLogsParams } params
+     * @summary /.well-known/public.key
+     * @param { MiscApiGetSignaturePublicKeyParams } params
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DeveloperApi
-     */
-    public getLogs(params: DeveloperApiGetLogsParams, options?: any): Promise<Array<LogRecordOut>> {
-        const localVarFetchArgs = DeveloperApiFetchParamCreator.getLogs(params?.applicationId, options);
-        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
-        requestBuilder.acceptJson();
-
-        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
-    }
-
-    /**
-     * Key may be used to validate webhook signature
-     *
-     * @summary Get public key
-     * @param { DeveloperApiGetSignaturePublicKeyParams } params
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DeveloperApi
+     * @memberof MiscApi
      */
     public getSignaturePublicKey(options?: any): Promise<ModelObject> {
-        const localVarFetchArgs = DeveloperApiFetchParamCreator.getSignaturePublicKey(options);
-        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
-        requestBuilder.acceptJson();
-
-        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
-    }
-
-    /**
-     * Endpoint can be safely called many times. If configuration does not exist it will be created. If does exist, updated.
-     *
-     * @summary Create webhook configuration for application
-     * @param { DeveloperApiWebhookCreateParams } params
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DeveloperApi
-     */
-    public webhookCreate(params: DeveloperApiWebhookCreateParams, options?: any): Promise<ModelObject> {
-        const localVarFetchArgs = DeveloperApiFetchParamCreator.webhookCreate(params?.body, params?.applicationId, options);
-        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
-        requestBuilder.acceptJson();
-
-        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
-    }
-
-    /**
-     * Also removes user-specific webhooks associated with the application_id
-     *
-     * @summary Remove webhook configuration for application
-     * @param { DeveloperApiWebhookDeleteParams } params
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DeveloperApi
-     */
-    public webhookDelete(params: DeveloperApiWebhookDeleteParams, options?: any): Promise<ModelObject> {
-        const localVarFetchArgs = DeveloperApiFetchParamCreator.webhookDelete(params?.applicationId, options);
-        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
-        requestBuilder.acceptJson();
-
-        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
-    }
-
-    /**
-     * 
-     *
-     * @summary Get application webhook configuration
-     * @param { DeveloperApiWebhookGetParams } params
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DeveloperApi
-     */
-    public webhookGet(params: DeveloperApiWebhookGetParams, options?: any): Promise<WebhookOut> {
-        const localVarFetchArgs = DeveloperApiFetchParamCreator.webhookGet(params?.applicationId, options);
-        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
-        requestBuilder.acceptJson();
-
-        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
-    }
-
-    /**
-     * 
-     *
-     * @summary Update webhook configuration for application
-     * @param { DeveloperApiWebhookUpdateParams } params
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DeveloperApi
-     */
-    public webhookUpdate(params: DeveloperApiWebhookUpdateParams, options?: any): Promise<ModelObject> {
-        const localVarFetchArgs = DeveloperApiFetchParamCreator.webhookUpdate(params?.body, params?.applicationId, options);
-        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
-        requestBuilder.acceptJson();
-
-        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
-    }
-
-}
-/**
- * UserApi - fetch parameter creator
- * @export
- */
-export const UserApiFetchParamCreator = {
-    /**
-     * 
-     * @summary Register user-specific webhooks
-     * @param {WebhookIn} body 
-     * @param {string} applicationId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    addUserSpecificWebhooks(body?: WebhookIn, applicationId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'body' is not null or undefined
-        if (body === null || body === undefined) {
-            throw new RequiredError('body','Required parameter body was null or undefined when calling addUserSpecificWebhooks.');
-        }
-        // verify required parameter 'applicationId' is not null or undefined
-        if (applicationId === null || applicationId === undefined) {
-            throw new RequiredError('applicationId','Required parameter applicationId was null or undefined when calling addUserSpecificWebhooks.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/api/v1/applications/{application_id}/user/webhooks`
-            .replace(`{${"application_id"}}`, encodeURIComponent(String(applicationId)));
-        const localVarUrlObj = url.parse(localVarPath, true);
-        const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-        const localVarHeaderParameter = {};
-        const localVarQueryParameter = {};
-        localVarHeaderParameter['Content-Type'] = 'application/json';
-
-        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        delete localVarUrlObj?.search;
-        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-        const needsSerialization = (<any>"WebhookIn" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-        localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-        return {
-            url: url.format(localVarUrlObj),
-            options: localVarRequestOptions,
-        };
-    },
-    /**
-     * 
-     * @summary Add user personal webhook
-     * @param {WebhookIn} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    addUserWebhook(body?: WebhookIn, options: any = {}): FetchArgs {
-        // verify required parameter 'body' is not null or undefined
-        if (body === null || body === undefined) {
-            throw new RequiredError('body','Required parameter body was null or undefined when calling addUserWebhook.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/api/v1/user/webhooks`;
-        const localVarUrlObj = url.parse(localVarPath, true);
-        const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-        const localVarHeaderParameter = {};
-        const localVarQueryParameter = {};
-        localVarHeaderParameter['Content-Type'] = 'application/json';
-
-        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        delete localVarUrlObj?.search;
-        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-        const needsSerialization = (<any>"WebhookIn" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-        localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-        return {
-            url: url.format(localVarUrlObj),
-            options: localVarRequestOptions,
-        };
-    },
-    /**
-     * 
-     * @summary Get webhook endpoint details
-     * @param {EndpointIn} body 
-     * @param {string} webhookId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    addWebhookEndpoint(body?: EndpointIn, webhookId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'body' is not null or undefined
-        if (body === null || body === undefined) {
-            throw new RequiredError('body','Required parameter body was null or undefined when calling addWebhookEndpoint.');
-        }
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling addWebhookEndpoint.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/api/v1/user/webhooks/{webhook_id}/endpoints/`
-            .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)));
-        const localVarUrlObj = url.parse(localVarPath, true);
-        const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-        const localVarHeaderParameter = {};
-        const localVarQueryParameter = {};
-        localVarHeaderParameter['Content-Type'] = 'application/json';
-
-        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        delete localVarUrlObj?.search;
-        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-        const needsSerialization = (<any>"EndpointIn" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-        localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-        return {
-            url: url.format(localVarUrlObj),
-            options: localVarRequestOptions,
-        };
-    },
-    /**
-     * 
-     * @summary Remove all user personal webhooks
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    deleteAllUserWebhooks(options: any = {}): FetchArgs {
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/api/v1/user/webhooks`;
-        const localVarUrlObj = url.parse(localVarPath, true);
-        const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
-        const localVarHeaderParameter = {};
-        const localVarQueryParameter = {};
-        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        delete localVarUrlObj?.search;
-        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-        return {
-            url: url.format(localVarUrlObj),
-            options: localVarRequestOptions,
-        };
-    },
-    /**
-     * 
-     * @summary Remove user personal webhook by id
-     * @param {string} tag 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    deleteAllUserWebhooksByTag(tag?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'tag' is not null or undefined
-        if (tag === null || tag === undefined) {
-            throw new RequiredError('tag','Required parameter tag was null or undefined when calling deleteAllUserWebhooksByTag.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/api/v1/user/webhooks/tag/{tag}`
-            .replace(`{${"tag"}}`, encodeURIComponent(String(tag)));
-        const localVarUrlObj = url.parse(localVarPath, true);
-        const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
-        const localVarHeaderParameter = {};
-        const localVarQueryParameter = {};
-        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        delete localVarUrlObj?.search;
-        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-        return {
-            url: url.format(localVarUrlObj),
-            options: localVarRequestOptions,
-        };
-    },
-    /**
-     * 
-     * @summary Remove user personal webhook by id
-     * @param {string} webhookId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    deleteUserWebhooks(webhookId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling deleteUserWebhooks.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/api/v1/user/webhooks/{webhook_id}`
-            .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)));
-        const localVarUrlObj = url.parse(localVarPath, true);
-        const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
-        const localVarHeaderParameter = {};
-        const localVarQueryParameter = {};
-        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        delete localVarUrlObj?.search;
-        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-        return {
-            url: url.format(localVarUrlObj),
-            options: localVarRequestOptions,
-        };
-    },
-    /**
-     * 
-     * @summary Get webhook endpoint details
-     * @param {string} webhookId 
-     * @param {number} endpointId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    deleteWebhookEndpointById(webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling deleteWebhookEndpointById.');
-        }
-        // verify required parameter 'endpointId' is not null or undefined
-        if (endpointId === null || endpointId === undefined) {
-            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling deleteWebhookEndpointById.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/api/v1/user/webhooks/{webhook_id}/endpoints/{endpoint_id}`
-            .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)))
-            .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)));
-        const localVarUrlObj = url.parse(localVarPath, true);
-        const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
-        const localVarHeaderParameter = {};
-        const localVarQueryParameter = {};
-        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        delete localVarUrlObj?.search;
-        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-        return {
-            url: url.format(localVarUrlObj),
-            options: localVarRequestOptions,
-        };
-    },
-    /**
-     * 
-     * @summary Get webhook details
-     * @param {string} webhookId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    getUserWebhookDetails(webhookId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling getUserWebhookDetails.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/api/v1/user/webhooks/{webhook_id}`
-            .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)));
-        const localVarUrlObj = url.parse(localVarPath, true);
-        const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-        const localVarHeaderParameter = {};
-        const localVarQueryParameter = {};
-        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        delete localVarUrlObj?.search;
-        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-        return {
-            url: url.format(localVarUrlObj),
-            options: localVarRequestOptions,
-        };
-    },
-    /**
-     * 
-     * @summary Get list of user personal webhooks
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    getUserWebhooksPublic(options: any = {}): FetchArgs {
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/api/v1/user/webhooks`;
-        const localVarUrlObj = url.parse(localVarPath, true);
-        const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-        const localVarHeaderParameter = {};
-        const localVarQueryParameter = {};
-        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        delete localVarUrlObj?.search;
-        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-        return {
-            url: url.format(localVarUrlObj),
-            options: localVarRequestOptions,
-        };
-    },
-    /**
-     * 
-     * @summary Get user webhooks by tag
-     * @param {string} tag 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    getUserWebhooksPublicByTag(tag?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'tag' is not null or undefined
-        if (tag === null || tag === undefined) {
-            throw new RequiredError('tag','Required parameter tag was null or undefined when calling getUserWebhooksPublicByTag.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/api/v1/user/webhooks/tag/{tag}`
-            .replace(`{${"tag"}}`, encodeURIComponent(String(tag)));
-        const localVarUrlObj = url.parse(localVarPath, true);
-        const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-        const localVarHeaderParameter = {};
-        const localVarQueryParameter = {};
-        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        delete localVarUrlObj?.search;
-        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-        return {
-            url: url.format(localVarUrlObj),
-            options: localVarRequestOptions,
-        };
-    },
-    /**
-     * 
-     * @summary Get webhook endpoint details
-     * @param {string} webhookId 
-     * @param {number} endpointId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    getWebhookEndpointById(webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling getWebhookEndpointById.');
-        }
-        // verify required parameter 'endpointId' is not null or undefined
-        if (endpointId === null || endpointId === undefined) {
-            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling getWebhookEndpointById.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/api/v1/user/webhooks/{webhook_id}/endpoints/{endpoint_id}`
-            .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)))
-            .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)));
-        const localVarUrlObj = url.parse(localVarPath, true);
-        const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-        const localVarHeaderParameter = {};
-        const localVarQueryParameter = {};
-        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        delete localVarUrlObj?.search;
-        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-        return {
-            url: url.format(localVarUrlObj),
-            options: localVarRequestOptions,
-        };
-    },
-    /**
-     * 
-     * @summary Get webhook endpoint list
-     * @param {string} webhookId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    getWebhookEndpoints(webhookId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling getWebhookEndpoints.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/api/v1/user/webhooks/{webhook_id}/endpoints/`
-            .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)));
-        const localVarUrlObj = url.parse(localVarPath, true);
-        const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-        const localVarHeaderParameter = {};
-        const localVarQueryParameter = {};
-        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        delete localVarUrlObj?.search;
-        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-        return {
-            url: url.format(localVarUrlObj),
-            options: localVarRequestOptions,
-        };
-    },
-    /**
-     * 
-     * @summary Update webhook endpoint details
-     * @param {EndpointIn} body 
-     * @param {string} webhookId 
-     * @param {number} endpointId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    updateWebhookEndpointById(body?: EndpointIn, webhookId?: string, endpointId?: number, options: any = {}): FetchArgs {
-        // verify required parameter 'body' is not null or undefined
-        if (body === null || body === undefined) {
-            throw new RequiredError('body','Required parameter body was null or undefined when calling updateWebhookEndpointById.');
-        }
-        // verify required parameter 'webhookId' is not null or undefined
-        if (webhookId === null || webhookId === undefined) {
-            throw new RequiredError('webhookId','Required parameter webhookId was null or undefined when calling updateWebhookEndpointById.');
-        }
-        // verify required parameter 'endpointId' is not null or undefined
-        if (endpointId === null || endpointId === undefined) {
-            throw new RequiredError('endpointId','Required parameter endpointId was null or undefined when calling updateWebhookEndpointById.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/api/v1/user/webhooks/{webhook_id}/endpoints/{endpoint_id}`
-            .replace(`{${"webhook_id"}}`, encodeURIComponent(String(webhookId)))
-            .replace(`{${"endpoint_id"}}`, encodeURIComponent(String(endpointId)));
-        const localVarUrlObj = url.parse(localVarPath, true);
-        const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
-        const localVarHeaderParameter = {};
-        const localVarQueryParameter = {};
-        localVarHeaderParameter['Content-Type'] = 'application/json';
-
-        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        delete localVarUrlObj?.search;
-        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-        const needsSerialization = (<any>"EndpointIn" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-        localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-        return {
-            url: url.format(localVarUrlObj),
-            options: localVarRequestOptions,
-        };
-    },
-    /**
-     * Webhooks must be preconfigured using POST /applications/{application_id}/webhooks
-     * @summary Subscribe current user to application's webhooks
-     * @param {string} applicationId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    subscribe(applicationId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'applicationId' is not null or undefined
-        if (applicationId === null || applicationId === undefined) {
-            throw new RequiredError('applicationId','Required parameter applicationId was null or undefined when calling subscribe.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/api/v1/applications/{application_id}/subscribe`
-            .replace(`{${"application_id"}}`, encodeURIComponent(String(applicationId)));
-        const localVarUrlObj = url.parse(localVarPath, true);
-        const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-        const localVarHeaderParameter = {};
-        const localVarQueryParameter = {};
-        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        delete localVarUrlObj?.search;
-        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-        return {
-            url: url.format(localVarUrlObj),
-            options: localVarRequestOptions,
-        };
-    },
-    /**
-     * 
-     * @summary Unsubscribe current user from application's webhooks
-     * @param {string} applicationId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    unsubscribe(applicationId?: string, options: any = {}): FetchArgs {
-        // verify required parameter 'applicationId' is not null or undefined
-        if (applicationId === null || applicationId === undefined) {
-            throw new RequiredError('applicationId','Required parameter applicationId was null or undefined when calling unsubscribe.');
-        }
-        const localVarPath = `${process.env.PAXFUL_DATA_HOST}/paxful/v1/api/v1/applications/{application_id}/unsubscribe`
-            .replace(`{${"application_id"}}`, encodeURIComponent(String(applicationId)));
-        const localVarUrlObj = url.parse(localVarPath, true);
-        const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
-        const localVarHeaderParameter = {};
-        const localVarQueryParameter = {};
-        localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-        // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        delete localVarUrlObj?.search;
-        localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-        return {
-            url: url.format(localVarUrlObj),
-            options: localVarRequestOptions,
-        };
-    },
-};
-
-export type UserApiAddUserSpecificWebhooksParams = {
-    /**
-     * 
-     */
-    body?: WebhookIn;
-
-    /**
-     * 
-     */
-    applicationId?: string;
-
-}
-
-export type UserApiAddUserWebhookParams = {
-    /**
-     * 
-     */
-    body?: WebhookIn;
-
-}
-
-export type UserApiAddWebhookEndpointParams = {
-    /**
-     * 
-     */
-    body?: EndpointIn;
-
-    /**
-     * 
-     */
-    webhookId?: string;
-
-}
-
-export type UserApiDeleteAllUserWebhooksParams = {
-}
-
-export type UserApiDeleteAllUserWebhooksByTagParams = {
-    /**
-     * 
-     */
-    tag?: string;
-
-}
-
-export type UserApiDeleteUserWebhooksParams = {
-    /**
-     * 
-     */
-    webhookId?: string;
-
-}
-
-export type UserApiDeleteWebhookEndpointByIdParams = {
-    /**
-     * 
-     */
-    webhookId?: string;
-
-    /**
-     * 
-     */
-    endpointId?: number;
-
-}
-
-export type UserApiGetUserWebhookDetailsParams = {
-    /**
-     * 
-     */
-    webhookId?: string;
-
-}
-
-export type UserApiGetUserWebhooksPublicParams = {
-}
-
-export type UserApiGetUserWebhooksPublicByTagParams = {
-    /**
-     * 
-     */
-    tag?: string;
-
-}
-
-export type UserApiGetWebhookEndpointByIdParams = {
-    /**
-     * 
-     */
-    webhookId?: string;
-
-    /**
-     * 
-     */
-    endpointId?: number;
-
-}
-
-export type UserApiGetWebhookEndpointsParams = {
-    /**
-     * 
-     */
-    webhookId?: string;
-
-}
-
-export type UserApiUpdateWebhookEndpointByIdParams = {
-    /**
-     * 
-     */
-    body?: EndpointIn;
-
-    /**
-     * 
-     */
-    webhookId?: string;
-
-    /**
-     * 
-     */
-    endpointId?: number;
-
-}
-
-export type UserApiUserSubscribeParams = {
-    /**
-     * 
-     */
-    applicationId?: string;
-
-}
-
-export type UserApiUserUnsubscribeParams = {
-    /**
-     * 
-     */
-    applicationId?: string;
-
-}
-
-
-/**
- * UserApi
- *
- * @export
- * @class UserApi
- * @extends {BaseAPI}
- */
-export class UserApi extends BaseAPI {
-    /**
-     * 
-     *
-     * @summary Register user-specific webhooks
-     * @param { UserApiAddUserSpecificWebhooksParams } params
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApi
-     */
-    public addUserSpecificWebhooks(params: UserApiAddUserSpecificWebhooksParams, options?: any): Promise<ModelObject> {
-        const localVarFetchArgs = UserApiFetchParamCreator.addUserSpecificWebhooks(params?.body, params?.applicationId, options);
-        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
-        requestBuilder.acceptJson();
-
-        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
-    }
-
-    /**
-     * 
-     *
-     * @summary Add user personal webhook
-     * @param { UserApiAddUserWebhookParams } params
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApi
-     */
-    public addUserWebhook(params?: UserApiAddUserWebhookParams, options?: any): Promise<UserWebhookOut> {
-        const localVarFetchArgs = UserApiFetchParamCreator.addUserWebhook(params?.body, options);
-        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
-        requestBuilder.acceptJson();
-
-        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
-    }
-
-    /**
-     * 
-     *
-     * @summary Get webhook endpoint details
-     * @param { UserApiAddWebhookEndpointParams } params
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApi
-     */
-    public addWebhookEndpoint(params: UserApiAddWebhookEndpointParams, options?: any): Promise<Array<EndpointOut>> {
-        const localVarFetchArgs = UserApiFetchParamCreator.addWebhookEndpoint(params?.body, params?.webhookId, options);
-        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
-        requestBuilder.acceptJson();
-
-        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
-    }
-
-    /**
-     * 
-     *
-     * @summary Remove all user personal webhooks
-     * @param { UserApiDeleteAllUserWebhooksParams } params
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApi
-     */
-    public deleteAllUserWebhooks(options?: any): Promise<ModelObject> {
-        const localVarFetchArgs = UserApiFetchParamCreator.deleteAllUserWebhooks(options);
-        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
-        requestBuilder.acceptJson();
-
-        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
-    }
-
-    /**
-     * 
-     *
-     * @summary Remove user personal webhook by id
-     * @param { UserApiDeleteAllUserWebhooksByTagParams } params
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApi
-     */
-    public deleteAllUserWebhooksByTag(params: UserApiDeleteAllUserWebhooksByTagParams, options?: any): Promise<ModelObject> {
-        const localVarFetchArgs = UserApiFetchParamCreator.deleteAllUserWebhooksByTag(params?.tag, options);
-        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
-        requestBuilder.acceptJson();
-
-        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
-    }
-
-    /**
-     * 
-     *
-     * @summary Remove user personal webhook by id
-     * @param { UserApiDeleteUserWebhooksParams } params
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApi
-     */
-    public deleteUserWebhooks(params: UserApiDeleteUserWebhooksParams, options?: any): Promise<ModelObject> {
-        const localVarFetchArgs = UserApiFetchParamCreator.deleteUserWebhooks(params?.webhookId, options);
-        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
-        requestBuilder.acceptJson();
-
-        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
-    }
-
-    /**
-     * 
-     *
-     * @summary Get webhook endpoint details
-     * @param { UserApiDeleteWebhookEndpointByIdParams } params
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApi
-     */
-    public deleteWebhookEndpointById(params: UserApiDeleteWebhookEndpointByIdParams, options?: any): Promise<ModelObject> {
-        const localVarFetchArgs = UserApiFetchParamCreator.deleteWebhookEndpointById(params?.webhookId, params?.endpointId, options);
-        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
-        requestBuilder.acceptJson();
-
-        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
-    }
-
-    /**
-     * 
-     *
-     * @summary Get webhook details
-     * @param { UserApiGetUserWebhookDetailsParams } params
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApi
-     */
-    public getUserWebhookDetails(params: UserApiGetUserWebhookDetailsParams, options?: any): Promise<UserWebhookOut> {
-        const localVarFetchArgs = UserApiFetchParamCreator.getUserWebhookDetails(params?.webhookId, options);
-        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
-        requestBuilder.acceptJson();
-
-        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
-    }
-
-    /**
-     * 
-     *
-     * @summary Get list of user personal webhooks
-     * @param { UserApiGetUserWebhooksPublicParams } params
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApi
-     */
-    public getUserWebhooksPublic(options?: any): Promise<Array<UserWebhookOut>> {
-        const localVarFetchArgs = UserApiFetchParamCreator.getUserWebhooksPublic(options);
-        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
-        requestBuilder.acceptJson();
-
-        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
-    }
-
-    /**
-     * 
-     *
-     * @summary Get user webhooks by tag
-     * @param { UserApiGetUserWebhooksPublicByTagParams } params
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApi
-     */
-    public getUserWebhooksPublicByTag(params: UserApiGetUserWebhooksPublicByTagParams, options?: any): Promise<Array<UserWebhookOut>> {
-        const localVarFetchArgs = UserApiFetchParamCreator.getUserWebhooksPublicByTag(params?.tag, options);
-        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
-        requestBuilder.acceptJson();
-
-        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
-    }
-
-    /**
-     * 
-     *
-     * @summary Get webhook endpoint details
-     * @param { UserApiGetWebhookEndpointByIdParams } params
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApi
-     */
-    public getWebhookEndpointById(params: UserApiGetWebhookEndpointByIdParams, options?: any): Promise<EndpointOut> {
-        const localVarFetchArgs = UserApiFetchParamCreator.getWebhookEndpointById(params?.webhookId, params?.endpointId, options);
-        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
-        requestBuilder.acceptJson();
-
-        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
-    }
-
-    /**
-     * 
-     *
-     * @summary Get webhook endpoint list
-     * @param { UserApiGetWebhookEndpointsParams } params
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApi
-     */
-    public getWebhookEndpoints(params: UserApiGetWebhookEndpointsParams, options?: any): Promise<Array<EndpointOut>> {
-        const localVarFetchArgs = UserApiFetchParamCreator.getWebhookEndpoints(params?.webhookId, options);
-        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
-        requestBuilder.acceptJson();
-
-        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
-    }
-
-    /**
-     * 
-     *
-     * @summary Update webhook endpoint details
-     * @param { UserApiUpdateWebhookEndpointByIdParams } params
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApi
-     */
-    public updateWebhookEndpointById(params: UserApiUpdateWebhookEndpointByIdParams, options?: any): Promise<EndpointOut> {
-        const localVarFetchArgs = UserApiFetchParamCreator.updateWebhookEndpointById(params?.body, params?.webhookId, params?.endpointId, options);
-        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
-        requestBuilder.acceptJson();
-
-        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
-    }
-
-    /**
-     * Webhooks must be preconfigured using POST /applications/{application_id}/webhooks
-     *
-     * @summary Subscribe current user to application's webhooks
-     * @param { UserApiUserSubscribeParams } params
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApi
-     */
-    public subscribe(params: UserApiUserSubscribeParams, options?: any): Promise<ModelObject> {
-        const localVarFetchArgs = UserApiFetchParamCreator.subscribe(params?.applicationId, options);
-        const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
-        requestBuilder.acceptJson();
-
-        return executeRequestAuthorized(requestBuilder, this.apiConfiguration, this.credentialStorage);
-    }
-
-    /**
-     * 
-     *
-     * @summary Unsubscribe current user from application's webhooks
-     * @param { UserApiUserUnsubscribeParams } params
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApi
-     */
-    public unsubscribe(params: UserApiUserUnsubscribeParams, options?: any): Promise<ModelObject> {
-        const localVarFetchArgs = UserApiFetchParamCreator.unsubscribe(params?.applicationId, options);
+        const localVarFetchArgs = MiscApiFetchParamCreator.getSignaturePublicKey(options);
         const requestBuilder = new RequestBuilder(localVarFetchArgs.url, localVarFetchArgs.options);
         requestBuilder.acceptJson();
 
@@ -2227,13 +2023,13 @@ export class UserApi extends BaseAPI {
 }
 
 export interface FluentApi {
-    default: DefaultApi;
-    developer: DeveloperApi;
-    user: UserApi;
+    delegatedAccess: DelegatedAccessApi;
+    directAccess: DirectAccessApi;
+    misc: MiscApi;
 }
 
 export default (configuration: ApiConfiguration, credentialStorage: CredentialStorage): FluentApi => ({
-    default: new DefaultApi(configuration, credentialStorage),
-    developer: new DeveloperApi(configuration, credentialStorage),
-    user: new UserApi(configuration, credentialStorage),
+    delegatedAccess: new DelegatedAccessApi(configuration, credentialStorage),
+    directAccess: new DirectAccessApi(configuration, credentialStorage),
+    misc: new MiscApi(configuration, credentialStorage),
 })
