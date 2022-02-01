@@ -11,6 +11,7 @@
     "test": "ALLOW_IN_MEMORY_STORAGE=true jest --ci --testResultsProcessor='jest-junit' --passWithNoTests --colors --coverage",
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix",
+    "gen": "./gen/generate.sh",
     "doc": "typedoc --out public --readme README.md --exclude \"**/__tests__/**/*.+(ts|tsx|js)\" --exclude \"**/jest.config.js\" --excludeNotDocumented --name \"Paxful SDK (Javascript)\" --hideGenerator --disableSources --highlightTheme light-plus src/"
   },
   "keywords": [],

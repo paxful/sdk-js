@@ -1,6 +1,4 @@
 import usePaxful from "../index";
-import { createReadStream, existsSync } from "fs";
-import { resolve } from "path";
 
 type Trade = {
   trade_hash: string;
@@ -21,8 +19,8 @@ const paxfulApiBuyer = usePaxful({
 describe("trade flow", () => {
   let offer_hash: string;
   let trade_hash: string;
-  let image_hash: string;
-  const imagePath = "./src/__tests__/paxful.png";
+  // let image_hash: string;
+  // const imagePath = "./src/__tests__/paxful.png";
   const textMessage = "just test message";
   const offerData = {
     margin: 0,

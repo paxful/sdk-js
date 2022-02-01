@@ -7,6 +7,9 @@ import { AnyJson, containsBinary, InvokeBody, RequestBuilder, AnyPromise } from 
 import { InMemoryCredentialStorage } from "./oauth/CredentialStorage";
 import { fetchRefreshedCredentials } from "./commands/RefreshIfNeeded";
 
+import { FluentApi as PaxfulFluentApi, default as preparePaxfulApis } from "./gen/paxful/api";
+import { FluentApi as WebhookFluentApi, default as prepareWebhookApis } from "./gen/webhook/api";
+
 /**
  * Interface responsable for exposing Paxful API integration.
  * @public
@@ -15,11 +18,16 @@ export class PaxfulApi {
 
     private readonly apiConfiguration: ApiConfiguration
     private readonly credentialStorage: CredentialStorage
+    public readonly paxfulApi: PaxfulFluentApi
+    public readonly webhookApi: WebhookFluentApi
 
     constructor(configuration: ApiConfiguration, credentialStorage?: CredentialStorage) {
         this.apiConfiguration = configuration;
         this.credentialStorage = credentialStorage || new InMemoryCredentialStorage();
         this.validateAndSetDefaultParameters(configuration);
+
+        this.paxfulApi = preparePaxfulApis(this.apiConfiguration, this.credentialStorage);
+        this.webhookApi = prepareWebhookApis(this.apiConfiguration, this.credentialStorage);
     }
 
     /**

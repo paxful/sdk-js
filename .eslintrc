@@ -16,5 +16,18 @@
     "no-console": "error",
     "no-loops/no-loops": "error",
     "object-curly-spacing": ["error", "always"]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["src/gen/*/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-namespace": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "radar/no-duplicate-string": "off",
+        "radar/cognitive-complexity": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off"
+      }
+    }
+  ]
 }
